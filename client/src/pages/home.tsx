@@ -513,12 +513,7 @@ function HomeContent() {
                 alt="Professional math tutor Luka" 
                 className="rounded-2xl shadow-2xl w-full"
               />
-              <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-blue-600 to-emerald-600 text-white p-4 rounded-xl shadow-lg">
-                <div className="text-center">
-                  <div className="text-2xl font-bold">4.9★</div>
-                  <div className="text-sm">Rating</div>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
