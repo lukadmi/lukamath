@@ -520,12 +520,6 @@ export default function Home() {
               </Card>
             ))}
           </div>
-          
-          <div className="text-center mt-8">
-            <p className="text-sm text-slate-500 italic">
-              Committed to excellence in mathematics education through continuous professional development
-            </p>
-          </div>
         </div>
       </section>
 
