@@ -488,7 +488,7 @@ function HomeContent() {
                 </div>
                 <div className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-emerald-600 mr-3" />
-                  <span>Mathematics degree from top university</span>
+                  <span>Data Science degree from top university</span>
                 </div>
                 
                 <div className="flex items-center">
@@ -1043,7 +1043,6 @@ function HomeContent() {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-
     </div>
   );
 }
