@@ -22,41 +22,37 @@ import anoushka_puri_f1YfrZ1o2r8_unsplash from "@assets/anoushka-puri-f1YfrZ1o2r
 
 const mathLevels = [
   {
-    id: "middle",
-    icon: "√",
+    id: "middle-school",
+    icon: "📚",
     title: "Middle School Math",
-    description: "Basic algebra, fractions, and foundational problem-solving",
+    description: "Grades 6-8",
     price: 20,
-    color: "text-blue-600",
-    tagline: "Start strong with the basics"
+    color: "text-blue-600"
   },
   {
-    id: "high",
-    icon: "△",
+    id: "high-school",
+    icon: "🎓",
     title: "High School Math", 
-    description: "Algebra, geometry, trigonometry, and pre-calculus",
+    description: "Grades 9-12",
     price: 30,
     color: "text-emerald-600",
-    tagline: "Master advanced concepts"
+    popular: true
   },
   {
     id: "university",
-    icon: "∞",
+    icon: "🏛️",
     title: "University Math",
-    description: "Statistics and linear algebra for college success", 
+    description: "College Level", 
     price: 40,
-    color: "text-purple-600",
-    tagline: "Excel in higher mathematics"
+    color: "text-purple-600"
   },
   {
-    id: "satact",
-    icon: "🏆",
-    title: "SAT/ACT Math Bootcamp",
-    description: "Test strategies and practice for your best score",
+    id: "sat-act",
+    icon: "📝",
+    title: "SAT/ACT Prep",
+    description: "Test Preparation",
     price: 45, 
-    color: "text-blue-600",
-    tagline: "Most Popular",
-    popular: true
+    color: "text-orange-600"
   }
 ];
 
@@ -220,7 +216,7 @@ function LanguageProvider({ children }: { children: React.ReactNode }) {
 
 // Pricing Section Component
 function PricingSection() {
-  const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
+  const [selectedLevel, setSelectedLevel] = useState<string>("middle-school");
   
   const selectedMathLevel = mathLevels.find(level => level.id === selectedLevel);
   
@@ -288,8 +284,8 @@ function PricingSection() {
           </div>
         </div>
 
-        {/* Pricing Packages - Only show when level is selected */}
-        {selectedLevel && selectedMathLevel && (
+        {/* Pricing Packages */}
+        {selectedMathLevel && (
           <div className="animate-in slide-in-from-bottom-4 duration-500">
             <div className="text-center mb-12">
               <h3 className="text-2xl font-bold text-slate-800 mb-4">
@@ -424,18 +420,6 @@ function PricingSection() {
                 100% satisfaction guarantee • 15-minute free trial session
               </p>
             </div>
-          </div>
-        )}
-
-        {/* Call to action when no level selected */}
-        {!selectedLevel && (
-          <div className="text-center mt-12 p-8 bg-slate-50 rounded-2xl">
-            <h3 className="text-xl font-bold text-slate-800 mb-4">
-              Select a math level above to see pricing packages
-            </h3>
-            <p className="text-slate-600">
-              Each level has different hourly rates and customized packages to fit your learning needs.
-            </p>
           </div>
         )}
       </div>
