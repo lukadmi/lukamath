@@ -529,9 +529,6 @@ function HomeContent() {
                 <button onClick={() => scrollToSection('about')} className="nav-item text-slate-600 hover:text-blue-600 transition-colors">
                   About
                 </button>
-                <button onClick={() => scrollToSection('testimonials')} className="nav-item text-slate-600 hover:text-blue-600 transition-colors">
-                  Reviews
-                </button>
                 <button onClick={() => scrollToSection('pricing')} className="nav-item text-slate-600 hover:text-blue-600 transition-colors">
                   Pricing
                 </button>
@@ -541,6 +538,11 @@ function HomeContent() {
                 <Link href="/blog">
                   <span className="nav-item text-slate-600 hover:text-blue-600 transition-colors cursor-pointer">
                     Blog
+                  </span>
+                </Link>
+                <Link href="/app-features">
+                  <span className="nav-item text-slate-600 hover:text-blue-600 transition-colors cursor-pointer">
+                    App
                   </span>
                 </Link>
               </div>
@@ -610,9 +612,6 @@ function HomeContent() {
                 <button onClick={() => { scrollToSection('about'); setMobileMenuOpen(false); }} className="block w-full text-left px-3 py-2 text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-md transition-colors">
                   About
                 </button>
-                <button onClick={() => { scrollToSection('testimonials'); setMobileMenuOpen(false); }} className="block w-full text-left px-3 py-2 text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-md transition-colors">
-                  Reviews
-                </button>
                 <button onClick={() => { scrollToSection('pricing'); setMobileMenuOpen(false); }} className="block w-full text-left px-3 py-2 text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-md transition-colors">
                   Pricing
                 </button>
@@ -622,6 +621,11 @@ function HomeContent() {
                 <Link href="/blog">
                   <span className="block w-full text-left px-3 py-2 text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-md transition-colors cursor-pointer" onClick={() => setMobileMenuOpen(false)}>
                     Blog
+                  </span>
+                </Link>
+                <Link href="/app-features">
+                  <span className="block w-full text-left px-3 py-2 text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-md transition-colors cursor-pointer" onClick={() => setMobileMenuOpen(false)}>
+                    App
                   </span>
                 </Link>
               </div>
@@ -654,7 +658,7 @@ function HomeContent() {
                 <Link href="/app-features">
                   <Button 
                     variant="outline"
-                    className="border-white text-white hover:bg-white hover:text-slate-800 text-lg px-8 py-4 h-auto shadow-lg font-semibold"
+                    className="border-white bg-white text-slate-800 hover:bg-slate-100 text-lg px-8 py-4 h-auto shadow-lg font-semibold"
                   >
                     <Smartphone className="w-5 h-5 mr-2" />
                     Explore Our App
@@ -939,11 +943,10 @@ function HomeContent() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="algebra">Algebra I & II</SelectItem>
-                                <SelectItem value="geometry">Geometry & Trigonometry</SelectItem>
-                                <SelectItem value="calculus">Pre-Calculus & Calculus</SelectItem>
-                                <SelectItem value="sat-act">SAT/ACT Math Prep</SelectItem>
-                                <SelectItem value="other">Other</SelectItem>
+                                <SelectItem value="middle-school">Middle School Math (Grades 6-8)</SelectItem>
+                                <SelectItem value="high-school">High School Math (Grades 9-12)</SelectItem>
+                                <SelectItem value="university">University Math (College Level)</SelectItem>
+                                <SelectItem value="sat-act">SAT/ACT Prep (Test Preparation)</SelectItem>
                               </SelectContent>
                             </Select>
                             <FormMessage />
