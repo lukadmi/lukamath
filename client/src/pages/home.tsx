@@ -650,7 +650,7 @@ function HomeContent() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button 
                   onClick={() => scrollToSection('contact')}
-                  className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 text-lg px-8 py-4 h-auto shadow-lg font-semibold"
+                  className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                 >
                   <Play className="w-5 h-5 mr-2" />
                   Book Your Free 15-Min Trial
@@ -658,7 +658,7 @@ function HomeContent() {
                 <Link href="/app-features">
                   <Button 
                     variant="outline"
-                    className="border-white bg-white text-slate-800 hover:bg-slate-100 text-lg px-8 py-4 h-auto shadow-lg font-semibold"
+                    className="border-white bg-white text-slate-800 hover:bg-slate-100 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                   >
                     <Smartphone className="w-5 h-5 mr-2" />
                     Explore Our App

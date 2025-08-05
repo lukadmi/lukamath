@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { Calculator, Users, BookOpen, Target, MessageSquare, TrendingUp, CheckCircle, Award, Clock, Smartphone, ArrowRight, Menu, X, Globe, LogIn, User } from "lucide-react";
+import { Calculator, Users, BookOpen, Target, MessageSquare, TrendingUp, CheckCircle, Award, Clock, Smartphone, ArrowRight, Menu, X, Globe, LogIn, User, Calendar } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { LanguageContext, type Language, translations } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
@@ -10,45 +10,45 @@ import { Badge } from "@/components/ui/badge";
 const appFeatures = [
   {
     icon: BookOpen,
-    title: "Homework Tracking",
-    description: "Keep track of all your assignments, due dates, and progress in one organized dashboard",
+    title: "Homework Management",
+    description: "Receive assignments from Luka, track due dates, and submit completed work in one organized dashboard",
     color: "bg-blue-100 text-blue-600",
-    benefits: ["Never miss a deadline", "Track completion status", "See progress over time"]
+    benefits: ["Get assignments instantly", "Track completion status", "Submit work easily"]
   },
   {
     icon: MessageSquare,
-    title: "Q&A System", 
-    description: "Ask questions anytime and get detailed explanations from your tutor",
+    title: "Direct Q&A with Luka", 
+    description: "Ask Luka questions anytime and get detailed explanations for any math problem",
     color: "bg-emerald-100 text-emerald-600",
-    benefits: ["24/7 question submission", "Step-by-step solutions", "Quick response times"]
+    benefits: ["24/7 question submission", "Step-by-step solutions", "Personal responses from Luka"]
   },
   {
     icon: TrendingUp,
-    title: "Progress Monitoring",
-    description: "Visual charts and analytics to track your improvement across different math topics",
+    title: "Progress Tracking",
+    description: "Visual charts showing your improvement across different math topics and assignments",
     color: "bg-purple-100 text-purple-600", 
     benefits: ["Grade tracking", "Performance analytics", "Improvement insights"]
   },
   {
-    icon: Target,
-    title: "Personalized Goals",
-    description: "Set and track your academic goals with milestone celebrations",
+    icon: Calendar,
+    title: "Availability Calendar",
+    description: "Check Luka's availability and schedule tutoring sessions at convenient times",
     color: "bg-yellow-100 text-yellow-600",
-    benefits: ["Custom goal setting", "Progress milestones", "Achievement rewards"]
+    benefits: ["Real-time availability", "Easy scheduling", "Session reminders"]
   },
   {
-    icon: Calculator,
-    title: "Math Tools",
-    description: "Built-in calculator, formula sheets, and reference materials",
+    icon: Award,
+    title: "Feedback & Grading",
+    description: "Receive detailed feedback on your homework with grades and improvement suggestions",
     color: "bg-red-100 text-red-600",
-    benefits: ["Interactive calculator", "Formula reference", "Quick conversions"]
+    benefits: ["Detailed feedback", "Grade tracking", "Improvement tips"]
   },
   {
-    icon: Users,
-    title: "Tutor Communication",
-    description: "Direct communication with your tutor through secure messaging",
+    icon: Clock,
+    title: "Assignment Timeline",
+    description: "Clear overview of upcoming deadlines, completed work, and pending assignments",
     color: "bg-green-100 text-green-600",
-    benefits: ["Instant messaging", "File sharing", "Session scheduling"]
+    benefits: ["Deadline management", "Progress overview", "Priority sorting"]
   }
 ];
 
@@ -191,11 +191,11 @@ function AppFeatures() {
               </div>
               
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Your Complete
-                <span className="text-gradient"> Math Learning Platform</span>
+                Your Personal
+                <span className="text-gradient"> Homework Management System</span>
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed max-w-3xl mx-auto">
-                Everything you need to succeed in math - homework tracking, Q&A support, progress monitoring, and direct tutor communication - all in one powerful app.
+                Stay organized with your math assignments, track your progress, ask Luka questions anytime, and schedule sessions - all in one dedicated platform.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -250,9 +250,9 @@ function AppFeatures() {
         <section className="py-20 bg-slate-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-800 mb-4">Powerful Features for Math Success</h2>
+              <h2 className="text-4xl font-bold text-slate-800 mb-4">Everything You Need to Stay Organized</h2>
               <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Our comprehensive app provides everything students need to excel in mathematics, from assignment tracking to personalized tutoring support.
+                Your personal homework management system designed to keep you on track with assignments, questions, and progress with Luka as your dedicated tutor.
               </p>
             </div>
             
@@ -293,20 +293,20 @@ function AppFeatures() {
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">1</div>
-                <h3 className="text-xl font-bold text-slate-800 mb-4">Sign Up & Get Matched</h3>
-                <p className="text-slate-600">Create your free account and get paired with a qualified math tutor based on your level and goals.</p>
+                <h3 className="text-xl font-bold text-slate-800 mb-4">Create Your Account</h3>
+                <p className="text-slate-600">Sign up for free and get access to your personal homework management dashboard with Luka as your tutor.</p>
               </div>
               
               <div className="text-center">
                 <div className="w-16 h-16 bg-emerald-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">2</div>
-                <h3 className="text-xl font-bold text-slate-800 mb-4">Start Learning</h3>
-                <p className="text-slate-600">Access your personalized dashboard, track homework assignments, and ask questions whenever you need help.</p>
+                <h3 className="text-xl font-bold text-slate-800 mb-4">Receive Assignments</h3>
+                <p className="text-slate-600">Get homework assignments from Luka, track deadlines, ask questions, and submit your completed work.</p>
               </div>
               
               <div className="text-center">
                 <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">3</div>
-                <h3 className="text-xl font-bold text-slate-800 mb-4">Track Progress</h3>
-                <p className="text-slate-600">Monitor your improvement with detailed analytics and celebrate milestones as you master new concepts.</p>
+                <h3 className="text-xl font-bold text-slate-800 mb-4">Schedule & Progress</h3>
+                <p className="text-slate-600">Check Luka's availability for sessions, track your grades, and monitor your improvement over time.</p>
               </div>
             </div>
           </div>
@@ -317,9 +317,9 @@ function AppFeatures() {
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-emerald-600/5"></div>
           
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
-            <h2 className="text-4xl font-bold mb-6">Ready to Transform Your Math Learning?</h2>
+            <h2 className="text-4xl font-bold mb-6">Ready to Get Organized with Your Math Homework?</h2>
             <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-              Join thousands of students who are already using the LukaMath app to achieve their math goals.
+              Join students who are staying on top of their assignments and improving their math skills with Luka's dedicated homework management system.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
