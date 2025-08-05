@@ -1,9 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, createContext, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, PlayCircle, BookOpen, Compass, Menu, X, Shield, ArrowRight, ChevronLeft, ChevronRight, Award } from "lucide-react";
+import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, PlayCircle, BookOpen, Compass, Menu, X, Shield, ArrowRight, ChevronLeft, ChevronRight, Award, Globe, LogIn, User } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { LanguageContext, type Language, translations } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -188,10 +190,27 @@ const certificates = [
   }
 ];
 
-export default function Home() {
+// Language Provider Component
+function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [language, setLanguage] = useState<Language>("en");
+
+  const t = (key: string): string => {
+    return translations[language][key as keyof typeof translations.en] || key;
+  };
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+}
+
+function HomeContent() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const { toast } = useToast();
+  const { user, isAuthenticated } = useAuth();
+  const { language, setLanguage, t } = useContext(LanguageContext)!;
 
   const form = useForm<InsertContact>({
     resolver: zodResolver(insertContactSchema),
@@ -292,10 +311,49 @@ export default function Home() {
               </div>
             </div>
             
-            <div className="flex items-center">
-              <Button onClick={() => scrollToSection('contact')} className="bg-blue-600 text-white hover:bg-blue-700">
-                Book Free Trial
-              </Button>
+            <div className="flex items-center space-x-4">
+              {/* Language Switcher */}
+              <div className="hidden md:flex items-center space-x-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setLanguage(language === "en" ? "hr" : "en")}
+                  className="text-slate-600 hover:text-blue-600"
+                >
+                  <Globe className="w-4 h-4 mr-1" />
+                  {language === "en" ? "HR" : "EN"}
+                </Button>
+              </div>
+
+              {/* Auth Buttons */}
+              {isAuthenticated ? (
+                <div className="flex items-center space-x-2">
+                  <Link href="/app">
+                    <Button variant="outline" className="hidden md:flex">
+                      <User className="w-4 h-4 mr-2" />
+                      {t("nav.app")}
+                    </Button>
+                  </Link>
+                  <a href="/api/logout">
+                    <Button variant="ghost" size="sm">
+                      Logout
+                    </Button>
+                  </a>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <a href="/api/login">
+                    <Button variant="outline" className="hidden md:flex">
+                      <LogIn className="w-4 h-4 mr-2" />
+                      {t("nav.login")}
+                    </Button>
+                  </a>
+                  <Button onClick={() => scrollToSection('contact')} className="bg-blue-600 text-white hover:bg-blue-700">
+                    {t("hero.cta.primary")}
+                  </Button>
+                </div>
+              )}
+              
               <Button
                 variant="ghost"
                 size="sm"
@@ -1016,5 +1074,13 @@ export default function Home() {
         </DialogContent>
       </Dialog>
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <LanguageProvider>
+      <HomeContent />
+    </LanguageProvider>
   );
 }
