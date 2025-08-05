@@ -4,6 +4,7 @@ import {
   homework,
   homeworkFiles,
   questions,
+  tutorAvailability,
   type User,
   type UpsertUser,
   type Contact,
@@ -14,6 +15,7 @@ import {
   type HomeworkFile,
   type Question,
   type InsertQuestion,
+  type TutorAvailability,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
@@ -44,6 +46,12 @@ export interface IStorage {
   getUnansweredQuestions(): Promise<Question[]>;
   createQuestion(studentId: string, question: InsertQuestion): Promise<Question>;
   answerQuestion(id: string, answer: string, tutorId: string): Promise<Question | undefined>;
+  
+  // Availability operations
+  getTutorAvailability(date?: string): Promise<TutorAvailability[]>;
+  
+  // Progress operations
+  getStudentProgress(studentId: string): Promise<any[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -178,6 +186,50 @@ export class DatabaseStorage implements IStorage {
       .where(eq(questions.id, id))
       .returning();
     return q;
+  }
+
+  // Availability operations
+  async getTutorAvailability(date?: string): Promise<TutorAvailability[]> {
+    const query = db.select().from(tutorAvailability);
+    if (date) {
+      // Filter by specific date if provided
+      const targetDate = new Date(date);
+      return await query.where(
+        and(
+          eq(tutorAvailability.date, targetDate),
+          eq(tutorAvailability.isAvailable, true)
+        )
+      ).orderBy(tutorAvailability.startTime);
+    }
+    
+    // Return all future availability
+    return await query.where(
+      eq(tutorAvailability.isAvailable, true)
+    ).orderBy(tutorAvailability.date, tutorAvailability.startTime);
+  }
+
+  // Progress operations
+  async getStudentProgress(studentId: string): Promise<any[]> {
+    // Get all completed homework with grades for progress tracking
+    const completedHomework = await db
+      .select({
+        id: homework.id,
+        title: homework.title,
+        subject: homework.subject,
+        grade: homework.grade,
+        completedAt: homework.completedAt,
+        createdAt: homework.createdAt,
+      })
+      .from(homework)
+      .where(
+        and(
+          eq(homework.studentId, studentId),
+          eq(homework.isCompleted, true)
+        )
+      )
+      .orderBy(homework.completedAt);
+
+    return completedHomework;
   }
 }
 

@@ -37,8 +37,11 @@ import {
   Globe,
   Plus,
   FileText,
-  Send
+  Send,
+  TrendingUp,
+  BarChart3
 } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Link } from "wouter";
 
 // Language Provider Component
@@ -75,6 +78,20 @@ function StudentAppContent() {
   const { data: questions = [], isLoading: questionsLoading } = useQuery<Question[]>({
     queryKey: ["/api/questions/student", (user as any)?.id],
     enabled: !!user && !!(user as any).id,
+    retry: false,
+  });
+
+  // Progress queries
+  const { data: progress = [], isLoading: progressLoading } = useQuery({
+    queryKey: ["/api/progress/student", (user as any)?.id],
+    enabled: !!user && !!(user as any).id,
+    retry: false,
+  });
+
+  // Availability queries
+  const { data: availability = [], isLoading: availabilityLoading } = useQuery({
+    queryKey: ["/api/availability"],
+    enabled: !!user,
     retry: false,
   });
 
@@ -244,7 +261,7 @@ function StudentAppContent() {
               <span>Q&A</span>
             </TabsTrigger>
             <TabsTrigger value="progress" className="flex items-center space-x-2">
-              <Calendar className="w-4 h-4" />
+              <BarChart3 className="w-4 h-4" />
               <span>Progress</span>
             </TabsTrigger>
           </TabsList>
@@ -527,6 +544,122 @@ function StudentAppContent() {
                 </CardContent>
               </Card>
             </div>
+
+            {/* Progress Tracking Graph */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <TrendingUp className="w-5 h-5" />
+                  <span>Grade Progress</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {progressLoading ? (
+                  <div className="h-64 bg-slate-200 animate-pulse rounded"></div>
+                ) : progress.length === 0 ? (
+                  <div className="h-64 flex items-center justify-center text-slate-500">
+                    <div className="text-center">
+                      <BarChart3 className="w-12 h-12 mx-auto mb-4 text-slate-400" />
+                      <p>No completed assignments yet</p>
+                      <p className="text-sm">Complete homework to track your progress</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={progress.map((item: any, index: number) => ({
+                        assignment: index + 1,
+                        grade: item.grade || 0,
+                        subject: item.subject,
+                        title: item.title
+                      }))}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis 
+                          dataKey="assignment" 
+                          label={{ value: 'Assignment #', position: 'insideBottom', offset: -5 }}
+                        />
+                        <YAxis 
+                          domain={[0, 100]}
+                          label={{ value: 'Grade', angle: -90, position: 'insideLeft' }}
+                        />
+                        <Tooltip 
+                          formatter={(value: any, name: any, props: any) => [
+                            `${value}%`, 
+                            'Grade'
+                          ]}
+                          labelFormatter={(label: any, payload: any) => {
+                            if (payload && payload[0]) {
+                              return `${payload[0].payload.title} (${payload[0].payload.subject})`;
+                            }
+                            return `Assignment ${label}`;
+                          }}
+                        />
+                        <Line 
+                          type="monotone" 
+                          dataKey="grade" 
+                          stroke="#2563eb" 
+                          strokeWidth={3}
+                          dot={{ fill: '#2563eb', strokeWidth: 2, r: 6 }}
+                          activeDot={{ r: 8, stroke: '#2563eb', strokeWidth: 2 }}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Tutor Availability Calendar */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Calendar className="w-5 h-5" />
+                  <span>Luka's Availability</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {availabilityLoading ? (
+                  <div className="h-64 bg-slate-200 animate-pulse rounded"></div>
+                ) : availability.length === 0 ? (
+                  <div className="h-64 flex items-center justify-center text-slate-500">
+                    <div className="text-center">
+                      <Calendar className="w-12 h-12 mx-auto mb-4 text-slate-400" />
+                      <p>No availability scheduled yet</p>
+                      <p className="text-sm">Check back later for available time slots</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <p className="text-slate-600 mb-4">Available time slots for tutoring sessions:</p>
+                    <div className="grid gap-3">
+                      {availability.map((slot: any, index: number) => (
+                        <div key={index} className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-200">
+                          <div className="flex items-center space-x-3">
+                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <div>
+                              <p className="font-medium text-slate-900">
+                                {new Date(slot.date).toLocaleDateString('en-US', { 
+                                  weekday: 'long',
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric'
+                                })}
+                              </p>
+                              <p className="text-sm text-slate-600">
+                                {slot.startTime} - {slot.endTime}
+                              </p>
+                            </div>
+                          </div>
+                          <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
+                            Book Session
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
       </main>

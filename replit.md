@@ -44,10 +44,14 @@ Preferred communication style: Simple, everyday language.
 - **Build Tools**: esbuild for server-side compilation and Vite for frontend bundling
 - **Fonts**: Google Fonts (Inter) loaded for professional typography
 
-## Recent Changes (January 2024)
+## Recent Changes (January 2025)
 - **Color Scheme Update**: Changed gradient colors from blue-green to dark blue - blue theme
 - **Free Trial Duration**: Updated from 30 minutes to 15 minutes across all messaging
 - **Blog Implementation**: Added complete blog section with separate page (/blog route)
 - **Navigation Enhancement**: Added blog link to main navigation (desktop and mobile)
 - **Content Preview**: Added blog preview section on home page with latest articles
 - **CSS Fixes**: Resolved import order issue in index.css for proper Tailwind compilation
+- **Progress Tracking Graph**: Added interactive line chart showing student grade trends over time in Progress tab
+- **Calendar Availability**: Implemented tutor availability calendar showing Luka's available time slots with booking options
+- **Enhanced Student Portal**: Progress tab now combines homework statistics, grade tracking graph, and availability calendar
+- **Database Schema Expansion**: Added tutorAvailability table and progress tracking endpoints for comprehensive student dashboard

@@ -208,6 +208,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Tutor availability endpoints
+  app.get("/api/availability", isAuthenticated, async (req: any, res) => {
+    try {
+      const { date } = req.query;
+      const availability = await storage.getTutorAvailability(date as string);
+      res.json(availability);
+    } catch (error) {
+      console.error("Error fetching tutor availability:", error);
+      res.status(500).json({ message: "Failed to fetch availability" });
+    }
+  });
+
+  // Progress tracking endpoint
+  app.get("/api/progress/student/:studentId", isAuthenticated, async (req: any, res) => {
+    try {
+      const { studentId } = req.params;
+      const progress = await storage.getStudentProgress(studentId);
+      res.json(progress);
+    } catch (error) {
+      console.error("Error fetching student progress:", error);
+      res.status(500).json({ message: "Failed to fetch progress" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

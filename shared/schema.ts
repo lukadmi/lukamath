@@ -96,6 +96,18 @@ export const questions = pgTable("questions", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+// Tutor availability for scheduling
+export const tutorAvailability = pgTable("tutor_availability", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  tutorId: varchar("tutor_id").notNull().references(() => users.id),
+  date: timestamp("date").notNull(),
+  startTime: varchar("start_time").notNull(), // '09:00'
+  endTime: varchar("end_time").notNull(), // '17:00'
+  isAvailable: boolean("is_available").notNull().default(true),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   assignedHomework: many(homework, { relationName: "studentHomework" }),
@@ -140,6 +152,13 @@ export const questionsRelations = relations(questions, ({ one }) => ({
     fields: [questions.answeredBy],
     references: [users.id],
     relationName: "tutorAnswers",
+  }),
+}));
+
+export const tutorAvailabilityRelations = relations(tutorAvailability, ({ one }) => ({
+  tutor: one(users, {
+    fields: [tutorAvailability.tutorId],
+    references: [users.id],
   }),
 }));
 
@@ -191,3 +210,4 @@ export type HomeworkFile = typeof homeworkFiles.$inferSelect;
 export type InsertQuestion = z.infer<typeof insertQuestionSchema>;
 export type Question = typeof questions.$inferSelect;
 export type UpdateHomework = z.infer<typeof updateHomeworkSchema>;
+export type TutorAvailability = typeof tutorAvailability.$inferSelect;
