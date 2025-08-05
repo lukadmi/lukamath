@@ -53,10 +53,10 @@ const appFeatures = [
 ];
 
 const stats = [
-  { number: "1,000+", label: "Active Students", icon: Users },
-  { number: "95%", label: "Improvement Rate", icon: TrendingUp },
-  { number: "4.9/5", label: "App Rating", icon: Award },
-  { number: "24/7", label: "Support", icon: Clock }
+  { number: "New", label: "Innovative Platform", icon: Users },
+  { number: "2025", label: "Latest Technology", icon: TrendingUp },
+  { number: "100%", label: "Personalized Focus", icon: Award },
+  { number: "24/7", label: "Question Support", icon: Clock }
 ];
 
 function AppFeatures() {
@@ -201,14 +201,14 @@ function AppFeatures() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 {isAuthenticated ? (
                   <Link href="/app">
-                    <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 text-lg px-8 py-4 h-auto shadow-lg font-semibold">
+                    <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200">
                       <User className="w-5 h-5 mr-2" />
                       Go to My App
                     </Button>
                   </Link>
                 ) : (
                   <a href="/api/login">
-                    <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 text-lg px-8 py-4 h-auto shadow-lg font-semibold">
+                    <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200">
                       <LogIn className="w-5 h-5 mr-2" />
                       Sign Up for Free
                     </Button>
@@ -218,7 +218,7 @@ function AppFeatures() {
                 <Link href="/">
                   <Button 
                     variant="outline"
-                    className="border-white text-white hover:bg-white hover:text-slate-800 text-lg px-8 py-4 h-auto shadow-lg font-semibold"
+                    className="border-white bg-white text-slate-800 hover:bg-slate-100 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                   >
                     <ArrowRight className="w-5 h-5 mr-2" />
                     Back to Home
@@ -325,16 +325,16 @@ function AppFeatures() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {isAuthenticated ? (
                 <Link href="/app">
-                  <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 text-lg px-8 py-4 h-auto shadow-lg font-semibold">
+                  <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200">
                     <User className="w-5 h-5 mr-2" />
                     Access My Dashboard
                   </Button>
                 </Link>
               ) : (
                 <a href="/api/login">
-                  <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 text-lg px-8 py-4 h-auto shadow-lg font-semibold">
+                  <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200">
                     <LogIn className="w-5 h-5 mr-2" />
-                    Get Started Free
+                    Sign Up for Free
                   </Button>
                 </a>
               )}
@@ -342,7 +342,7 @@ function AppFeatures() {
               <Link href="/">
                 <Button 
                   variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-slate-800 text-lg px-8 py-4 h-auto shadow-lg font-semibold"
+                  className="border-white bg-white text-slate-800 hover:bg-slate-100 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                 >
                   Learn More About Tutoring
                 </Button>
