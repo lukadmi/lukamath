@@ -28,11 +28,13 @@ export interface IStorage {
   
   // Contact operations
   getContacts(): Promise<Contact[]>;
+  getAllContacts(): Promise<Contact[]>;
   createContact(insertContact: InsertContact): Promise<Contact>;
   
   // Homework operations
   getHomeworkForStudent(studentId: string): Promise<Homework[]>;
   getHomeworkForTutor(tutorId: string): Promise<Homework[]>;
+  getAllHomework(): Promise<Homework[]>;
   createHomework(insertHomework: InsertHomework): Promise<Homework>;
   updateHomework(id: string, updates: UpdateHomework): Promise<Homework | undefined>;
   getHomeworkById(id: string): Promise<Homework | undefined>;
@@ -44,6 +46,8 @@ export interface IStorage {
   // Question operations
   getQuestionsForStudent(studentId: string): Promise<Question[]>;
   getUnansweredQuestions(): Promise<Question[]>;
+  getAllQuestions(): Promise<Question[]>;
+  getAllStudents(): Promise<User[]>;
   createQuestion(studentId: string, question: InsertQuestion): Promise<Question>;
   answerQuestion(id: string, answer: string, tutorId: string): Promise<Question | undefined>;
   
@@ -81,6 +85,10 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(contacts).orderBy(desc(contacts.createdAt));
   }
 
+  async getAllContacts(): Promise<Contact[]> {
+    return await db.select().from(contacts).orderBy(desc(contacts.createdAt));
+  }
+
   async createContact(insertContact: InsertContact): Promise<Contact> {
     const [contact] = await db
       .insert(contacts)
@@ -103,6 +111,13 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(homework)
       .where(eq(homework.tutorId, tutorId))
+      .orderBy(desc(homework.createdAt));
+  }
+
+  async getAllHomework(): Promise<Homework[]> {
+    return await db
+      .select()
+      .from(homework)
       .orderBy(desc(homework.createdAt));
   }
 
@@ -163,6 +178,21 @@ export class DatabaseStorage implements IStorage {
       .from(questions)
       .where(eq(questions.isAnswered, false))
       .orderBy(desc(questions.createdAt));
+  }
+
+  async getAllQuestions(): Promise<Question[]> {
+    return await db
+      .select()
+      .from(questions)
+      .orderBy(desc(questions.createdAt));
+  }
+
+  async getAllStudents(): Promise<User[]> {
+    return await db
+      .select()
+      .from(users)
+      .where(eq(users.role, 'student'))
+      .orderBy(desc(users.createdAt));
   }
 
   async createQuestion(studentId: string, question: InsertQuestion): Promise<Question> {

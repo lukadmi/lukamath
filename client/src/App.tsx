@@ -7,6 +7,7 @@ import Home from "@/pages/home";
 import Blog from "@/pages/blog";
 import AppFeatures from "@/pages/app-features";
 import StudentApp from "@/pages/app";
+import AdminDashboard from "@/pages/admin";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/blog" component={Blog}/>
       <Route path="/app-features" component={AppFeatures}/>
       <Route path="/app" component={StudentApp}/>
+      <Route path="/admin" component={AdminDashboard}/>
       <Route component={NotFound} />
     </Switch>
   );
