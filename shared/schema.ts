@@ -58,10 +58,6 @@ export const homework = pgTable("homework", {
   instructions: text("instructions"),
   subject: varchar("subject").notNull(), // 'algebra', 'geometry', 'calculus', etc.
   difficulty: varchar("difficulty").notNull().default("medium"), // 'easy', 'medium', 'hard'
-  type: varchar("type").notNull().default("assignment"), // 'assignment', 'quiz'
-  quizQuestions: jsonb("quiz_questions"), // Array of quiz questions for auto-grading
-  studentAnswers: jsonb("student_answers"), // Student's answers for quiz
-  autoGraded: boolean("auto_graded").default(false), // Whether quiz was auto-graded
   dueDate: timestamp("due_date"),
   status: varchar("status").notNull().default("pending"), // 'pending', 'in_progress', 'completed'
   isCompleted: boolean("is_completed").notNull().default(false),

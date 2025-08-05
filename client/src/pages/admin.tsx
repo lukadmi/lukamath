@@ -32,8 +32,7 @@ import {
   CheckCircle2,
   AlertCircle,
   User,
-  FileText,
-  HelpCircle,
+  Paperclip,
   X
 } from "lucide-react";
 
@@ -44,13 +43,6 @@ const homeworkSchema = z.object({
   instructions: z.string().optional(),
   subject: z.string().min(1, "Subject is required"),
   difficulty: z.enum(["easy", "medium", "hard"]),
-  type: z.enum(["assignment", "quiz"]),
-  quizQuestions: z.array(z.object({
-    question: z.string().min(1, "Question is required"),
-    options: z.array(z.string()).min(2, "At least 2 options required"),
-    correctAnswer: z.number().min(0, "Correct answer must be selected"),
-    points: z.number().min(1, "Points must be at least 1"),
-  })).optional(),
   dueDate: z.string().optional(),
   studentId: z.string().min(1, "Student is required"),
 });
@@ -98,15 +90,12 @@ function AdminDashboard() {
       instructions: "",
       subject: "",
       difficulty: "medium" as const,
-      type: "assignment" as const,
-      quizQuestions: [],
       dueDate: "",
       studentId: "",
     },
   });
 
-  const watchType = homeworkForm.watch("type");
-  const watchQuizQuestions = homeworkForm.watch("quizQuestions") || [];
+  const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
 
   const availabilityForm = useForm({
     resolver: zodResolver(availabilitySchema),
@@ -120,14 +109,35 @@ function AdminDashboard() {
 
   // Mutations
   const createHomeworkMutation = useMutation({
-    mutationFn: (data: any) => apiRequest("/api/homework", {
-      method: "POST",
-      body: JSON.stringify(data),
-    }),
+    mutationFn: async (data: any) => {
+      // First create the homework
+      const homework = await apiRequest("/api/homework", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+
+      // Then upload any attached files
+      if (attachedFiles.length > 0) {
+        const formData = new FormData();
+        attachedFiles.forEach(file => {
+          formData.append('files', file);
+        });
+        formData.append('homeworkId', homework.id);
+        formData.append('purpose', 'assignment');
+
+        await apiRequest("/api/homework/files", {
+          method: "POST",
+          body: formData,
+        });
+      }
+
+      return homework;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/homework"] });
       setHomeworkDialogOpen(false);
       homeworkForm.reset();
+      setAttachedFiles([]);
     },
   });
 
@@ -508,6 +518,53 @@ function AdminDashboard() {
                           </FormItem>
                         )}
                       />
+
+                      {/* File Attachments */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Attachments (Optional)</label>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => document.getElementById('file-input')?.click()}
+                            className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                          >
+                            <Paperclip className="w-4 h-4 mr-2" />
+                            Attach Files
+                          </Button>
+                          <input
+                            id="file-input"
+                            type="file"
+                            multiple
+                            accept=".pdf,.doc,.docx,.txt"
+                            className="hidden"
+                            onChange={(e) => {
+                              const files = Array.from(e.target.files || []);
+                              setAttachedFiles(prev => [...prev, ...files]);
+                            }}
+                          />
+                        </div>
+                        {attachedFiles.length > 0 && (
+                          <div className="space-y-1">
+                            {attachedFiles.map((file, index) => (
+                              <div key={index} className="flex items-center justify-between text-sm bg-slate-50 p-2 rounded">
+                                <span className="text-slate-700 truncate">{file.name}</span>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => setAttachedFiles(prev => prev.filter((_, i) => i !== index))}
+                                  className="text-red-500 hover:text-red-700 h-6 w-6 p-0"
+                                >
+                                  <X className="w-3 h-3" />
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
                       <div className="flex justify-end space-x-2">
                         <Button type="button" variant="outline" onClick={() => setHomeworkDialogOpen(false)}>
                           Cancel

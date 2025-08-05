@@ -81,6 +81,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // File upload endpoint for homework
+  app.post("/api/homework/files", isAuthenticated, async (req, res) => {
+    try {
+      // In a real implementation, you would use multer or similar to handle file uploads
+      // For now, we'll just acknowledge the upload request
+      const { homeworkId, purpose } = req.body;
+      
+      // This would typically save files to cloud storage and create database records
+      // For demo purposes, we'll just return success
+      res.json({ 
+        message: "Files uploaded successfully",
+        homeworkId,
+        purpose
+      });
+    } catch (error) {
+      console.error("Error uploading files:", error);
+      res.status(500).json({ message: "Failed to upload files" });
+    }
+  });
+
   // Contact routes
   app.post("/api/contacts", async (req, res) => {
     try {
