@@ -299,10 +299,30 @@ function AppFeatures() {
               
               {/* Arrow between steps 1 and 2 */}
               <div className="hidden md:flex justify-center items-center">
-                <div className="relative">
-                  <ArrowRight className="w-8 h-8 text-blue-400 animate-bounce transform rotate-12 hover:rotate-0 hover:scale-110 transition-all duration-300 cursor-pointer" />
-                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
-                </div>
+                <svg width="60" height="40" viewBox="0 0 60 40" className="text-blue-400">
+                  <path
+                    d="M10 20 Q30 10 50 20"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    fill="none"
+                    markerEnd="url(#arrowhead1)"
+                  />
+                  <defs>
+                    <marker
+                      id="arrowhead1"
+                      markerWidth="10"
+                      markerHeight="7"
+                      refX="9"
+                      refY="3.5"
+                      orient="auto"
+                    >
+                      <polygon
+                        points="0 0, 10 3.5, 0 7"
+                        fill="currentColor"
+                      />
+                    </marker>
+                  </defs>
+                </svg>
               </div>
               
               <div className="text-center">
@@ -313,11 +333,30 @@ function AppFeatures() {
               
               {/* Arrow between steps 2 and 3 */}
               <div className="hidden md:flex justify-center items-center">
-                <div className="relative">
-                  <ArrowRight className="w-8 h-8 text-emerald-400 animate-pulse transform -rotate-12 hover:rotate-0 hover:scale-110 transition-all duration-500 cursor-pointer" />
-                  <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-purple-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                  <div className="absolute -top-2 left-1/2 w-1 h-1 bg-pink-400 rounded-full animate-ping" style={{animationDelay: '0.4s'}}></div>
-                </div>
+                <svg width="60" height="40" viewBox="0 0 60 40" className="text-emerald-400">
+                  <path
+                    d="M10 20 Q30 30 50 20"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    fill="none"
+                    markerEnd="url(#arrowhead2)"
+                  />
+                  <defs>
+                    <marker
+                      id="arrowhead2"
+                      markerWidth="10"
+                      markerHeight="7"
+                      refX="9"
+                      refY="3.5"
+                      orient="auto"
+                    >
+                      <polygon
+                        points="0 0, 10 3.5, 0 7"
+                        fill="currentColor"
+                      />
+                    </marker>
+                  </defs>
+                </svg>
               </div>
               
               <div className="text-center">
