@@ -486,54 +486,39 @@ export default function Home() {
             <p className="text-lg text-slate-600">Continuous learning to provide the best math education</p>
           </div>
           
-          <div className="relative">
-            {/* Desktop: Show 2 cards, Mobile: Show 1 card */}
-            <div className="overflow-x-auto scrollbar-hide">
-              <div className="flex gap-6 pb-4 w-max" style={{ scrollBehavior: 'smooth' }}>
-                {certificates.map((cert, index) => (
-                  <div key={index} className="flex-none w-80 md:w-96">
-                    <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow h-full">
-                      <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
-                          <div className="flex-shrink-0">
-                            <img 
-                              src={cert.logo} 
-                              alt={cert.logoAlt}
-                              className="w-16 h-16 object-contain rounded-lg bg-white p-2 shadow-sm"
-                              onError={(e) => {
-                                // Fallback to a generic education icon if logo fails to load
-                                e.currentTarget.style.display = 'none';
-                                const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
-                                if (nextElement) {
-                                  nextElement.style.display = 'flex';
-                                }
-                              }}
-                            />
-                            <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 hidden">
-                              <Award className="w-8 h-8" />
-                            </div>
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <Badge className="bg-blue-600 text-white mb-2 text-xs">{cert.type}</Badge>
-                            <h3 className="font-bold text-lg text-slate-800 mb-1 leading-tight">{cert.title}</h3>
-                            <p className="font-medium text-slate-600 mb-2">{cert.institution}</p>
-                            <p className="text-sm text-slate-500 leading-relaxed">{cert.description}</p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {certificates.slice(0, 3).map((cert, index) => (
+              <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow h-full">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <img 
+                        src={cert.logo} 
+                        alt={cert.logoAlt}
+                        className="w-16 h-16 object-contain rounded-lg bg-white p-2 shadow-sm"
+                        onError={(e) => {
+                          // Fallback to a generic education icon if logo fails to load
+                          e.currentTarget.style.display = 'none';
+                          const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
+                          if (nextElement) {
+                            nextElement.style.display = 'flex';
+                          }
+                        }}
+                      />
+                      <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 hidden">
+                        <Award className="w-8 h-8" />
+                      </div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <Badge className="bg-blue-600 text-white mb-2 text-xs">{cert.type}</Badge>
+                      <h3 className="font-bold text-lg text-slate-800 mb-1 leading-tight">{cert.title}</h3>
+                      <p className="font-medium text-slate-600 mb-2">{cert.institution}</p>
+                      <p className="text-sm text-slate-500 leading-relaxed">{cert.description}</p>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Mobile scroll hint */}
-            <div className="flex justify-center mt-4 md:hidden">
-              <p className="text-xs text-slate-400 flex items-center">
-                <ArrowRight className="w-3 h-3 mr-1" />
-                Scroll to see more credentials
-              </p>
-            </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
           
           <div className="text-center mt-8">
