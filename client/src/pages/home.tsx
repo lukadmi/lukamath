@@ -403,7 +403,7 @@ function HomeContent() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Ace Your Math Tests—
+                Ace Your Math Tests – 
                 <span className="text-gradient"> One Problem at a Time</span>
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed">
@@ -425,16 +425,7 @@ function HomeContent() {
                   Watch Demo
                 </Button>
               </div>
-              <div className="mt-8 flex items-center justify-center lg:justify-start space-x-4 text-blue-100">
-                <div className="flex items-center">
-                  <Star className="w-4 h-4 text-yellow-400 mr-1 fill-current" />
-                  <span className="font-semibold">4.9/5</span>
-                </div>
-                <span>•</span>
-                <span>200+ happy students</span>
-                <span>•</span>
-                <span>Free trial guaranteed</span>
-              </div>
+              
             </div>
             <div className="relative">
               <img 
