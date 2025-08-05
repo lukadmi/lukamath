@@ -31,7 +31,10 @@ import {
   Clock,
   CheckCircle2,
   AlertCircle,
-  User
+  User,
+  FileText,
+  HelpCircle,
+  X
 } from "lucide-react";
 
 // Form schemas
@@ -41,6 +44,13 @@ const homeworkSchema = z.object({
   instructions: z.string().optional(),
   subject: z.string().min(1, "Subject is required"),
   difficulty: z.enum(["easy", "medium", "hard"]),
+  type: z.enum(["assignment", "quiz"]),
+  quizQuestions: z.array(z.object({
+    question: z.string().min(1, "Question is required"),
+    options: z.array(z.string()).min(2, "At least 2 options required"),
+    correctAnswer: z.number().min(0, "Correct answer must be selected"),
+    points: z.number().min(1, "Points must be at least 1"),
+  })).optional(),
   dueDate: z.string().optional(),
   studentId: z.string().min(1, "Student is required"),
 });
@@ -88,10 +98,15 @@ function AdminDashboard() {
       instructions: "",
       subject: "",
       difficulty: "medium" as const,
+      type: "assignment" as const,
+      quizQuestions: [],
       dueDate: "",
       studentId: "",
     },
   });
+
+  const watchType = homeworkForm.watch("type");
+  const watchQuizQuestions = homeworkForm.watch("quizQuestions") || [];
 
   const availabilityForm = useForm({
     resolver: zodResolver(availabilitySchema),
