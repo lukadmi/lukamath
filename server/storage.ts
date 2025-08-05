@@ -163,6 +163,15 @@ export class DatabaseStorage implements IStorage {
     return hwFile;
   }
 
+  async addMultipleHomeworkFiles(files: Omit<HomeworkFile, 'id' | 'createdAt'>[]): Promise<HomeworkFile[]> {
+    if (files.length === 0) return [];
+    const insertedFiles = await db
+      .insert(homeworkFiles)
+      .values(files)
+      .returning();
+    return insertedFiles;
+  }
+
   // Question operations
   async getQuestionsForStudent(studentId: string): Promise<Question[]> {
     return await db
