@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, PlayCircle, BookOpen, Compass, Menu, X, Shield, ArrowRight, ChevronLeft, ChevronRight, Award, Globe, LogIn, User } from "lucide-react";
+import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, PlayCircle, BookOpen, Compass, Menu, X, Shield, ArrowRight, ChevronLeft, ChevronRight, Award, Globe, LogIn, User, Upload } from "lucide-react";
+import { LogoUploadManager } from "@/components/LogoUploadManager";
 import { useAuth } from "@/hooks/useAuth";
 import { LanguageContext, type Language, translations } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
@@ -210,6 +211,7 @@ function LanguageProvider({ children }: { children: React.ReactNode }) {
 function HomeContent() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
+  const [logoUploadOpen, setLogoUploadOpen] = useState(false);
   const { toast } = useToast();
   const { user, isAuthenticated } = useAuth();
   const { language, setLanguage, t } = useContext(LanguageContext)!;
@@ -507,10 +509,21 @@ function HomeContent() {
       <section className="py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-800 mb-4 flex items-center justify-center">
-              <Award className="w-8 h-8 mr-3 text-blue-600" />
-              Credentials and Certifications
-            </h2>
+            <div className="flex items-center justify-center mb-4">
+              <h2 className="text-3xl font-bold text-slate-800 flex items-center">
+                <Award className="w-8 h-8 mr-3 text-blue-600" />
+                Credentials and Certifications
+              </h2>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setLogoUploadOpen(true)}
+                className="ml-4 text-xs opacity-50 hover:opacity-100"
+              >
+                <Upload className="w-3 h-3 mr-1" />
+                Upload Logos
+              </Button>
+            </div>
             <p className="text-lg text-slate-600">Continuous learning to provide the best math education</p>
           </div>
           
@@ -1036,6 +1049,12 @@ function HomeContent() {
           </DialogHeader>
         </DialogContent>
       </Dialog>
+
+      {/* Logo Upload Manager */}
+      <LogoUploadManager 
+        isOpen={logoUploadOpen} 
+        onClose={() => setLogoUploadOpen(false)} 
+      />
     </div>
   );
 }
