@@ -149,18 +149,16 @@ const blogPreviews = [
   }
 ];
 
-// University logos - you can upload these to attached_assets/ and import them here
-// import dukeLogoPath from "@assets/duke-university.png";
-// import illinoisTechLogoPath from "@assets/illinois-tech.png";
-// import ucIrvineLogoPath from "@assets/uc-irvine.png";
-// import googleLogoPath from "@assets/google.png";
-// import coloradoBoulderLogoPath from "@assets/colorado-boulder.png";
+// University logos
+import dukeLogoPath from "@assets/duke.png";
+import illinoisTechLogoPath from "@assets/iit_seal.gif";
+import ucIrvineLogoPath from "@assets/UCI.png";
 
 const certificates = [
   {
     title: "Math for Data Science",
     institution: "Duke University",
-    logo: null, // Replace with dukeLogoPath when you upload the image
+    logo: dukeLogoPath,
     logoAlt: "Duke University",
     type: "Certificate",
     description: "Statistical foundations and mathematical modeling"
@@ -168,7 +166,7 @@ const certificates = [
   {
     title: "Master of Data Science",
     institution: "Illinois Institute of Technology",
-    logo: null, // Replace with illinoisTechLogoPath when you upload the image
+    logo: illinoisTechLogoPath,
     logoAlt: "Illinois Institute of Technology",
     type: "Degree",
     description: "Advanced analytics and machine learning"
@@ -176,7 +174,7 @@ const certificates = [
   {
     title: "Virtual Teaching Specialization",
     institution: "University of California, Irvine",
-    logo: null, // Replace with ucIrvineLogoPath when you upload the image
+    logo: ucIrvineLogoPath,
     logoAlt: "UC Irvine",
     type: "Specialization",
     description: "Online pedagogy and instructional design"
@@ -184,7 +182,7 @@ const certificates = [
   {
     title: "Data Analytics Certificate",
     institution: "Google",
-    logo: null, // Replace with googleLogoPath when you upload the image
+    logo: null, // No Google logo uploaded yet
     logoAlt: "Google",
     type: "Professional Certificate",
     description: "Business intelligence and data visualization"
@@ -192,7 +190,7 @@ const certificates = [
   {
     title: "Data Science Math Skills",
     institution: "University of Colorado Boulder",
-    logo: null, // Replace with coloradoBoulderLogoPath when you upload the image
+    logo: null, // No Colorado Boulder logo uploaded yet
     logoAlt: "University of Colorado Boulder",
     type: "Certificate",
     description: "Mathematical foundations for data science"
