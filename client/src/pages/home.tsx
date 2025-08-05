@@ -35,8 +35,7 @@ const mathLevels = [
     title: "High School Math", 
     description: "Grades 9-12",
     price: 30,
-    color: "text-emerald-600",
-    popular: true
+    color: "text-emerald-600"
   },
   {
     id: "university",
@@ -52,11 +51,50 @@ const mathLevels = [
     title: "SAT/ACT Prep",
     description: "Test Preparation",
     price: 45, 
-    color: "text-orange-600"
+    color: "text-orange-600",
+    popular: true
   }
 ];
 
-const services = mathLevels; // Keep backward compatibility
+const services = [
+  {
+    id: "middle",
+    icon: "√",
+    title: "Middle School Math",
+    description: "Basic algebra, fractions, and foundational problem-solving",
+    price: 20,
+    color: "text-blue-600",
+    tagline: "Start strong with the basics"
+  },
+  {
+    id: "high",
+    icon: "△",
+    title: "High School Math", 
+    description: "Algebra, geometry, trigonometry, and pre-calculus",
+    price: 30,
+    color: "text-emerald-600",
+    tagline: "Master advanced concepts"
+  },
+  {
+    id: "university",
+    icon: "∞",
+    title: "University Math",
+    description: "Statistics and linear algebra for college success", 
+    price: 40,
+    color: "text-purple-600",
+    tagline: "Excel in higher mathematics"
+  },
+  {
+    id: "satact",
+    icon: "🏆",
+    title: "SAT/ACT Math Bootcamp",
+    description: "Test strategies and practice for your best score",
+    price: 45, 
+    color: "text-blue-600",
+    tagline: "Most Popular",
+    popular: true
+  }
+];
 
 const testimonials = [
   {
