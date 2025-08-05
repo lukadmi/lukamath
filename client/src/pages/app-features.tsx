@@ -299,7 +299,10 @@ function AppFeatures() {
               
               {/* Arrow between steps 1 and 2 */}
               <div className="hidden md:flex justify-center items-center">
-                <ArrowRight className="w-8 h-8 text-blue-400" />
+                <div className="relative">
+                  <ArrowRight className="w-8 h-8 text-blue-400 animate-bounce transform rotate-12 hover:rotate-0 hover:scale-110 transition-all duration-300 cursor-pointer" />
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+                </div>
               </div>
               
               <div className="text-center">
@@ -310,7 +313,11 @@ function AppFeatures() {
               
               {/* Arrow between steps 2 and 3 */}
               <div className="hidden md:flex justify-center items-center">
-                <ArrowRight className="w-8 h-8 text-blue-400" />
+                <div className="relative">
+                  <ArrowRight className="w-8 h-8 text-emerald-400 animate-pulse transform -rotate-12 hover:rotate-0 hover:scale-110 transition-all duration-500 cursor-pointer" />
+                  <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-purple-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                  <div className="absolute -top-2 left-1/2 w-1 h-1 bg-pink-400 rounded-full animate-ping" style={{animationDelay: '0.4s'}}></div>
+                </div>
               </div>
               
               <div className="text-center">
