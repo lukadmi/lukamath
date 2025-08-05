@@ -153,7 +153,7 @@ const certificates = [
   {
     title: "Math for Data Science",
     institution: "Duke University",
-    logo: "https://via.placeholder.com/64x64/012169/ffffff?text=DUKE",
+    logo: "/logos/duke-university.png",
     logoAlt: "Duke University",
     type: "Certificate",
     description: "Statistical foundations and mathematical modeling"
@@ -161,7 +161,7 @@ const certificates = [
   {
     title: "Master of Data Science",
     institution: "Illinois Institute of Technology",
-    logo: "https://via.placeholder.com/64x64/CC0000/ffffff?text=IIT",
+    logo: "/logos/illinois-tech.png",
     logoAlt: "Illinois Institute of Technology",
     type: "Degree",
     description: "Advanced analytics and machine learning"
@@ -169,7 +169,7 @@ const certificates = [
   {
     title: "Virtual Teaching Specialization",
     institution: "University of California, Irvine",
-    logo: "https://via.placeholder.com/64x64/FFD200/003DA5?text=UCI",
+    logo: "/logos/uc-irvine.png",
     logoAlt: "UC Irvine",
     type: "Specialization",
     description: "Online pedagogy and instructional design"
@@ -177,7 +177,7 @@ const certificates = [
   {
     title: "Data Analytics Certificate",
     institution: "Google",
-    logo: "https://via.placeholder.com/64x64/ffffff/4285f4?text=G",
+    logo: "/logos/google.png",
     logoAlt: "Google",
     type: "Professional Certificate",
     description: "Business intelligence and data visualization"
@@ -185,7 +185,7 @@ const certificates = [
   {
     title: "Data Science Math Skills",
     institution: "University of Colorado Boulder",
-    logo: "https://via.placeholder.com/64x64/CFB87C/565A5C?text=CU",
+    logo: "/logos/colorado-boulder.png",
     logoAlt: "University of Colorado Boulder",
     type: "Certificate",
     description: "Mathematical foundations for data science"
@@ -523,7 +523,7 @@ function HomeContent() {
                       <img 
                         src={cert.logo} 
                         alt={cert.logoAlt}
-                        className="w-16 h-16 object-contain rounded-lg bg-white p-2 shadow-sm"
+                        className="w-16 h-16 object-contain rounded-lg bg-white p-2 shadow-sm border border-gray-200"
                         onError={(e) => {
                           // Fallback to a generic education icon if logo fails to load
                           e.currentTarget.style.display = 'none';
@@ -533,7 +533,7 @@ function HomeContent() {
                           }
                         }}
                       />
-                      <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 hidden">
+                      <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 hidden border border-gray-200">
                         <Award className="w-8 h-8" />
                       </div>
                     </div>
