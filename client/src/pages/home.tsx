@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, PlayCircle, BookOpen, Compass, Menu, X, Shield, ArrowRight } from "lucide-react";
+import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, PlayCircle, BookOpen, Compass, Menu, X, Shield, ArrowRight, ChevronLeft, ChevronRight, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -142,6 +142,44 @@ const blogPreviews = [
     excerpt: "Break down complex geometry proofs into manageable steps with logical flow patterns.",
     readTime: "10 min read",
     category: "Geometry"
+  }
+];
+
+const certificates = [
+  {
+    title: "Math for Data Science",
+    institution: "Duke University",
+    logo: "https://logos-world.net/wp-content/uploads/2022/01/Duke-University-Logo.png",
+    type: "Specialization",
+    description: "Statistical foundations and mathematical modeling"
+  },
+  {
+    title: "Data Science Master's",
+    institution: "Illinois Institute of Technology",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Illinois_Institute_of_Technology_seal.svg/200px-Illinois_Institute_of_Technology_seal.svg.png",
+    type: "Master's Degree",
+    description: "Advanced analytics and machine learning"
+  },
+  {
+    title: "Virtual Teaching Specialization",
+    institution: "University of California, Irvine",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/UC_Irvine_seal.svg/200px-UC_Irvine_seal.svg.png",
+    type: "Certificate",
+    description: "Online pedagogy and instructional design"
+  },
+  {
+    title: "Data Analytics Certificate",
+    institution: "Google",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/200px-Google_2015_logo.svg.png",
+    type: "Professional Certificate",
+    description: "Business intelligence and data visualization"
+  },
+  {
+    title: "Data Science Math Skills",
+    institution: "University of Colorado Boulder",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/University_of_Colorado_Boulder_seal.svg/200px-University_of_Colorado_Boulder_seal.svg.png",
+    type: "Certificate",
+    description: "Mathematical foundations for data science"
   }
 ];
 
@@ -428,6 +466,75 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Certificates Section */}
+      <section className="py-16 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-800 mb-4 flex items-center justify-center">
+              <Award className="w-8 h-8 mr-3 text-blue-600" />
+              Credentials & Certifications
+            </h2>
+            <p className="text-lg text-slate-600">Continuous learning to provide the best math education</p>
+          </div>
+          
+          <div className="relative">
+            {/* Desktop: Show 2 cards, Mobile: Show 1 card */}
+            <div className="overflow-x-auto scrollbar-hide">
+              <div className="flex gap-6 pb-4 w-max" style={{ scrollBehavior: 'smooth' }}>
+                {certificates.map((cert, index) => (
+                  <div key={index} className="flex-none w-80 md:w-96">
+                    <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow h-full">
+                      <CardContent className="p-6">
+                        <div className="flex items-start gap-4">
+                          <div className="flex-shrink-0">
+                            <img 
+                              src={cert.logo} 
+                              alt={`${cert.institution} logo`}
+                              className="w-16 h-16 object-contain rounded-lg bg-white p-2 shadow-sm"
+                              onError={(e) => {
+                                // Fallback to a generic education icon if logo fails to load
+                                e.currentTarget.style.display = 'none';
+                                const nextElement = e.currentTarget.nextElementSibling as HTMLElement;
+                                if (nextElement) {
+                                  nextElement.style.display = 'flex';
+                                }
+                              }}
+                            />
+                            <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 hidden">
+                              <Award className="w-8 h-8" />
+                            </div>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <Badge className="bg-blue-600 text-white mb-2 text-xs">{cert.type}</Badge>
+                            <h3 className="font-bold text-lg text-slate-800 mb-1 leading-tight">{cert.title}</h3>
+                            <p className="font-medium text-slate-600 mb-2">{cert.institution}</p>
+                            <p className="text-sm text-slate-500 leading-relaxed">{cert.description}</p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Mobile scroll hint */}
+            <div className="flex justify-center mt-4 md:hidden">
+              <p className="text-xs text-slate-400 flex items-center">
+                <ArrowRight className="w-3 h-3 mr-1" />
+                Scroll to see more credentials
+              </p>
+            </div>
+          </div>
+          
+          <div className="text-center mt-8">
+            <p className="text-sm text-slate-500 italic">
+              Committed to excellence in mathematics education through continuous professional development
+            </p>
           </div>
         </div>
       </section>
