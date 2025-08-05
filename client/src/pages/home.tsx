@@ -394,7 +394,6 @@ function HomeContent() {
           )}
         </div>
       </nav>
-
       {/* Hero Section */}
       <section className="gradient-bg text-white py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-emerald-600/5"></div>
@@ -429,7 +428,7 @@ function HomeContent() {
             </div>
             <div className="relative">
               <img 
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
+                src="https://unsplash.com/photos/silver-and-white-round-analog-watch-beside-white-printer-paper-evixqxe715k" 
                 alt="Professional math tutor with whiteboard" 
                 className="rounded-2xl shadow-2xl w-full"
               />
@@ -443,7 +442,6 @@ function HomeContent() {
           </div>
         </div>
       </section>
-
       {/* Services Section */}
       <section id="services" className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -476,7 +474,6 @@ function HomeContent() {
           </div>
         </div>
       </section>
-
       {/* About Section */}
       <section id="about" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -518,7 +515,6 @@ function HomeContent() {
           </div>
         </div>
       </section>
-
       {/* Certificates Section */}
       <section className="py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -566,7 +562,6 @@ function HomeContent() {
           </div>
         </div>
       </section>
-
       {/* Testimonials Section */}
       <section id="testimonials" className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -622,7 +617,6 @@ function HomeContent() {
           </div>
         </div>
       </section>
-
       {/* Pricing Section */}
       <section id="pricing" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -753,7 +747,6 @@ function HomeContent() {
           </div>
         </div>
       </section>
-
       {/* Resources Section */}
       <section id="resources" className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -780,7 +773,6 @@ function HomeContent() {
           </div>
         </div>
       </section>
-
       {/* Blog Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -824,7 +816,6 @@ function HomeContent() {
           </div>
         </div>
       </section>
-
       {/* Contact Section */}
       <section id="contact" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1001,7 +992,6 @@ function HomeContent() {
           </div>
         </div>
       </section>
-
       {/* Footer */}
       <footer className="bg-slate-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1042,7 +1032,6 @@ function HomeContent() {
           </div>
         </div>
       </footer>
-
       {/* Success Modal */}
       <Dialog open={successModalOpen} onOpenChange={setSuccessModalOpen}>
         <DialogContent className="max-w-md">
