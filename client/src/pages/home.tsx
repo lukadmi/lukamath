@@ -23,7 +23,7 @@ import anoushka_puri_f1YfrZ1o2r8_unsplash from "@assets/anoushka-puri-f1YfrZ1o2r
 const mathLevels = [
   {
     id: "middle-school",
-    icon: "📚",
+    icon: "√",
     title: "Middle School Math",
     description: "Grades 6-8",
     price: 20,
@@ -31,7 +31,7 @@ const mathLevels = [
   },
   {
     id: "high-school",
-    icon: "🎓",
+    icon: "△",
     title: "High School Math", 
     description: "Grades 9-12",
     price: 30,
@@ -39,7 +39,7 @@ const mathLevels = [
   },
   {
     id: "university",
-    icon: "🏛️",
+    icon: "∞",
     title: "University Math",
     description: "College Level", 
     price: 40,
@@ -47,7 +47,7 @@ const mathLevels = [
   },
   {
     id: "sat-act",
-    icon: "📝",
+    icon: "🏆",
     title: "SAT/ACT Prep",
     description: "Test Preparation",
     price: 45, 
