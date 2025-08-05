@@ -27,7 +27,7 @@ const services = [
     description: "Basic algebra, fractions, and foundational problem-solving",
     price: "$40/hr",
     color: "text-blue-600",
-    tagline: "Start strong with the basics!"
+    tagline: "Start strong with the basics"
   },
   {
     icon: "△",
@@ -35,7 +35,7 @@ const services = [
     description: "Algebra, geometry, trigonometry, and pre-calculus",
     price: "$50/hr",
     color: "text-emerald-600",
-    tagline: "Master advanced concepts!"
+    tagline: "Master advanced concepts"
   },
   {
     icon: "∞",
@@ -43,7 +43,7 @@ const services = [
     description: "Statistics and linear algebra for college success", 
     price: "$60/hr",
     color: "text-purple-600",
-    tagline: "Excel in higher mathematics!"
+    tagline: "Excel in higher mathematics"
   },
   {
     icon: "🏆",
@@ -51,7 +51,7 @@ const services = [
     description: "Test strategies and practice for your best score",
     price: "$65/hr", 
     color: "text-blue-600",
-    tagline: "Most Popular!",
+    tagline: "Most Popular",
     popular: true
   }
 ];
