@@ -23,33 +23,33 @@ import anoushka_puri_f1YfrZ1o2r8_unsplash from "@assets/anoushka-puri-f1YfrZ1o2r
 const services = [
   {
     icon: "√",
-    title: "Algebra I & II",
-    description: "Master equations, functions, and problem-solving strategies",
-    price: "$45/hr",
+    title: "Middle School Math",
+    description: "Basic algebra, fractions, and foundational problem-solving",
+    price: "$40/hr",
     color: "text-blue-600",
-    tagline: "Build your foundation strong!"
+    tagline: "Start strong with the basics!"
   },
   {
     icon: "△",
-    title: "Geometry & Trigonometry", 
-    description: "Visualize concepts and ace those proofs",
+    title: "High School Math", 
+    description: "Algebra, geometry, trigonometry, and pre-calculus",
     price: "$50/hr",
     color: "text-emerald-600",
-    tagline: "Get the right angle on math!"
+    tagline: "Master advanced concepts!"
   },
   {
     icon: "∞",
-    title: "Pre-Calculus & Calculus",
-    description: "Tackle limits, derivatives, and integrals with confidence", 
-    price: "$55/hr",
-    color: "text-yellow-600",
-    tagline: "Reach your limit... then exceed it!"
+    title: "University Math",
+    description: "Statistics and linear algebra for college success", 
+    price: "$60/hr",
+    color: "text-purple-600",
+    tagline: "Excel in higher mathematics!"
   },
   {
     icon: "🏆",
     title: "SAT/ACT Math Bootcamp",
     description: "Test strategies and practice for your best score",
-    price: "$60/hr", 
+    price: "$65/hr", 
     color: "text-blue-600",
     tagline: "Most Popular!",
     popular: true
@@ -442,7 +442,7 @@ function HomeContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-800 mb-4">Math Made Simple</h2>
-            <p className="text-xl text-slate-600">From basic algebra to advanced calculus, I've got you covered</p>
+            <p className="text-xl text-slate-600">From middle school foundations to university-level concepts</p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
