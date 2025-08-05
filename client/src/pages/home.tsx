@@ -20,41 +20,47 @@ import { insertContactSchema, type InsertContact } from "@shared/schema";
 
 import anoushka_puri_f1YfrZ1o2r8_unsplash from "@assets/anoushka-puri-f1YfrZ1o2r8-unsplash.jpg";
 
-const services = [
+const mathLevels = [
   {
+    id: "middle",
     icon: "√",
     title: "Middle School Math",
     description: "Basic algebra, fractions, and foundational problem-solving",
-    price: "$40/hr",
+    price: 20,
     color: "text-blue-600",
     tagline: "Start strong with the basics"
   },
   {
+    id: "high",
     icon: "△",
     title: "High School Math", 
     description: "Algebra, geometry, trigonometry, and pre-calculus",
-    price: "$50/hr",
+    price: 30,
     color: "text-emerald-600",
     tagline: "Master advanced concepts"
   },
   {
+    id: "university",
     icon: "∞",
     title: "University Math",
     description: "Statistics and linear algebra for college success", 
-    price: "$60/hr",
+    price: 40,
     color: "text-purple-600",
     tagline: "Excel in higher mathematics"
   },
   {
+    id: "satact",
     icon: "🏆",
     title: "SAT/ACT Math Bootcamp",
     description: "Test strategies and practice for your best score",
-    price: "$65/hr", 
+    price: 45, 
     color: "text-blue-600",
     tagline: "Most Popular",
     popular: true
   }
 ];
+
+const services = mathLevels; // Keep backward compatibility
 
 const testimonials = [
   {
@@ -209,6 +215,231 @@ function LanguageProvider({ children }: { children: React.ReactNode }) {
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
+  );
+}
+
+// Pricing Section Component
+function PricingSection() {
+  const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
+  
+  const selectedMathLevel = mathLevels.find(level => level.id === selectedLevel);
+  
+  const getPricingPackages = (hourlyRate: number) => {
+    const singleSession = hourlyRate;
+    const fourSessionPrice = Math.round(hourlyRate * 4 * 0.85); // 15% discount
+    const eightSessionPrice = Math.round(hourlyRate * 8 * 0.8); // 20% discount
+    
+    return {
+      single: {
+        price: singleSession,
+        sessions: 1,
+        savings: 0
+      },
+      package: {
+        price: fourSessionPrice,
+        sessions: 4,
+        perHour: Math.round(fourSessionPrice / 4),
+        savings: (hourlyRate * 4) - fourSessionPrice
+      },
+      intensive: {
+        price: eightSessionPrice,
+        sessions: 8,
+        perHour: Math.round(eightSessionPrice / 8),
+        savings: (hourlyRate * 8) - eightSessionPrice
+      }
+    };
+  };
+
+  return (
+    <section id="pricing" className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-slate-800 mb-4">Simple, Transparent Pricing</h2>
+          <p className="text-xl text-slate-600">First, choose your math level to see relevant pricing</p>
+        </div>
+        
+        {/* Level Selection */}
+        <div className="mb-12">
+          <h3 className="text-2xl font-bold text-center text-slate-800 mb-8">Select Your Math Level</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {mathLevels.map((level) => (
+              <Card 
+                key={level.id}
+                className={`cursor-pointer transition-all hover:shadow-lg ${
+                  selectedLevel === level.id 
+                    ? 'ring-2 ring-blue-600 bg-blue-50' 
+                    : 'hover:bg-slate-50'
+                }`}
+                onClick={() => setSelectedLevel(level.id)}
+              >
+                <CardContent className="p-6 text-center">
+                  <div className="text-4xl mb-3">{level.icon}</div>
+                  <h4 className="text-lg font-bold mb-2">{level.title}</h4>
+                  <p className="text-sm text-slate-600 mb-3">{level.description}</p>
+                  <div className={`text-xl font-bold ${level.color}`}>${level.price}/hr</div>
+                  {level.popular && (
+                    <Badge className="mt-2 bg-blue-600 text-white">
+                      Most Popular
+                    </Badge>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Pricing Packages - Only show when level is selected */}
+        {selectedLevel && selectedMathLevel && (
+          <div className="animate-in slide-in-from-bottom-4 duration-500">
+            <div className="text-center mb-12">
+              <h3 className="text-2xl font-bold text-slate-800 mb-4">
+                {selectedMathLevel.title} Packages
+              </h3>
+              <p className="text-slate-600">Choose the package that fits your learning goals</p>
+            </div>
+            
+            {(() => {
+              const packages = getPricingPackages(selectedMathLevel.price);
+              
+              return (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {/* Single Session */}
+                  <Card className="bg-slate-50 border-slate-200">
+                    <CardHeader>
+                      <CardTitle className="text-2xl">Single Session</CardTitle>
+                      <div className="text-4xl font-bold text-blue-600">
+                        ${packages.single.price}<span className="text-lg text-slate-600">/hour</span>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-3 mb-8">
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-600 mr-3" />
+                          One-on-one tutoring
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-600 mr-3" />
+                          Personalized lesson plan
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-600 mr-3" />
+                          Practice materials
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-600 mr-3" />
+                          Progress tracking
+                        </li>
+                      </ul>
+                      <Button className="w-full bg-slate-600 hover:bg-slate-700">
+                        Book Session
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Package Deal (Most Popular) */}
+                  <Card className="bg-blue-600 text-white border-2 border-blue-600 relative">
+                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                      <Badge className="bg-yellow-400 text-slate-800">
+                        Most Popular
+                      </Badge>
+                    </div>
+                    <CardHeader>
+                      <CardTitle className="text-2xl">4-Session Package</CardTitle>
+                      <div className="text-4xl font-bold">
+                        ${packages.package.price}<span className="text-lg opacity-80"> (${packages.package.perHour}/hr)</span>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-3 mb-8">
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-400 mr-3" />
+                          Four 1-hour sessions
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-400 mr-3" />
+                          Save ${packages.package.savings} total
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-400 mr-3" />
+                          Structured learning path
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-400 mr-3" />
+                          Weekly progress reviews
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-400 mr-3" />
+                          Priority scheduling
+                        </li>
+                      </ul>
+                      <Button className="w-full bg-yellow-400 text-slate-800 hover:bg-yellow-300 font-semibold">
+                        Start Package
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Intensive Program */}
+                  <Card className="bg-slate-50 border-slate-200">
+                    <CardHeader>
+                      <CardTitle className="text-2xl">8-Session Intensive</CardTitle>
+                      <div className="text-4xl font-bold text-emerald-600">
+                        ${packages.intensive.price}<span className="text-lg text-slate-600"> (${packages.intensive.perHour}/hr)</span>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-3 mb-8">
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-600 mr-3" />
+                          Eight 1-hour sessions
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-600 mr-3" />
+                          Save ${packages.intensive.savings} total
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-600 mr-3" />
+                          Comprehensive curriculum
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-600 mr-3" />
+                          Progress assessments
+                        </li>
+                        <li className="flex items-center">
+                          <Check className="w-5 h-5 text-emerald-600 mr-3" />
+                          Flexible scheduling
+                        </li>
+                      </ul>
+                      <Button className="w-full bg-emerald-600 hover:bg-emerald-700">
+                        Start Intensive
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              );
+            })()}
+
+            <div className="text-center mt-12">
+              <p className="text-slate-600 flex items-center justify-center">
+                <Shield className="w-5 h-5 text-emerald-600 mr-2" />
+                100% satisfaction guarantee • 15-minute free trial session
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Call to action when no level selected */}
+        {!selectedLevel && (
+          <div className="text-center mt-12 p-8 bg-slate-50 rounded-2xl">
+            <h3 className="text-xl font-bold text-slate-800 mb-4">
+              Select a math level above to see pricing packages
+            </h3>
+            <p className="text-slate-600">
+              Each level has different hourly rates and customized packages to fit your learning needs.
+            </p>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
 
@@ -461,7 +692,7 @@ function HomeContent() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-slate-600 mb-4">{service.description}</p>
-                  <div className={`text-2xl font-bold mb-2 ${service.color}`}>{service.price}</div>
+                  <div className={`text-2xl font-bold mb-2 ${service.color}`}>${service.price}/hr</div>
                   <p className="text-sm text-slate-500">{service.tagline}</p>
                   {service.popular && (
                     <Badge className="mt-2 bg-blue-600 text-white">
@@ -613,135 +844,7 @@ function HomeContent() {
         </div>
       </section>
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-800 mb-4">Simple, Transparent Pricing</h2>
-            <p className="text-xl text-slate-600">Choose the package that fits your learning goals</p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Single Session */}
-            <Card className="bg-slate-50 border-slate-200">
-              <CardHeader>
-                <CardTitle className="text-2xl">Single Session</CardTitle>
-                <div className="text-4xl font-bold text-blue-600">
-                  $60<span className="text-lg text-slate-600">/hour</span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                    One-on-one tutoring
-                  </li>
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                    Personalized lesson plan
-                  </li>
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                    Practice materials
-                  </li>
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                    Progress tracking
-                  </li>
-                </ul>
-                <Button className="w-full bg-slate-600 hover:bg-slate-700">
-                  Book Session
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Package Deal (Most Popular) */}
-            <Card className="bg-blue-600 text-white border-2 border-blue-600 relative">
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-yellow-400 text-slate-800">
-                  Most Popular
-                </Badge>
-              </div>
-              <CardHeader>
-                <CardTitle className="text-2xl">4-Session Package</CardTitle>
-                <div className="text-4xl font-bold">
-                  $200<span className="text-lg opacity-80"> ($50/hr)</span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                    Four 1-hour sessions
-                  </li>
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                    Save $40 total
-                  </li>
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                    Structured learning path
-                  </li>
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                    Weekly progress reviews
-                  </li>
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                    Priority scheduling
-                  </li>
-                </ul>
-                <Button className="w-full bg-yellow-400 text-slate-800 hover:bg-yellow-300 font-semibold">
-                  Start Package
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Intensive Program */}
-            <Card className="bg-slate-50 border-slate-200">
-              <CardHeader>
-                <CardTitle className="text-2xl">Test Prep Intensive</CardTitle>
-                <div className="text-4xl font-bold text-emerald-600">
-                  $400<span className="text-lg text-slate-600"> (8 sessions)</span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                    Eight 1-hour sessions
-                  </li>
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                    SAT/ACT focused
-                  </li>
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                    Practice tests included
-                  </li>
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                    Score improvement guarantee
-                  </li>
-                  <li className="flex items-center">
-                    <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                    Flexible scheduling
-                  </li>
-                </ul>
-                <Button className="w-full bg-emerald-600 hover:bg-emerald-700">
-                  Start Intensive
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="text-center mt-12">
-            <p className="text-slate-600 flex items-center justify-center">
-              <Shield className="w-5 h-5 text-emerald-600 mr-2" />
-              100% satisfaction guarantee • First session free if not completely satisfied
-            </p>
-          </div>
-        </div>
-      </section>
+      <PricingSection />
       {/* Resources Section */}
       <section id="resources" className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
