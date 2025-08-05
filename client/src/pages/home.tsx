@@ -404,7 +404,7 @@ function HomeContent() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Ace Your Math Tests – 
+                Ace Your Math Tests — 
                 <span className="text-gradient"> One Problem at a Time</span>
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed">
@@ -442,7 +442,7 @@ function HomeContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-800 mb-4">Math Made Simple</h2>
-            <p className="text-xl text-slate-600">From basic algebra to advanced calculus, I've got you covered!</p>
+            <p className="text-xl text-slate-600">From basic algebra to advanced calculus, I've got you covered</p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -460,7 +460,7 @@ function HomeContent() {
                   <p className="text-sm text-slate-500">{service.tagline}</p>
                   {service.popular && (
                     <Badge className="mt-2 bg-blue-600 text-white">
-                      Most Popular!
+                      Most Popular
                     </Badge>
                   )}
                 </CardContent>
