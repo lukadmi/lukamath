@@ -315,7 +315,7 @@ function AppFeatures() {
               
               <div className="text-center">
                 <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">3</div>
-                <h3 className="text-xl font-bold text-slate-800 mb-4">Schedule & Progress</h3>
+                <h3 className="text-xl font-bold text-slate-800 mb-4">Schedule and Progress</h3>
                 <p className="text-slate-600">Check Luka's availability for sessions, track your grades, and monitor your improvement over time.</p>
               </div>
             </div>
