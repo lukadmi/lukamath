@@ -42,6 +42,7 @@ export interface IStorage {
   // Homework files operations
   getHomeworkFiles(homeworkId: string): Promise<HomeworkFile[]>;
   addHomeworkFile(file: Omit<HomeworkFile, 'id' | 'createdAt'>): Promise<HomeworkFile>;
+  addMultipleHomeworkFiles(files: Omit<HomeworkFile, 'id' | 'createdAt'>[]): Promise<HomeworkFile[]>;
   
   // Question operations
   getQuestionsForStudent(studentId: string): Promise<Question[]>;
@@ -53,6 +54,7 @@ export interface IStorage {
   
   // Availability operations
   getTutorAvailability(date?: string): Promise<TutorAvailability[]>;
+  addTutorAvailability(availability: Omit<TutorAvailability, 'id' | 'createdAt'>): Promise<TutorAvailability>;
   
   // Progress operations
   getStudentProgress(studentId: string): Promise<any[]>;
@@ -245,6 +247,14 @@ export class DatabaseStorage implements IStorage {
     return await query.where(
       eq(tutorAvailability.isAvailable, true)
     ).orderBy(tutorAvailability.date, tutorAvailability.startTime);
+  }
+
+  async addTutorAvailability(availability: Omit<TutorAvailability, 'id' | 'createdAt'>): Promise<TutorAvailability> {
+    const [slot] = await db
+      .insert(tutorAvailability)
+      .values(availability)
+      .returning();
+    return slot;
   }
 
   // Progress operations

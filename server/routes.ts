@@ -82,18 +82,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // File upload endpoint for homework
-  app.post("/api/homework/files", isAuthenticated, async (req, res) => {
+  app.post("/api/homework/files", isAuthenticated, async (req: any, res) => {
     try {
-      // In a real implementation, you would use multer or similar to handle file uploads
-      // For now, we'll just acknowledge the upload request
       const { homeworkId, purpose } = req.body;
+      const uploaderId = req.user.claims.sub;
       
-      // This would typically save files to cloud storage and create database records
-      // For demo purposes, we'll just return success
+      // In a real implementation, you would handle actual file uploads here
+      // For now, we'll simulate file storage and create database records
+      const mockFiles = [
+        {
+          homeworkId,
+          fileName: "sample_worksheet.pdf",
+          fileUrl: "/files/sample_worksheet.pdf",
+          fileType: "pdf",
+          uploadedBy: uploaderId,
+          purpose: purpose || "assignment"
+        }
+      ];
+      
+      const savedFiles = await storage.addMultipleHomeworkFiles(mockFiles);
+      
       res.json({ 
         message: "Files uploaded successfully",
-        homeworkId,
-        purpose
+        files: savedFiles
       });
     } catch (error) {
       console.error("Error uploading files:", error);
@@ -164,7 +175,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/homework", isAuthenticated, async (req: any, res) => {
     try {
-      const validatedData = insertHomeworkSchema.parse(req.body);
+      const tutorId = req.user.claims.sub;
+      const validatedData = insertHomeworkSchema.parse({
+        ...req.body,
+        tutorId, // Ensure tutorId is set from authenticated user
+      });
       const homework = await storage.createHomework(validatedData);
       res.status(201).json(homework);
     } catch (error) {

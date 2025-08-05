@@ -31,7 +31,7 @@ export const users = pgTable("users", {
   firstName: varchar("first_name"),
   lastName: varchar("last_name"),
   profileImageUrl: varchar("profile_image_url"),
-  role: varchar("role").notNull().default("student"), // 'student' or 'tutor'
+  role: varchar("role").notNull().default("student"), // 'student', 'tutor', 'admin'
   language: varchar("language").notNull().default("en"), // 'en' or 'hr'
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
@@ -178,6 +178,7 @@ export const insertContactSchema = createInsertSchema(contacts).pick({
 
 export const insertHomeworkSchema = createInsertSchema(homework).pick({
   studentId: true,
+  tutorId: true,
   title: true,
   description: true,
   instructions: true,
