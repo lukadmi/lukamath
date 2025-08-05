@@ -58,33 +58,6 @@ function AdminDashboard() {
   const [homeworkDialogOpen, setHomeworkDialogOpen] = useState(false);
   const [availabilityDialogOpen, setAvailabilityDialogOpen] = useState(false);
 
-  // Check if user is admin
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated || (user as any)?.role !== 'admin') {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
-        <div className="text-center">
-          <Shield className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-slate-800 mb-4">Access Denied</h2>
-          <p className="text-slate-600 mb-6">You don't have permission to access the admin dashboard.</p>
-          <Link href="/">
-            <Button className="bg-blue-600 text-white hover:bg-blue-700">
-              <Home className="w-4 h-4 mr-2" />
-              Go Home
-            </Button>
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
   // Data queries
   const { data: students = [], isLoading: studentsLoading } = useQuery({
     queryKey: ["/api/admin/students"],
@@ -174,6 +147,33 @@ function AdminDashboard() {
       new Date(c.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
     ).length,
   };
+
+  // Check if user is admin - after all hooks are defined
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated || (user as any)?.role !== 'admin') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <Shield className="w-16 h-16 text-slate-400 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">Access Denied</h2>
+          <p className="text-slate-600 mb-6">You don't have permission to access the admin dashboard.</p>
+          <Link href="/">
+            <Button className="bg-blue-600 text-white hover:bg-blue-700">
+              <Home className="w-4 h-4 mr-2" />
+              Go Home
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
