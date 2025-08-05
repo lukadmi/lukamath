@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, PlayCircle, BookOpen, Compass, Menu, X, Shield, ArrowRight, ChevronLeft, ChevronRight, Award, Globe, LogIn, User } from "lucide-react";
+import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, PlayCircle, BookOpen, Compass, Menu, X, Shield, ArrowRight, ChevronLeft, ChevronRight, Award, Globe, LogIn, User, Smartphone } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { LanguageContext, type Language, translations } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
@@ -96,32 +96,7 @@ const services = [
   }
 ];
 
-const testimonials = [
-  {
-    name: "Sarah M.",
-    role: "Parent, Junior Student",
-    avatar: "S",
-    color: "bg-blue-600",
-    rating: 5,
-    text: "After 8 sessions with Luka, my daughter went from a C to an A in Algebra II! His patience and clear explanations made all the difference."
-  },
-  {
-    name: "Marcus T.",
-    role: "High School Senior", 
-    avatar: "M",
-    color: "bg-emerald-600",
-    rating: 5,
-    text: "I raised my SAT math score by 120 points in just 2 months! Luka's test strategies and practice problems were exactly what I needed."
-  },
-  {
-    name: "Amy L.",
-    role: "Sophomore Student",
-    avatar: "A", 
-    color: "bg-yellow-600",
-    rating: 5,
-    text: "Geometry used to give me nightmares. Now I actually enjoy solving proofs! Luka has a gift for making complex topics simple."
-  }
-];
+
 
 const resources = [
   {
@@ -676,6 +651,15 @@ function HomeContent() {
                   <Play className="w-5 h-5 mr-2" />
                   Book Your Free 15-Min Trial
                 </Button>
+                <Link href="/app-features">
+                  <Button 
+                    variant="outline"
+                    className="border-white text-white hover:bg-white hover:text-slate-800 text-lg px-8 py-4 h-auto shadow-lg font-semibold"
+                  >
+                    <Smartphone className="w-5 h-5 mr-2" />
+                    Explore Our App
+                  </Button>
+                </Link>
               </div>
               
             </div>
@@ -810,61 +794,7 @@ function HomeContent() {
           </div>
         </div>
       </section>
-      {/* Testimonials Section */}
-      <section id="testimonials" className="py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-800 mb-4">Success Stories That Add Up</h2>
-            <p className="text-xl text-slate-600">Real students, real results, real confidence boost!</p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="bg-white shadow-lg">
-                <CardContent className="p-8">
-                  <div className="flex text-yellow-500 mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-current" />
-                    ))}
-                  </div>
-                  <p className="text-slate-700 mb-6 italic">"{testimonial.text}"</p>
-                  <div className="flex items-center">
-                    <div className={`w-12 h-12 ${testimonial.color} rounded-full flex items-center justify-center text-white font-bold mr-4`}>
-                      {testimonial.avatar}
-                    </div>
-                    <div>
-                      <div className="font-semibold">{testimonial.name}</div>
-                      <div className="text-sm text-slate-500">{testimonial.role}</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          
-          {/* Score Improvement Stats */}
-          <div className="gradient-bg p-8 rounded-2xl text-white text-center">
-            <h3 className="text-2xl font-bold mb-6">Average Score Improvements</h3>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="stat-card p-6 rounded-xl border border-white/20">
-                <div className="text-4xl font-bold text-yellow-400 mb-2">+2.1</div>
-                <div className="text-lg">Letter Grades</div>
-                <div className="text-sm text-blue-100">Average GPA increase</div>
-              </div>
-              <div className="stat-card p-6 rounded-xl border border-white/20">
-                <div className="text-4xl font-bold text-yellow-400 mb-2">+150</div>
-                <div className="text-lg">SAT Points</div>
-                <div className="text-sm text-blue-100">Math section improvement</div>
-              </div>
-              <div className="stat-card p-6 rounded-xl border border-white/20">
-                <div className="text-4xl font-bold text-yellow-400 mb-2">85%</div>
-                <div className="text-lg">Success Rate</div>
-                <div className="text-sm text-blue-100">Students achieve goals</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
       {/* Pricing Section */}
       <PricingSection />
       {/* Resources Section */}
@@ -1001,11 +931,11 @@ function HomeContent() {
                         name="subject"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Subject Area *</FormLabel>
+                            <FormLabel>Math Level *</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
                                 <SelectTrigger>
-                                  <SelectValue placeholder="Select a subject" />
+                                  <SelectValue placeholder="Select your math level" />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
