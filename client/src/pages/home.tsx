@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import { Link } from "wouter";
 import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, PlayCircle, BookOpen, Compass, Menu, X, Shield, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -123,6 +124,27 @@ const resources = [
   }
 ];
 
+const blogPreviews = [
+  {
+    title: "5 Essential SAT Math Strategies That Actually Work",
+    excerpt: "Master the most effective test-taking strategies that can boost your SAT math score by 100+ points.",
+    readTime: "8 min read",
+    category: "Test Prep"
+  },
+  {
+    title: "How to Stop Making Silly Mistakes in Algebra",
+    excerpt: "The most common algebra errors students make and proven techniques to eliminate careless mistakes.",
+    readTime: "6 min read",
+    category: "Algebra"
+  },
+  {
+    title: "Geometry Proofs Made Simple: A Step-by-Step Guide",
+    excerpt: "Break down complex geometry proofs into manageable steps with logical flow patterns.",
+    readTime: "10 min read",
+    category: "Geometry"
+  }
+];
+
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
@@ -219,6 +241,11 @@ export default function Home() {
                 <button onClick={() => scrollToSection('resources')} className="nav-item text-slate-600 hover:text-blue-600 transition-colors">
                   Resources
                 </button>
+                <Link href="/blog">
+                  <span className="nav-item text-slate-600 hover:text-blue-600 transition-colors cursor-pointer">
+                    Blog
+                  </span>
+                </Link>
               </div>
             </div>
             
@@ -256,6 +283,11 @@ export default function Home() {
                 <button onClick={() => { scrollToSection('resources'); setMobileMenuOpen(false); }} className="block w-full text-left px-3 py-2 text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-md transition-colors">
                   Resources
                 </button>
+                <Link href="/blog">
+                  <span className="block w-full text-left px-3 py-2 text-slate-600 hover:text-blue-600 hover:bg-slate-50 rounded-md transition-colors cursor-pointer" onClick={() => setMobileMenuOpen(false)}>
+                    Blog
+                  </span>
+                </Link>
               </div>
             </div>
           )}
@@ -282,7 +314,7 @@ export default function Home() {
                   className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 text-lg px-8 py-4 h-auto shadow-lg font-semibold"
                 >
                   <Play className="w-5 h-5 mr-2" />
-                  Book Your Free 30-Min Trial
+                  Book Your Free 15-Min Trial
                 </Button>
                 <Button 
                   variant="outline"
@@ -614,6 +646,50 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Blog Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-slate-800 mb-4">Latest Math Insights</h2>
+            <p className="text-xl text-slate-600">Expert tips, study strategies, and math concepts explained simply</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {blogPreviews.map((post, index) => (
+              <Card key={index} className="hover:shadow-xl transition-shadow">
+                <CardHeader>
+                  <Badge className="bg-blue-600 text-white w-fit mb-2">{post.category}</Badge>
+                  <CardTitle className="text-xl hover:text-blue-600 transition-colors cursor-pointer">
+                    {post.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-slate-600 mb-4">{post.excerpt}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-slate-500 flex items-center">
+                      <Clock className="w-4 h-4 mr-1" />
+                      {post.readTime}
+                    </span>
+                    <Button variant="link" className="p-0 h-auto font-semibold">
+                      Read More <ArrowRight className="w-4 h-4 ml-1" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link href="/blog">
+              <Button className="bg-blue-600 text-white hover:bg-blue-700 px-8 py-3 h-auto">
+                <BookOpen className="w-5 h-5 mr-2" />
+                View All Articles
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -668,7 +744,7 @@ export default function Home() {
                           <FormItem>
                             <FormLabel>Phone Number</FormLabel>
                             <FormControl>
-                              <Input type="tel" placeholder="(555) 123-4567" {...field} />
+                              <Input type="tel" placeholder="(555) 123-4567" {...field} value={field.value || ""} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
