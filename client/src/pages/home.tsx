@@ -18,6 +18,8 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { insertContactSchema, type InsertContact } from "@shared/schema";
 
+import anoushka_puri_f1YfrZ1o2r8_unsplash from "@assets/anoushka-puri-f1YfrZ1o2r8-unsplash.jpg";
+
 const services = [
   {
     icon: "√",
@@ -428,7 +430,7 @@ function HomeContent() {
             </div>
             <div className="relative">
               <img 
-                src="https://unsplash.com/photos/silver-and-white-round-analog-watch-beside-white-printer-paper-evixqxe715k" 
+                src={anoushka_puri_f1YfrZ1o2r8_unsplash} 
                 alt="Professional math tutor with whiteboard" 
                 className="rounded-2xl shadow-2xl w-full"
               />
