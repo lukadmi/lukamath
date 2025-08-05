@@ -475,7 +475,7 @@ function HomeContent() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl font-bold text-slate-800 mb-6">Meet Your Math Mentor</h2>
-              <p className="text-lg text-slate-600 mb-6 leading-relaxed">Hi! I'm Luka, and I've been helping students conquer their math fears for over 5 years. With a degree in Data Science and a passion for teaching, I specialize in making complex concepts simple and engaging.</p>
+              <p className="text-lg text-slate-600 mb-6 leading-relaxed">Hi! I'm Luka, and I've been helping students conquer their math fears for over 5 years. With a degree in Data Science and a passion for teaching, I specialize in making complex concepts simple.</p>
               <div className="space-y-4">
                 <div className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-emerald-600 mr-3" />
@@ -509,7 +509,7 @@ function HomeContent() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-slate-800 mb-4 flex items-center justify-center">
               <Award className="w-8 h-8 mr-3 text-blue-600" />
-              Credentials & Certifications
+              Credentials and Certifications
             </h2>
             <p className="text-lg text-slate-600">Continuous learning to provide the best math education</p>
           </div>
