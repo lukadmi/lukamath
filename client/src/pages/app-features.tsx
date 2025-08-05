@@ -53,7 +53,7 @@ const appFeatures = [
 ];
 
 const stats = [
-  { number: "New", label: "Innovative Platform", icon: Users },
+  { number: "1:1", label: "Personal Tutoring", icon: Users },
   { number: "2025", label: "Latest Technology", icon: TrendingUp },
   { number: "100%", label: "Personalized Focus", icon: Award },
   { number: "24/7", label: "Question Support", icon: Clock }
@@ -290,17 +290,27 @@ function AppFeatures() {
               <p className="text-xl text-slate-600">Simple steps to transform your math learning experience</p>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-5 gap-4 items-center max-w-5xl mx-auto">
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">1</div>
                 <h3 className="text-xl font-bold text-slate-800 mb-4">Create Your Account</h3>
                 <p className="text-slate-600">Sign up for free and get access to your personal homework management dashboard with Luka as your tutor.</p>
               </div>
               
+              {/* Arrow between steps 1 and 2 */}
+              <div className="hidden md:flex justify-center items-center">
+                <ArrowRight className="w-8 h-8 text-blue-400" />
+              </div>
+              
               <div className="text-center">
                 <div className="w-16 h-16 bg-emerald-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">2</div>
                 <h3 className="text-xl font-bold text-slate-800 mb-4">Receive Assignments</h3>
                 <p className="text-slate-600">Get homework assignments from Luka, track deadlines, ask questions, and submit your completed work.</p>
+              </div>
+              
+              {/* Arrow between steps 2 and 3 */}
+              <div className="hidden md:flex justify-center items-center">
+                <ArrowRight className="w-8 h-8 text-blue-400" />
               </div>
               
               <div className="text-center">
