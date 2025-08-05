@@ -251,7 +251,7 @@ function StudentAppContent() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="homework" className="flex items-center space-x-2">
               <BookOpen className="w-4 h-4" />
               <span>Homework</span>
@@ -263,6 +263,10 @@ function StudentAppContent() {
             <TabsTrigger value="progress" className="flex items-center space-x-2">
               <BarChart3 className="w-4 h-4" />
               <span>Progress</span>
+            </TabsTrigger>
+            <TabsTrigger value="scheduling" className="flex items-center space-x-2">
+              <Calendar className="w-4 h-4" />
+              <span>Scheduling</span>
             </TabsTrigger>
           </TabsList>
 
@@ -556,7 +560,7 @@ function StudentAppContent() {
               <CardContent>
                 {progressLoading ? (
                   <div className="h-64 bg-slate-200 animate-pulse rounded"></div>
-                ) : progress.length === 0 ? (
+                ) : (progress as any[]).length === 0 ? (
                   <div className="h-64 flex items-center justify-center text-slate-500">
                     <div className="text-center">
                       <BarChart3 className="w-12 h-12 mx-auto mb-4 text-slate-400" />
@@ -567,7 +571,7 @@ function StudentAppContent() {
                 ) : (
                   <div className="h-64">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={progress.map((item: any, index: number) => ({
+                      <LineChart data={(progress as any[]).map((item: any, index: number) => ({
                         assignment: index + 1,
                         grade: item.grade || 0,
                         subject: item.subject,
@@ -576,7 +580,7 @@ function StudentAppContent() {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis 
                           dataKey="assignment" 
-                          label={{ value: 'Assignment #', position: 'insideBottom', offset: -5 }}
+                          label={{ value: 'Assignment #', position: 'insideBottom', offset: -10 }}
                         />
                         <YAxis 
                           domain={[0, 100]}
@@ -609,7 +613,13 @@ function StudentAppContent() {
               </CardContent>
             </Card>
 
-            {/* Tutor Availability Calendar */}
+
+          </TabsContent>
+
+          {/* Scheduling Tab */}
+          <TabsContent value="scheduling" className="space-y-6">
+            <h2 className="text-xl font-semibold text-slate-900">Schedule a Session</h2>
+            
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
@@ -620,7 +630,7 @@ function StudentAppContent() {
               <CardContent>
                 {availabilityLoading ? (
                   <div className="h-64 bg-slate-200 animate-pulse rounded"></div>
-                ) : availability.length === 0 ? (
+                ) : (availability as any[]).length === 0 ? (
                   <div className="h-64 flex items-center justify-center text-slate-500">
                     <div className="text-center">
                       <Calendar className="w-12 h-12 mx-auto mb-4 text-slate-400" />
@@ -632,7 +642,7 @@ function StudentAppContent() {
                   <div className="space-y-4">
                     <p className="text-slate-600 mb-4">Available time slots for tutoring sessions:</p>
                     <div className="grid gap-3">
-                      {availability.map((slot: any, index: number) => (
+                      {(availability as any[]).map((slot: any, index: number) => (
                         <div key={index} className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-200">
                           <div className="flex items-center space-x-3">
                             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
@@ -650,7 +660,7 @@ function StudentAppContent() {
                               </p>
                             </div>
                           </div>
-                          <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
+                          <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white hover:scale-105 transition-transform">
                             Book Session
                           </Button>
                         </div>
