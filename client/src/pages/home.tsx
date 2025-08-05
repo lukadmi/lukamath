@@ -489,10 +489,7 @@ function HomeContent() {
                   <CheckCircle className="w-5 h-5 text-emerald-600 mr-3" />
                   <span>Mathematics degree from top university</span>
                 </div>
-                <div className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-emerald-600 mr-3" />
-                  <span>200+ students with improved grades</span>
-                </div>
+                
                 <div className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-emerald-600 mr-3" />
                   <span>Specialized in test preparation</span>
