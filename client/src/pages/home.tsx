@@ -153,31 +153,31 @@ const certificates = [
   {
     title: "Math for Data Science",
     institution: "Duke University",
-    logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23012169'/%3E%3Ctext x='50' y='30' font-family='serif' font-size='12' fill='white' text-anchor='middle'%3EDUKE%3C/text%3E%3Ctext x='50' y='70' font-family='serif' font-size='8' fill='white' text-anchor='middle'%3EUNIVERSITY%3C/text%3E%3C/svg%3E",
+    logo: "https://via.placeholder.com/64x64/012169/ffffff?text=DUKE",
     logoAlt: "Duke University",
-    type: "Specialization",
+    type: "Certificate",
     description: "Statistical foundations and mathematical modeling"
   },
   {
-    title: "Data Science Master's",
+    title: "Master of Data Science",
     institution: "Illinois Institute of Technology",
-    logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23CC0000'/%3E%3Ctext x='50' y='30' font-family='serif' font-size='10' fill='white' text-anchor='middle'%3EILLINOIS%3C/text%3E%3Ctext x='50' y='45' font-family='serif' font-size='8' fill='white' text-anchor='middle'%3EINSTITUTE OF%3C/text%3E%3Ctext x='50' y='60' font-family='serif' font-size='8' fill='white' text-anchor='middle'%3ETECHNOLOGY%3C/text%3E%3C/svg%3E",
+    logo: "https://via.placeholder.com/64x64/CC0000/ffffff?text=IIT",
     logoAlt: "Illinois Institute of Technology",
-    type: "Master's Degree",
+    type: "Degree",
     description: "Advanced analytics and machine learning"
   },
   {
     title: "Virtual Teaching Specialization",
     institution: "University of California, Irvine",
-    logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23FFD200'/%3E%3Ctext x='50' y='30' font-family='serif' font-size='12' fill='%23003DA5' text-anchor='middle'%3EUC%3C/text%3E%3Ctext x='50' y='55' font-family='serif' font-size='10' fill='%23003DA5' text-anchor='middle'%3EIRVINE%3C/text%3E%3C/svg%3E",
+    logo: "https://via.placeholder.com/64x64/FFD200/003DA5?text=UCI",
     logoAlt: "UC Irvine",
-    type: "Certificate",
+    type: "Specialization",
     description: "Online pedagogy and instructional design"
   },
   {
     title: "Data Analytics Certificate",
     institution: "Google",
-    logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='white' stroke='%23dadce0' stroke-width='2'/%3E%3Ctext x='50' y='35' font-family='Arial' font-size='18' fill='%234285f4' text-anchor='middle'%3EG%3C/text%3E%3Ctext x='50' y='55' font-family='Arial' font-size='8' fill='%2334a853' text-anchor='middle'%3EGoogle%3C/text%3E%3C/svg%3E",
+    logo: "https://via.placeholder.com/64x64/ffffff/4285f4?text=G",
     logoAlt: "Google",
     type: "Professional Certificate",
     description: "Business intelligence and data visualization"
@@ -185,7 +185,7 @@ const certificates = [
   {
     title: "Data Science Math Skills",
     institution: "University of Colorado Boulder",
-    logo: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23CFB87C'/%3E%3Ctext x='50' y='28' font-family='serif' font-size='8' fill='%23565A5C' text-anchor='middle'%3EUNIVERSITY OF%3C/text%3E%3Ctext x='50' y='45' font-family='serif' font-size='10' fill='%23565A5C' text-anchor='middle'%3ECOLORADO%3C/text%3E%3Ctext x='50' y='62' font-family='serif' font-size='8' fill='%23565A5C' text-anchor='middle'%3EBOULDER%3C/text%3E%3C/svg%3E",
+    logo: "https://via.placeholder.com/64x64/CFB87C/565A5C?text=CU",
     logoAlt: "University of Colorado Boulder",
     type: "Certificate",
     description: "Mathematical foundations for data science"
