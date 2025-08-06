@@ -1017,7 +1017,7 @@ function HomeContent() {
                 <div className="flex items-start">
                   <Clock className="w-6 h-6 text-blue-600 mr-4 mt-1" />
                   <div>
-                    <div className="font-semibold">Available Hours</div>
+                    <div className="font-semibold">Available Hours (CET)</div>
                     <div className="text-slate-600">Mon-Fri: 3pm-9pm<br />Sat-Sun: 10am-6pm</div>
                   </div>
                 </div>
