@@ -156,7 +156,7 @@ export const translations = {
     "nav.about": "O meni",
     "nav.testimonials": "Mišljenja", 
     "nav.pricing": "Cjenik",
-    "nav.resources": "Resursi",
+    "nav.resources": "Materijali",
     "nav.blog": "Blog",
     "nav.contact": "Kontakt",
     "nav.student_app": "Aplikacija",
@@ -183,7 +183,7 @@ export const translations = {
     "services.university": "Sveučilišna matematika",
     "services.university_desc": "Statistika i linearna algebra za sveučilišni uspjeh",
     "services.university_tagline": "Postani izvrsna/n u višoj matematici",
-    "services.sat_act": "SAT/ACT matematički bootcamp",
+    "services.sat_act": "Državna matura - matematika",
     "services.sat_desc": "Strategije testiranja i vježba za tvoj najbolji rezultat",
     "services.sat_tagline": "Najpopularnije",
     "services.most_popular": "Najpopularnije",
@@ -237,16 +237,16 @@ export const translations = {
     "pricing.progress_assessments": "Procjene napretka",
     "pricing.flexible_scheduling": "Fleksibilno raspoređivanje",
     "pricing.start_intensive": "Počni intenzivni program",
-    "pricing.guarantee": "100% jamstvo zadovoljstva • 15 minuta besplatni probni sat",
+    "pricing.guarantee": "100% jamstvo zadovoljstva • 15-minutni besplatni probni sat",
     
     // Resources
-    "resources.title": "Besplatni matematički resursi",
+    "resources.title": "Besplatni matematički materijali",
     "resources.subtitle": "Priručnici za učenje, zadaci za vježbu i korisni savjeti",
     "resources.algebra_title": "Brzi priručnik za algebru",
     "resources.algebra_desc": "Ključne formule i koncepti za uspjeh u algebri",
     "resources.geometry_title": "Geometrijski priručnik",
     "resources.geometry_desc": "Formule za površinu, opseg i volumen jednostavno objašnjene",
-    "resources.sat_title": "SAT matematička strategija", 
+    "resources.sat_title": "Državna matura - strategija", 
     "resources.sat_desc": "Strategije pristupa testu za maksimizaciju rezultata",
     "resources.calculus_title": "Priručnik za kalkulus",
     "resources.calculus_desc": "Sveobuhvatan PDF vodič koji pokriva limite, derivacije i integrale",
@@ -266,15 +266,15 @@ export const translations = {
     
     // Contact
     "contact.title": "Spreman si početi učiti?",
-    "contact.subtitle": "Rezerviraj svoj besplatni probni sat i vidi razliku koju čini personalizirano podučavanje",
-    "contact.form_title": "Rezerviraj svoj besplatni probni sat",
+    "contact.subtitle": "Rezerviraj svoj 15-minutni besplatni probni sat i vidi razliku koju čini personalizirano podučavanje",
+    "contact.form_title": "Rezerviraj svoj 15-minutni besplatni probni sat",
     "contact.full_name": "Puno ime",
     "contact.email": "Email adresa",
     "contact.phone": "Broj telefona",
     "contact.math_level": "Razina matematike",
     "contact.goals": "Opišite mi svoje matematičke ciljeve",
     "contact.goals_placeholder": "S kojim specifičnim temama trebate pomoć? Koji su vaši ciljevi?",
-    "contact.submit": "Rezerviraj moj besplatni probni sat",
+    "contact.submit": "Rezerviraj moj 15-minutni besplatni probni sat",
     "contact.response_time": "Odgovorit ću u roku od 24 sata za dogovaranje sesije",
     "contact.lets_connect": "Povežimo se",
     "contact.email_label": "Email",
@@ -283,14 +283,14 @@ export const translations = {
     "contact.schedule": "Pon-Pet: 15-21h\nSub-Ned: 10-18h",
     
     // Math Levels
-    "level.middle_school": "Matematika za osnovnu školu (6.-8. razred)",
-    "level.high_school": "Matematika za srednju školu (9.-12. razred)", 
+    "level.middle_school": "Matematika za osnovnu školu (5.-8. razred)",
+    "level.high_school": "Matematika za srednju školu (1.-4. razred)", 
     "level.university": "Sveučilišna matematika (sveučilišna razina)",
-    "level.sat_act": "SAT/ACT priprema (priprema za testove)",
+    "level.sat_act": "Državna matura (priprema za testove)",
     "level.middle_school_desc": "Osnove i temeljne vještine za uspjeh u srednjoj školi",
     "level.high_school_desc": "Napredni koncepti i priprema za fakultet", 
     "level.university_desc": "Statistika i linearna algebra za fakultetski uspjeh",
-    "level.satact_desc": "Strategije testova i vježba za najbolji rezultat",
+    "level.satact_desc": "Strategije testova i vježba za najbolji rezultat na Državnoj maturi",
     
     // Why Choose
     "why.title": "Zašto odabrati LukaMath?",
@@ -308,7 +308,7 @@ export const translations = {
     
     // Success Modal
     "success.title": "Poruka je poslana!",
-    "success.message": "Hvala na interesu! Odgovorit ću u roku od 24 sata za dogovaranje vašeg besplatnog probnog sata.",
+    "success.message": "Hvala na interesu! Odgovorit ću u roku od 24 sata za dogovaranje vašeg 15-minutnog besplatnog probnog sata.",
     
     // Common
     "common.sending": "Šalje se...",
