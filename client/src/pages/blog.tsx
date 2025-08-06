@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/hooks/useLanguage";
+import { Helmet } from 'react-helmet-async';
+import { LazyImage } from "@/components/LazyImage";
 
 const blogPosts = [
   {
@@ -119,6 +121,14 @@ export default function Blog() {
 
   return (
     <div className="font-inter antialiased">
+      <Helmet>
+        <title>{language === 'en' ? 'LukaMath Blog - Math Study Tips & Strategies' : 'LukaMath Blog - Savjeti za učenje matematike'}</title>
+        <meta name="description" content={language === 'en' ? 'Expert math study tips, test strategies, and learning techniques from professional tutor Luka. SAT prep, algebra tips, calculus guides and more.' : 'Stručni savjeti za učenje matematike, strategije za testove i tehnike učenja od profesionalnog instruktora Luke. Priprema za maturu, algebra, analiza i više.'} />
+        <meta property="og:title" content={language === 'en' ? 'LukaMath Blog - Math Study Tips' : 'LukaMath Blog - Savjeti za matematiku'} />
+        <meta property="og:description" content={language === 'en' ? 'Expert math study tips and strategies from professional tutor Luka.' : 'Stručni savjeti za učenje matematike od profesionalnog instruktora Luke.'} />
+        <link rel="canonical" href="https://lukamath.replit.app/blog" />
+        <html lang={language} />
+      </Helmet>
       {/* Navigation */}
       <nav className="bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

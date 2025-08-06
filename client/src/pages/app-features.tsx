@@ -6,6 +6,8 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Helmet } from 'react-helmet-async';
+import { trackEvent } from "@/lib/analytics";
 
 const getAppFeatures = (language: string, t: any) => [
   {
@@ -72,11 +74,19 @@ function AppFeatures() {
   };
 
   const toggleLanguage = () => {
-    setLanguage(prev => prev === "en" ? "hr" : "en");
+    setLanguage(language === "en" ? "hr" : "en");
   };
 
   return (
       <div className="min-h-screen bg-gray-50">
+        <Helmet>
+          <title>{language === 'en' ? 'LukaMath Student App - Homework Management System' : 'LukaMath App - Sustav za upravljanje domaćim zadacima'}</title>
+          <meta name="description" content={language === 'en' ? 'Advanced student app for homework management, progress tracking, tutor communication, and assignment submission. Built for modern math education.' : 'Napredni student app za upravljanje domaćim zadacima, praćenje napretka, komunikaciju s instruktorom i predaju zadataka. Napravljen za moderno matematičko obrazovanje.'} />
+          <meta property="og:title" content={language === 'en' ? 'LukaMath Student App Features' : 'Značajke LukaMath Student App-a'} />
+          <meta property="og:description" content={language === 'en' ? 'Discover the advanced features of our student homework management system.' : 'Otkrijte napredne značajke našeg sustava za upravljanje domaćim zadacima.'} />
+          <link rel="canonical" href="https://lukamath.replit.app/app-features" />
+          <html lang={language} />
+        </Helmet>
         {/* Navigation */}
         <nav className="bg-white shadow-sm border-b relative z-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -19,6 +19,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { insertContactSchema, type InsertContact } from "@shared/schema";
+import { Helmet } from 'react-helmet-async';
 
 import anoushka_puri_f1YfrZ1o2r8_unsplash from "@assets/anoushka-puri-f1YfrZ1o2r8-unsplash.jpg";
 
@@ -530,6 +531,14 @@ function HomeContent() {
 
   return (
     <div className="font-inter antialiased">
+      <Helmet>
+        <title>{language === 'en' ? 'LukaMath - Online Math Tutoring | Ace Your Math Tests' : 'LukaMath - Online matematičko instruiranje | Pobijedi na matematici'}</title>
+        <meta name="description" content={language === 'en' ? 'Professional online math tutoring with personalized one-on-one sessions. Algebra, Geometry, Calculus, SAT/ACT prep. Free 15-minute trial available.' : 'Profesionalno online matematičko instruiranje s personaliziranim sesijama jedan na jedan. Algebra, geometrija, analiza. Besplatna 15-minutna proba dostupna.'} />
+        <meta property="og:title" content={language === 'en' ? 'LukaMath - Online Math Tutoring' : 'LukaMath - Online matematičko instruiranje'} />
+        <meta property="og:description" content={language === 'en' ? 'Professional online math tutoring with personalized one-on-one sessions. Free 15-minute trial available.' : 'Profesionalno online matematičko instruiranje s personaliziranim sesijama. Besplatna 15-minutna proba dostupna.'} />
+        <link rel="canonical" href="https://lukamath.replit.app/" />
+        <html lang={language} />
+      </Helmet>
       {/* Navigation */}
       <nav className="bg-white shadow-sm sticky top-0 z-50 transition-shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -727,6 +736,10 @@ function HomeContent() {
                 src={anoushka_puri_f1YfrZ1o2r8_unsplash} 
                 alt="Professional math tutor with whiteboard" 
                 className="rounded-2xl shadow-2xl w-full"
+                loading="eager"
+                decoding="async"
+                width="600"
+                height="400"
               />
               <div className="absolute -top-4 -right-4 bg-yellow-400 text-slate-800 p-3 rounded-full shadow-lg animate-float">
                 <Star className="w-6 h-6" />

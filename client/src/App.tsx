@@ -5,17 +5,29 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { LanguageProvider } from "@/contexts/LanguageProvider";
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { initGA } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
-import Home from "@/pages/home";
-import Blog from "@/pages/blog";
-import AppFeatures from "@/pages/app-features";
-import StudentApp from "@/pages/app";
-import AdminDashboard from "@/pages/admin";
-import AdminExport from "@/pages/admin-export";
-import Register from "@/pages/register";
-import NotFound from "@/pages/not-found";
+import { HelmetProvider } from 'react-helmet-async';
+
+// Lazy load components for better performance
+const Home = lazy(() => import("@/pages/home"));
+const Blog = lazy(() => import("@/pages/blog"));
+const AppFeatures = lazy(() => import("@/pages/app-features"));
+const StudentApp = lazy(() => import("@/pages/app"));
+const AdminDashboard = lazy(() => import("@/pages/admin"));
+const AdminExport = lazy(() => import("@/pages/admin-export"));
+const Register = lazy(() => import("@/pages/register"));
+const NotFound = lazy(() => import("@/pages/not-found"));
+
+// Loading component
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+    </div>
+  );
+}
 
 function Router() {
   // Track page views when routes change
@@ -23,22 +35,24 @@ function Router() {
   
   return (
     <ErrorBoundary>
-      <Switch>
-        <Route path="/" component={Home}/>
-        <Route path="/blog" component={Blog}/>
-        <Route path="/app-features" component={AppFeatures}/>
-        <Route path="/app" component={StudentApp}/>
-        <Route path="/admin" component={AdminDashboard}/>
-        <Route path="/admin/export" component={AdminExport}/>
-        <Route path="/register" component={Register}/>
-        <Route component={NotFound} />
-      </Switch>
+      <Suspense fallback={<PageLoader />}>
+        <Switch>
+          <Route path="/" component={Home}/>
+          <Route path="/blog" component={Blog}/>
+          <Route path="/app-features" component={AppFeatures}/>
+          <Route path="/app" component={StudentApp}/>
+          <Route path="/admin" component={AdminDashboard}/>
+          <Route path="/admin/export" component={AdminExport}/>
+          <Route path="/register" component={Register}/>
+          <Route component={NotFound} />
+        </Switch>
+      </Suspense>
     </ErrorBoundary>
   );
 }
 
 function App() {
-  // Initialize Google Analytics when app loads
+  // Initialize Google Analytics and performance optimizations
   useEffect(() => {
     // Verify required environment variable is present
     if (!import.meta.env.VITE_GA_MEASUREMENT_ID) {
@@ -46,17 +60,25 @@ function App() {
     } else {
       initGA();
     }
+
+    // Preload critical resources
+    import('@/lib/preload').then(({ preloadCriticalResources, registerServiceWorker }) => {
+      preloadCriticalResources();
+      registerServiceWorker();
+    });
   }, []);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <TooltipProvider>
-          <Toaster />
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
           <Router />
-        </TooltipProvider>
-      </LanguageProvider>
-    </QueryClientProvider>
+          </TooltipProvider>
+        </LanguageProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 }
 
