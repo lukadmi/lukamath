@@ -17,7 +17,7 @@ const registerSchema = z.object({
   lastName: z.string().min(1, 'Last name is required'),
   email: z.string().email('Please enter a valid email address'),
   language: z.enum(['en', 'hr'], { required_error: 'Please select a language' }),
-  mathLevel: z.string().min(1, 'Please select your current math level'),
+  mathLevel: z.enum(['middle', 'high-school', 'university', 'sat-act'], { required_error: 'Please select your current math level' }),
   parentEmail: z.string().email('Please enter a valid parent/guardian email').optional().or(z.literal('')),
   goals: z.string().min(10, 'Please describe your math learning goals (at least 10 characters)'),
 });
@@ -43,11 +43,16 @@ export default function Register() {
 
   const registerMutation = useMutation({
     mutationFn: async (data: RegisterData) => {
-      return apiRequest('/api/register', {
+      const response = await fetch('/api/register', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' },
       });
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Registration failed');
+      }
+      return response.json();
     },
     onSuccess: () => {
       setIsSubmitted(true);
@@ -194,14 +199,10 @@ export default function Register() {
                     <SelectValue placeholder="Select your level" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="elementary">Elementary Math</SelectItem>
                     <SelectItem value="middle">Middle School Math</SelectItem>
-                    <SelectItem value="algebra">Algebra I & II</SelectItem>
-                    <SelectItem value="geometry">Geometry</SelectItem>
-                    <SelectItem value="precalculus">Pre-Calculus</SelectItem>
-                    <SelectItem value="calculus">Calculus</SelectItem>
-                    <SelectItem value="sat">SAT/ACT Prep</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
+                    <SelectItem value="high-school">High School Math</SelectItem>
+                    <SelectItem value="university">University Math</SelectItem>
+                    <SelectItem value="sat-act">SAT/ACT Prep</SelectItem>
                   </SelectContent>
                 </Select>
                 {form.formState.errors.mathLevel && (

@@ -58,3 +58,7 @@ Preferred communication style: Simple, everyday language.
 - **Full SQL Database Integration**: Transitioned entire system from in-memory storage to PostgreSQL with role-based user permissions
 - **File Attachment System**: Implemented homework file uploads with database metadata storage
 - **Clean Database State**: Removed all sample/mock data per user preference - system now ready for real data entry
+- **Object Storage Integration**: Real cloud file uploads configured for homework attachments
+- **Role-Based Access Control**: Admin/tutor/student permissions enforced with requireRole middleware
+- **User Registration Flow**: Student registration page with math level selection and form validation
+- **Math Level Standardization**: Updated to use only 4 levels: Middle School, High School, University, SAT/ACT Prep

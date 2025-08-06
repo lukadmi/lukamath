@@ -22,7 +22,7 @@ const homeworkSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   description: z.string().min(1, 'Description is required'),
   instructions: z.string().optional(),
-  subject: z.string().min(1, 'Subject is required'),
+  subject: z.enum(['middle', 'high-school', 'university', 'sat-act']),
   difficulty: z.enum(['easy', 'medium', 'hard']),
   dueDate: z.string().optional(),
 });
@@ -41,8 +41,8 @@ export default function AdminHomework() {
       title: '',
       description: '',
       instructions: '',
-      subject: 'algebra',
-      difficulty: 'medium',
+      subject: 'middle' as const,
+      difficulty: 'medium' as const,
       dueDate: '',
     },
   });
@@ -273,12 +273,10 @@ export default function AdminHomework() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="algebra">Algebra</SelectItem>
-                        <SelectItem value="geometry">Geometry</SelectItem>
-                        <SelectItem value="calculus">Calculus</SelectItem>
-                        <SelectItem value="statistics">Statistics</SelectItem>
-                        <SelectItem value="trigonometry">Trigonometry</SelectItem>
-                        <SelectItem value="precalculus">Pre-Calculus</SelectItem>
+                        <SelectItem value="middle">Middle School Math</SelectItem>
+                        <SelectItem value="high-school">High School Math</SelectItem>
+                        <SelectItem value="university">University Math</SelectItem>
+                        <SelectItem value="sat-act">SAT/ACT Prep</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
