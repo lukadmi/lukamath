@@ -503,6 +503,29 @@ function HomeContent() {
     }
   };
 
+  // Handle URL hash navigation on page load
+  useEffect(() => {
+    const handleHashNavigation = () => {
+      const hash = window.location.hash.substring(1); // Remove the # symbol
+      if (hash) {
+        // Small delay to ensure the page has rendered
+        setTimeout(() => {
+          scrollToSection(hash);
+        }, 100);
+      }
+    };
+
+    // Check hash on initial load
+    handleHashNavigation();
+    
+    // Also listen for hash changes (if user uses back/forward buttons)
+    window.addEventListener('hashchange', handleHashNavigation);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashNavigation);
+    };
+  }, []);
+
   const onSubmit = (data: InsertContact) => {
     // Track form submission attempt
     trackEvent('contact_form_attempt', 'engagement', 'home_page', 1);
