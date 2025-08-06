@@ -195,33 +195,25 @@ function AppFeatures() {
         </nav>
 
         {/* Download App Promotion - Top */}
-        <section className="bg-white border-b border-gray-100 py-1">
+        <div className="bg-gray-50 border-b border-gray-200 py-2">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="inline-flex items-center bg-blue-50 rounded-full px-2 py-0.5 mr-3">
-                  <Smartphone className="w-3 h-3 mr-1 text-blue-600" />
-                  <span className="text-xs font-medium text-blue-700">{language === 'en' ? 'NEW' : 'NOVO'}</span>
-                </div>
-                <div>
-                  <span className="text-xs font-medium text-slate-800">
-                    {language === 'en' ? 'Try our Mobile App for better experience' : 'Probajte našu mobilnu aplikaciju za bolje iskustvo'}
-                  </span>
-                </div>
-              </div>
-              
+            <div className="flex items-center justify-center gap-4 text-center">
+              <span className="text-xs text-gray-600">
+                {language === 'en' ? 'NEW: Try our mobile app for a better experience' : 'NOVO: Probajte našu mobilnu aplikaciju za bolje iskustvo'}
+              </span>
               <Link href="/pwa">
                 <Button 
                   size="sm"
-                  className="bg-blue-600 text-white hover:bg-blue-700 px-3 py-1 text-xs h-6"
+                  variant="outline"
+                  className="bg-blue-600 text-white hover:bg-blue-700 border-blue-600 px-3 py-1 text-xs h-6"
                   onClick={() => trackEvent('download_app_click', 'engagement', 'app_features_top', 1)}
                 >
-                  {language === 'en' ? 'Get App' : 'Preuzmite'}
+                  {language === 'en' ? 'Try App' : 'Probaj'}
                 </Button>
               </Link>
             </div>
           </div>
-        </section>
+        </div>
 
         {/* Hero Section */}
         <section className="gradient-bg text-white py-20 relative overflow-hidden">
