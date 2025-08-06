@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { Calculator, Calendar, User, ArrowLeft, BookOpen, Target, TrendingUp, Clock, Tag } from "lucide-react";
+import { Calculator, Calendar, User, ArrowLeft, BookOpen, Target, TrendingUp, Clock, Tag, Globe, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const blogPosts = [
   {
@@ -86,6 +88,8 @@ const categories = ["All", "Test Prep", "Algebra", "Geometry", "Calculus", "Stud
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
+  const { isAuthenticated } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
 
   const filteredPosts = blogPosts.filter(post => {
     const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;

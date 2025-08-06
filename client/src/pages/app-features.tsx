@@ -73,7 +73,6 @@ function AppFeatures() {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
       <div className="min-h-screen bg-gray-50">
         {/* Navigation */}
         <nav className="bg-white shadow-sm border-b relative z-50">
@@ -88,9 +87,15 @@ function AppFeatures() {
 
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center space-x-8">
-                <Link href="/" className="text-slate-600 hover:text-blue-600 transition-colors">Home</Link>
-                <Link href="/blog" className="text-slate-600 hover:text-blue-600 transition-colors">Blog</Link>
-                <Link href="/app-features" className="text-blue-600 font-semibold">App Features</Link>
+                <Link href="/" className="text-slate-600 hover:text-blue-600 transition-colors">
+                  {language === 'en' ? 'Home' : t('nav.home')}
+                </Link>
+                <Link href="/blog" className="text-slate-600 hover:text-blue-600 transition-colors">
+                  {language === 'en' ? 'Blog' : t('nav.blog')}
+                </Link>
+                <Link href="/app-features" className="text-blue-600 font-semibold">
+                  {language === 'en' ? 'App Features' : t('nav.app_features')}
+                </Link>
                 
                 <div className="flex items-center space-x-4">
                   <Button
@@ -134,9 +139,15 @@ function AppFeatures() {
           {isMobileMenuOpen && (
             <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b shadow-lg z-40">
               <div className="px-4 py-4 space-y-4">
-                <Link href="/" className="block text-slate-600 hover:text-blue-600">Home</Link>
-                <Link href="/blog" className="block text-slate-600 hover:text-blue-600">Blog</Link>
-                <Link href="/app-features" className="block text-blue-600 font-semibold">App Features</Link>
+                <Link href="/" className="block text-slate-600 hover:text-blue-600">
+                  {language === 'en' ? 'Home' : t('nav.home')}
+                </Link>
+                <Link href="/blog" className="block text-slate-600 hover:text-blue-600">
+                  {language === 'en' ? 'Blog' : t('nav.blog')}
+                </Link>
+                <Link href="/app-features" className="block text-blue-600 font-semibold">
+                  {language === 'en' ? 'App Features' : t('nav.app_features')}
+                </Link>
                 
                 <div className="pt-4 border-t border-gray-200 space-y-4">
                   <Button
@@ -452,7 +463,6 @@ function AppFeatures() {
           </div>
         </footer>
       </div>
-    </LanguageContext.Provider>
   );
 }
 
