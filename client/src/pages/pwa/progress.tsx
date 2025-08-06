@@ -46,7 +46,7 @@ const translations = {
   },
   hr: {
     progress: "Napredak",
-    dashboard: "Nadzorna ploča",
+    dashboard: "Aplikacija",
     homework: "Domaći zadaci",
     messages: "Poruke",
     overview: "Pregled",

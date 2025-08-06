@@ -37,7 +37,7 @@ const translations = {
     logout: "Logout"
   },
   hr: {
-    dashboard: "Nadzorna ploča",
+    dashboard: "Aplikacija",
     welcome: "Dobrodošli natrag",
     homework: "Domaći zadaci",
     progress: "Napredak",

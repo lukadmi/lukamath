@@ -337,7 +337,7 @@ export const translations = {
     "app_features.how_it_works_title": "Kako LukaMath aplikacija funkcionira",
     "app_features.how_it_works_subtitle": "Jednostavni koraci za transformaciju vašeg iskustva učenja matematike",
     "app_features.step1_title": "Stvorite svoj račun",
-    "app_features.step1_desc": "Registrirajte se besplatno i dobijte pristup svojoj osobnoj ploči za upravljanje domaćim zadacima s Lukom kao vašim nastavnikom.",
+    "app_features.step1_desc": "Registrirajte se besplatno i dobijte pristup svojoj osobnoj aplikaciji za upravljanje domaćim zadacima s Lukom kao vašim nastavnikom.",
     "app_features.step2_title": "Primajte zadatke",
     "app_features.step2_desc": "Dobijte domaće zadatke od Luke, pratite rokove, postavite pitanja i predajte svoj završeni rad.",
     "app_features.step3_title": "Zakazivanje i napredak",

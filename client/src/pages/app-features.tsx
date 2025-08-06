@@ -506,7 +506,7 @@ function AppFeatures() {
                 <Link href="/app">
                   <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200">
                     <User className="w-5 h-5 mr-2" />
-                    {language === 'en' ? 'Access My Dashboard' : 'Pristupite mojoj ploči'}
+                    {language === 'en' ? 'Access My Dashboard' : 'Pristupite mojoj aplikaciji'}
                   </Button>
                 </Link>
               ) : (

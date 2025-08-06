@@ -64,7 +64,7 @@ const translations = {
     tomorrow: "Sutra",
     thisWeek: "Ovaj tjedan",
     pastDue: "Zakasnilo",
-    dashboard: "Nadzorna ploča",
+    dashboard: "Aplikacija",
     progress: "Napredak", 
     messages: "Poruke"
   }
