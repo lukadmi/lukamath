@@ -340,7 +340,7 @@ export default function Blog() {
       <footer className="bg-slate-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
+            <div>
               <div className="flex items-center mb-4">
                 <Calculator className="w-8 h-8 mr-2" />
                 <span className="text-2xl font-bold">LukaMath</span>
@@ -348,6 +348,17 @@ export default function Blog() {
               <p className="text-slate-300 mb-4 max-w-md">
                 {language === 'en' ? 'Helping students build confidence and achieve success in mathematics through personalized, one-on-one tutoring.' : t('footer.description')}
               </p>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4">
+                {language === 'en' ? 'Navigation' : 'Navigacija'}
+              </h4>
+              <ul className="space-y-2">
+                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">{language === 'en' ? 'Home' : 'Početna'}</Link></li>
+                <li><Link href="/blog" className="text-slate-300 hover:text-white transition-colors">Blog</Link></li>
+                <li><Link href="/app-features" className="text-slate-300 hover:text-white transition-colors">{language === 'en' ? 'App Features' : 'Značajke aplikacije'}</Link></li>
+              </ul>
             </div>
             
             <div>

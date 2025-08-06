@@ -569,12 +569,10 @@ function AppFeatures() {
               <div>
                 <h3 className="font-semibold mb-4">{language === 'en' ? 'Get Started' : 'Počnite'}</h3>
                 <div className="space-y-2">
-                  {isAuthenticated ? (
-                    <Link href="/app" className="block text-blue-400 hover:text-blue-300 transition-colors">{language === 'en' ? 'My Dashboard' : 'Moja ploča'}</Link>
-                  ) : (
-                    <Link href="/register" className="block text-blue-400 hover:text-blue-300 transition-colors">{language === 'en' ? 'Sign Up Free' : 'Registrirajte se besplatno'}</Link>
-                  )}
+                  <Link href="/register" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Sign Up Free' : 'Registrirajte se besplatno'}</Link>
                   <Link href="/#contact" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Free 15-Min Trial' : 'Besplatno 15-min probno'}</Link>
+                  <Link href="/#about" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'About Luka' : t('nav.about')}</Link>
+                  <Link href="/#pricing" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Pricing' : t('nav.pricing')}</Link>
                 </div>
               </div>
             </div>
