@@ -7,62 +7,65 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-const appFeatures = [
+const getAppFeatures = (language: string, t: any) => [
   {
     icon: BookOpen,
-    title: "Homework Management",
-    description: "Receive assignments from Luka, track due dates, and submit completed work in one organized dashboard",
+    title: language === 'en' ? "Homework Management" : t('app_features.homework_title'),
+    description: language === 'en' ? "Receive assignments from Luka, track due dates, and submit completed work in one organized dashboard" : t('app_features.homework_desc'),
     color: "bg-blue-100 text-blue-600",
-    benefits: ["Get assignments instantly", "Track completion status", "Submit work easily"]
+    benefits: language === 'en' ? ["Get assignments instantly", "Track completion status", "Submit work easily"] : ["Primajte zadatke odmah", "Pratite status završetka", "Lako predajte radove"]
   },
   {
     icon: MessageSquare,
-    title: "Direct Q&A with Luka", 
-    description: "Ask Luka questions anytime and get detailed explanations for any math problem",
+    title: language === 'en' ? "Direct Q&A with Luka" : t('app_features.qa_title'), 
+    description: language === 'en' ? "Ask Luka questions anytime and get detailed explanations for any math problem" : t('app_features.qa_desc'),
     color: "bg-emerald-100 text-emerald-600",
-    benefits: ["24/7 question submission", "Step-by-step solutions", "Personal responses from Luka"]
+    benefits: language === 'en' ? ["24/7 question submission", "Step-by-step solutions", "Personal responses from Luka"] : ["24/7 postavljanje pitanja", "Korak-po-korak rješenja", "Osobni odgovori od Luke"]
   },
   {
     icon: TrendingUp,
-    title: "Progress Tracking",
-    description: "Visual charts showing your improvement across different math topics and assignments",
+    title: language === 'en' ? "Progress Tracking" : t('app_features.progress_title'),
+    description: language === 'en' ? "Visual charts showing your improvement across different math topics and assignments" : t('app_features.progress_desc'),
     color: "bg-purple-100 text-purple-600", 
-    benefits: ["Grade tracking", "Performance analytics", "Improvement insights"]
+    benefits: language === 'en' ? ["Grade tracking", "Performance analytics", "Improvement insights"] : ["Praćenje ocjena", "Analitika performansi", "Uvidi o poboljšanju"]
   },
   {
     icon: Calendar,
-    title: "Availability Calendar",
-    description: "Check Luka's availability and schedule tutoring sessions at convenient times",
+    title: language === 'en' ? "Availability Calendar" : t('app_features.calendar_title'),
+    description: language === 'en' ? "Check Luka's availability and schedule tutoring sessions at convenient times" : t('app_features.calendar_desc'),
     color: "bg-yellow-100 text-yellow-600",
-    benefits: ["Real-time availability", "Easy scheduling", "Session reminders"]
+    benefits: language === 'en' ? ["Real-time availability", "Easy scheduling", "Session reminders"] : ["Dostupnost u realnom vremenu", "Lako zakazivanje", "Podsjetnici za sesije"]
   },
   {
     icon: Award,
-    title: "Feedback & Grading",
-    description: "Receive detailed feedback on your homework with grades and improvement suggestions",
+    title: language === 'en' ? "Feedback & Grading" : t('app_features.feedback_title'),
+    description: language === 'en' ? "Receive detailed feedback on your homework with grades and improvement suggestions" : t('app_features.feedback_desc'),
     color: "bg-red-100 text-red-600",
-    benefits: ["Detailed feedback", "Grade tracking", "Improvement tips"]
+    benefits: language === 'en' ? ["Detailed feedback", "Grade tracking", "Improvement tips"] : ["Detaljne povratne informacije", "Praćenje ocjena", "Savjeti za poboljšanje"]
   },
   {
     icon: Clock,
-    title: "Assignment Timeline",
-    description: "Clear overview of upcoming deadlines, completed work, and pending assignments",
+    title: language === 'en' ? "Assignment Timeline" : t('app_features.timeline_title'),
+    description: language === 'en' ? "Clear overview of upcoming deadlines, completed work, and pending assignments" : t('app_features.timeline_desc'),
     color: "bg-green-100 text-green-600",
-    benefits: ["Deadline management", "Progress overview", "Priority sorting"]
+    benefits: language === 'en' ? ["Deadline management", "Progress overview", "Priority sorting"] : ["Upravljanje rokovima", "Pregled napretka", "Sortiranje po prioritetima"]
   }
 ];
 
-const stats = [
-  { number: "1:1", label: "Personal Tutoring", icon: Users },
-  { number: "2025", label: "Latest Technology", icon: TrendingUp },
-  { number: "100%", label: "Personalized Focus", icon: Award },
-  { number: "24/7", label: "Question Support", icon: Clock }
+const getStats = (language: string) => [
+  { number: "1:1", label: language === 'en' ? "Personal Tutoring" : "Personalizirano podučavanje", icon: Users },
+  { number: "2025", label: language === 'en' ? "Latest Technology" : "Najnovija tehnologija", icon: TrendingUp },
+  { number: "100%", label: language === 'en' ? "Personalized Focus" : "Personalizirani fokus", icon: Award },
+  { number: "24/7", label: language === 'en' ? "Question Support" : "Podrška za pitanja", icon: Clock }
 ];
 
 function AppFeatures() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isAuthenticated, user } = useAuth();
   const { language, setLanguage, t } = useLanguage();
+
+  const appFeatures = getAppFeatures(language, t);
+  const stats = getStats(language);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -189,15 +192,18 @@ function AppFeatures() {
             <div className="text-center">
               <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-6 py-2 mb-8">
                 <Smartphone className="w-5 h-5 mr-2" />
-                <span className="text-sm font-medium">Introducing the LukaMath App</span>
+                <span className="text-sm font-medium">{language === 'en' ? 'Introducing the LukaMath App' : 'Predstavljamo LukaMath aplikaciju'}</span>
               </div>
               
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Your Personal
-                <span className="text-gradient"> Homework Management System</span>
+                {language === 'en' ? 'Your Personal' : 'Vaš osobni'}
+                <span className="text-gradient">{language === 'en' ? ' Homework Management System' : ' sustav za upravljanje domaćim zadacima'}</span>
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed max-w-3xl mx-auto">
-                Stay organized with your math assignments, track your progress, ask Luka questions anytime, and schedule sessions - all in one dedicated platform.
+                {language === 'en' ? 
+                  'Stay organized with your math assignments, track your progress, ask Luka questions anytime, and schedule sessions - all in one dedicated platform.' :
+                  t('app_features.subtitle')
+                }
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -205,14 +211,14 @@ function AppFeatures() {
                   <Link href="/app">
                     <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200">
                       <User className="w-5 h-5 mr-2" />
-                      Go to My App
+                      {language === 'en' ? 'Go to My App' : 'Idite na moju aplikaciju'}
                     </Button>
                   </Link>
                 ) : (
                   <a href="/api/login">
                     <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200">
                       <LogIn className="w-5 h-5 mr-2" />
-                      Sign Up for Free
+                      {language === 'en' ? 'Sign Up for Free' : t('app_features.get_started')}
                     </Button>
                   </a>
                 )}
@@ -223,7 +229,7 @@ function AppFeatures() {
                     className="border-white bg-white text-slate-800 hover:bg-slate-100 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                   >
                     <ArrowRight className="w-5 h-5 mr-2" />
-                    Back to Home
+                    {language === 'en' ? 'Back to Home' : 'Povratak na početnu'}
                   </Button>
                 </Link>
               </div>
@@ -252,9 +258,12 @@ function AppFeatures() {
         <section className="py-20 bg-slate-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-800 mb-4">Everything You Need to Stay Organized</h2>
+              <h2 className="text-4xl font-bold text-slate-800 mb-4">{language === 'en' ? 'Everything You Need to Stay Organized' : t('app_features.features_title')}</h2>
               <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-                Your personal homework management system designed to keep you on track with assignments, questions, and progress with Luka as your dedicated tutor.
+                {language === 'en' ? 
+                  'Your personal homework management system designed to keep you on track with assignments, questions, and progress with Luka as your dedicated tutor.' :
+                  t('app_features.features_subtitle')
+                }
               </p>
             </div>
             
@@ -288,15 +297,15 @@ function AppFeatures() {
         <section className="py-20 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-800 mb-4">How the LukaMath App Works</h2>
-              <p className="text-xl text-slate-600">Simple steps to transform your math learning experience</p>
+              <h2 className="text-4xl font-bold text-slate-800 mb-4">{language === 'en' ? 'How the LukaMath App Works' : t('app_features.how_it_works_title')}</h2>
+              <p className="text-xl text-slate-600">{language === 'en' ? 'Simple steps to transform your math learning experience' : t('app_features.how_it_works_subtitle')}</p>
             </div>
             
             <div className="grid md:grid-cols-5 gap-4 items-center max-w-5xl mx-auto">
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">1</div>
-                <h3 className="text-xl font-bold text-slate-800 mb-4">Create Your Account</h3>
-                <p className="text-slate-600">Sign up for free and get access to your personal homework management dashboard with Luka as your tutor.</p>
+                <h3 className="text-xl font-bold text-slate-800 mb-4">{language === 'en' ? 'Create Your Account' : t('app_features.step1_title')}</h3>
+                <p className="text-slate-600">{language === 'en' ? 'Sign up for free and get access to your personal homework management dashboard with Luka as your tutor.' : t('app_features.step1_desc')}</p>
               </div>
               
               {/* Arrow between steps 1 and 2 */}
@@ -329,8 +338,8 @@ function AppFeatures() {
               
               <div className="text-center">
                 <div className="w-16 h-16 bg-emerald-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">2</div>
-                <h3 className="text-xl font-bold text-slate-800 mb-4">Receive Assignments</h3>
-                <p className="text-slate-600">Get homework assignments from Luka, track deadlines, ask questions, and submit your completed work.</p>
+                <h3 className="text-xl font-bold text-slate-800 mb-4">{language === 'en' ? 'Receive Assignments' : t('app_features.step2_title')}</h3>
+                <p className="text-slate-600">{language === 'en' ? 'Get homework assignments from Luka, track deadlines, ask questions, and submit your completed work.' : t('app_features.step2_desc')}</p>
               </div>
               
               {/* Arrow between steps 2 and 3 */}
@@ -363,8 +372,8 @@ function AppFeatures() {
               
               <div className="text-center">
                 <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-6">3</div>
-                <h3 className="text-xl font-bold text-slate-800 mb-4">Schedule and Progress</h3>
-                <p className="text-slate-600">Check Luka's availability for sessions, track your grades, and monitor your improvement over time.</p>
+                <h3 className="text-xl font-bold text-slate-800 mb-4">{language === 'en' ? 'Schedule and Progress' : t('app_features.step3_title')}</h3>
+                <p className="text-slate-600">{language === 'en' ? 'Check Luka\'s availability for sessions, track your grades, and monitor your improvement over time.' : t('app_features.step3_desc')}</p>
               </div>
             </div>
           </div>
@@ -375,9 +384,12 @@ function AppFeatures() {
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-emerald-600/5"></div>
           
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
-            <h2 className="text-4xl font-bold mb-6">Ready to Get Organized with Your Math Homework?</h2>
+            <h2 className="text-4xl font-bold mb-6">{language === 'en' ? 'Ready to Get Organized with Your Math Homework?' : t('app_features.cta_title')}</h2>
             <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-              Join students who are staying on top of their assignments and improving their math skills with Luka's dedicated homework management system.
+              {language === 'en' ? 
+                'Join students who are staying on top of their assignments and improving their math skills with Luka\'s dedicated homework management system.' :
+                t('app_features.cta_desc')
+              }
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -385,14 +397,14 @@ function AppFeatures() {
                 <Link href="/app">
                   <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200">
                     <User className="w-5 h-5 mr-2" />
-                    Access My Dashboard
+                    {language === 'en' ? 'Access My Dashboard' : 'Pristupite mojoj ploči'}
                   </Button>
                 </Link>
               ) : (
                 <a href="/api/login">
                   <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200">
                     <LogIn className="w-5 h-5 mr-2" />
-                    Sign Up for Free
+                    {language === 'en' ? 'Sign Up for Free' : t('app_features.get_started')}
                   </Button>
                 </a>
               )}
@@ -402,7 +414,7 @@ function AppFeatures() {
                   variant="outline"
                   className="border-white bg-white text-slate-800 hover:bg-slate-100 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                 >
-                  Learn More About Tutoring
+                  {language === 'en' ? 'Learn More About Tutoring' : 'Saznajte više o poduci'}
                 </Button>
               </Link>
             </div>
@@ -419,45 +431,51 @@ function AppFeatures() {
                   <span className="text-2xl font-bold">LukaMath</span>
                 </div>
                 <p className="text-slate-400">
-                  Personalized online math tutoring that builds confidence and achieves results.
+                  {language === 'en' ? 
+                    'Personalized online math tutoring that builds confidence and achieves results.' :
+                    'Personalizirano online podučavanje matematike koje gradi samopouzdanje i postiže rezultate.'
+                  }
                 </p>
               </div>
               
               <div>
-                <h3 className="font-semibold mb-4">Navigation</h3>
+                <h3 className="font-semibold mb-4">{language === 'en' ? 'Navigation' : 'Navigacija'}</h3>
                 <div className="space-y-2">
-                  <Link href="/" className="block text-slate-400 hover:text-white transition-colors">Home</Link>
+                  <Link href="/" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Home' : 'Početna'}</Link>
                   <Link href="/blog" className="block text-slate-400 hover:text-white transition-colors">Blog</Link>
-                  <Link href="/app-features" className="block text-slate-400 hover:text-white transition-colors">App Features</Link>
+                  <Link href="/app-features" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'App Features' : 'Značajke aplikacije'}</Link>
                 </div>
               </div>
               
               <div>
-                <h3 className="font-semibold mb-4">Math Levels</h3>
+                <h3 className="font-semibold mb-4">{language === 'en' ? 'Math Levels' : 'Razine matematike'}</h3>
                 <div className="space-y-2">
-                  <span className="block text-slate-400">Middle School Math</span>
-                  <span className="block text-slate-400">High School Math</span>
-                  <span className="block text-slate-400">University Math</span> 
-                  <span className="block text-slate-400">SAT/ACT Prep</span>
+                  <span className="block text-slate-400">{language === 'en' ? 'Middle School Math' : 'Matematika za osnovnu školu'}</span>
+                  <span className="block text-slate-400">{language === 'en' ? 'High School Math' : 'Matematika za srednju školu'}</span>
+                  <span className="block text-slate-400">{language === 'en' ? 'University Math' : 'Sveučilišna matematika'}</span> 
+                  <span className="block text-slate-400">{language === 'en' ? 'SAT/ACT Prep' : 'Državna matura'}</span>
                 </div>
               </div>
               
               <div>
-                <h3 className="font-semibold mb-4">Get Started</h3>
+                <h3 className="font-semibold mb-4">{language === 'en' ? 'Get Started' : 'Počnite'}</h3>
                 <div className="space-y-2">
                   {isAuthenticated ? (
-                    <Link href="/app" className="block text-blue-400 hover:text-blue-300 transition-colors">My Dashboard</Link>
+                    <Link href="/app" className="block text-blue-400 hover:text-blue-300 transition-colors">{language === 'en' ? 'My Dashboard' : 'Moja ploča'}</Link>
                   ) : (
-                    <a href="/api/login" className="block text-blue-400 hover:text-blue-300 transition-colors">Sign Up Free</a>
+                    <a href="/api/login" className="block text-blue-400 hover:text-blue-300 transition-colors">{language === 'en' ? 'Sign Up Free' : 'Registrirajte se besplatno'}</a>
                   )}
-                  <span className="block text-slate-400">Free 15-Min Trial</span>
+                  <span className="block text-slate-400">{language === 'en' ? 'Free 15-Min Trial' : 'Besplatno 15-min probno'}</span>
                 </div>
               </div>
             </div>
             
             <div className="border-t border-slate-700 mt-8 pt-8 text-center">
               <p className="text-slate-400">
-                © 2024 LukaMath. All rights reserved.
+                {language === 'en' ? 
+                  '© 2024 LukaMath. All rights reserved.' :
+                  '© 2024 LukaMath. Sva prava zadržana.'
+                }
               </p>
             </div>
           </div>
