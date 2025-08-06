@@ -222,6 +222,7 @@ function useTranslations() {
 // Pricing Section Component
 function PricingSection() {
   const [selectedLevel, setSelectedLevel] = useState<string>("middle-school");
+  const { language, t } = useLanguage();
   
   const selectedMathLevel = mathLevels.find(level => level.id === selectedLevel);
   
@@ -255,13 +256,19 @@ function PricingSection() {
     <section id="pricing" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-slate-800 mb-4">Simple, Transparent Pricing</h2>
-          <p className="text-xl text-slate-600">First, choose your math level to see relevant pricing</p>
+          <h2 className="text-4xl font-bold text-slate-800 mb-4">
+            {language === 'en' ? 'Simple, Transparent Pricing' : t('pricing.title')}
+          </h2>
+          <p className="text-xl text-slate-600">
+            {language === 'en' ? 'First, choose your math level to see relevant pricing' : t('pricing.subtitle')}
+          </p>
         </div>
         
         {/* Level Selection */}
         <div className="mb-12">
-          <h3 className="text-2xl font-bold text-center text-slate-800 mb-8">Select Your Math Level</h3>
+          <h3 className="text-2xl font-bold text-center text-slate-800 mb-8">
+            {language === 'en' ? 'Select Your Math Level' : t('pricing.select_level')}
+          </h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {mathLevels.map((level) => (
               <Card 
@@ -275,12 +282,16 @@ function PricingSection() {
               >
                 <CardContent className="p-6 text-center">
                   <div className="text-4xl mb-3">{level.icon}</div>
-                  <h4 className="text-lg font-bold mb-2">{level.title}</h4>
-                  <p className="text-sm text-slate-600 mb-3">{level.description}</p>
+                  <h4 className="text-lg font-bold mb-2">
+                    {language === 'en' ? level.title : t(`level.${level.id.replace('-', '_')}`)}
+                  </h4>
+                  <p className="text-sm text-slate-600 mb-3">
+                    {language === 'en' ? level.description : t(`level.${level.id.replace('-', '_')}_desc`)}
+                  </p>
                   <div className={`text-xl font-bold ${level.color}`}>${level.price}/hr</div>
                   {level.popular && (
                     <Badge className="mt-2 bg-blue-600 text-white">
-                      Most Popular
+                      {language === 'en' ? 'Most Popular' : t('pricing.most_popular')}
                     </Badge>
                   )}
                 </CardContent>
@@ -294,9 +305,11 @@ function PricingSection() {
           <div className="animate-in slide-in-from-bottom-4 duration-500">
             <div className="text-center mb-12">
               <h3 className="text-2xl font-bold text-slate-800 mb-4">
-                {selectedMathLevel.title} Packages
+                {language === 'en' ? `${selectedMathLevel.title} Packages` : `${t(`level.${selectedMathLevel.id.replace('-', '_')}`)} ${t('pricing.packages')}`}
               </h3>
-              <p className="text-slate-600">Choose the package that fits your learning goals</p>
+              <p className="text-slate-600">
+                {language === 'en' ? 'Choose the package that fits your learning goals' : t('pricing.choose_package')}
+              </p>
             </div>
             
             {(() => {
@@ -307,32 +320,36 @@ function PricingSection() {
                   {/* Single Session */}
                   <Card className="bg-slate-50 border-slate-200">
                     <CardHeader>
-                      <CardTitle className="text-2xl">Single Session</CardTitle>
+                      <CardTitle className="text-2xl">
+                        {language === 'en' ? 'Single Session' : t('pricing.single_session')}
+                      </CardTitle>
                       <div className="text-4xl font-bold text-blue-600">
-                        ${packages.single.price}<span className="text-lg text-slate-600">/hour</span>
+                        ${packages.single.price}<span className="text-lg text-slate-600">/
+                        {language === 'en' ? 'hour' : t('pricing.hour')}
+                        </span>
                       </div>
                     </CardHeader>
                     <CardContent>
                       <ul className="space-y-3 mb-8">
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                          One-on-one tutoring
+                          {language === 'en' ? 'One-on-one tutoring' : t('pricing.one_on_one')}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                          Personalized lesson plan
+                          {language === 'en' ? 'Personalized lesson plan' : t('pricing.personalized_plan')}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                          Practice materials
+                          {language === 'en' ? 'Practice materials' : t('pricing.practice_materials')}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                          Progress tracking
+                          {language === 'en' ? 'Progress tracking' : t('pricing.progress_tracking')}
                         </li>
                       </ul>
                       <Button className="w-full bg-slate-600 hover:bg-slate-700">
-                        Book Session
+                        {language === 'en' ? 'Book Session' : t('pricing.book_session')}
                       </Button>
                     </CardContent>
                   </Card>
@@ -341,40 +358,43 @@ function PricingSection() {
                   <Card className="bg-blue-600 text-white border-2 border-blue-600 relative">
                     <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                       <Badge className="bg-yellow-400 text-slate-800">
-                        Most Popular
+                        {language === 'en' ? 'Most Popular' : t('pricing.most_popular')}
                       </Badge>
                     </div>
                     <CardHeader>
-                      <CardTitle className="text-2xl">4-Session Package</CardTitle>
+                      <CardTitle className="text-2xl">
+                        {language === 'en' ? '4-Session Package' : t('pricing.four_session_package')}
+                      </CardTitle>
                       <div className="text-4xl font-bold">
-                        ${packages.package.price}<span className="text-lg opacity-80"> (${packages.package.perHour}/hr)</span>
+                        ${packages.package.price}<span className="text-lg opacity-80"> (${packages.package.perHour}/
+                        {language === 'en' ? 'hr' : t('pricing.hr')})</span>
                       </div>
                     </CardHeader>
                     <CardContent>
                       <ul className="space-y-3 mb-8">
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                          Four 1-hour sessions
+                          {language === 'en' ? 'Four 1-hour sessions' : t('pricing.four_sessions')}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                          Save ${packages.package.savings} total
+                          {language === 'en' ? `Save $${packages.package.savings} total` : `${t('pricing.save')} $${packages.package.savings} ${t('pricing.total')}`}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                          Structured learning path
+                          {language === 'en' ? 'Structured learning path' : t('pricing.structured_path')}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                          Weekly progress reviews
+                          {language === 'en' ? 'Weekly progress reviews' : t('pricing.weekly_reviews')}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                          Priority scheduling
+                          {language === 'en' ? 'Priority scheduling' : t('pricing.priority_scheduling')}
                         </li>
                       </ul>
                       <Button className="w-full bg-yellow-400 text-slate-800 hover:bg-yellow-300 font-semibold">
-                        Start Package
+                        {language === 'en' ? 'Start Package' : t('pricing.start_package')}
                       </Button>
                     </CardContent>
                   </Card>
@@ -382,36 +402,39 @@ function PricingSection() {
                   {/* Intensive Program */}
                   <Card className="bg-slate-50 border-slate-200">
                     <CardHeader>
-                      <CardTitle className="text-2xl">8-Session Intensive</CardTitle>
+                      <CardTitle className="text-2xl">
+                        {language === 'en' ? '8-Session Intensive' : t('pricing.eight_session_intensive')}
+                      </CardTitle>
                       <div className="text-4xl font-bold text-emerald-600">
-                        ${packages.intensive.price}<span className="text-lg text-slate-600"> (${packages.intensive.perHour}/hr)</span>
+                        ${packages.intensive.price}<span className="text-lg text-slate-600"> (${packages.intensive.perHour}/
+                        {language === 'en' ? 'hr' : t('pricing.hr')})</span>
                       </div>
                     </CardHeader>
                     <CardContent>
                       <ul className="space-y-3 mb-8">
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                          Eight 1-hour sessions
+                          {language === 'en' ? 'Eight 1-hour sessions' : t('pricing.eight_sessions')}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                          Save ${packages.intensive.savings} total
+                          {language === 'en' ? `Save $${packages.intensive.savings} total` : `${t('pricing.save')} $${packages.intensive.savings} ${t('pricing.total')}`}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                          Comprehensive curriculum
+                          {language === 'en' ? 'Comprehensive curriculum' : t('pricing.comprehensive_curriculum')}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                          Progress assessments
+                          {language === 'en' ? 'Progress assessments' : t('pricing.progress_assessments')}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                          Flexible scheduling
+                          {language === 'en' ? 'Flexible scheduling' : t('pricing.flexible_scheduling')}
                         </li>
                       </ul>
                       <Button className="w-full bg-emerald-600 hover:bg-emerald-700">
-                        Start Intensive
+                        {language === 'en' ? 'Start Intensive' : t('pricing.start_intensive')}
                       </Button>
                     </CardContent>
                   </Card>
@@ -422,7 +445,7 @@ function PricingSection() {
             <div className="text-center mt-12">
               <p className="text-slate-600 flex items-center justify-center">
                 <Shield className="w-5 h-5 text-emerald-600 mr-2" />
-                100% satisfaction guarantee • 15-minute free trial session
+                {language === 'en' ? '100% satisfaction guarantee • 15-minute free trial session' : t('pricing.guarantee')}
               </p>
             </div>
           </div>
