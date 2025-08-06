@@ -319,7 +319,7 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
           <div className="animate-in slide-in-from-bottom-4 duration-500">
             <div className="text-center mb-12">
               <h3 className="text-2xl font-bold text-slate-800 mb-4">
-                {language === 'en' ? `${selectedMathLevel.title} Packages` : `${t(`level.${selectedMathLevel.id.replace('-', '_')}`)} ${t('pricing.packages')}`}
+                {language === 'en' ? `${selectedMathLevel.title} Packages` : `${selectedMathLevel.id === 'university' ? 'Sveučilišna matematika' : t(`level.${selectedMathLevel.id.replace('-', '_')}`)} ${t('pricing.packages')}`}
               </h3>
               <p className="text-slate-600">
                 {language === 'en' ? 'Choose the package that fits your learning goals' : t('pricing.choose_package')}
