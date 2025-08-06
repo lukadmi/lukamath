@@ -195,25 +195,36 @@ function AppFeatures() {
         </nav>
 
         {/* Download App Promotion - Top */}
-        <div className="bg-gray-50 border-b border-gray-200 py-2">
+        <section className="bg-white border-b border-gray-100 py-4">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-center gap-4 text-center">
-              <span className="text-xs text-gray-600">
-                {language === 'en' ? 'NEW: Try our mobile app for a better experience' : 'NOVO: Probajte našu mobilnu aplikaciju za bolje iskustvo'}
-              </span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="inline-flex items-center bg-blue-50 rounded-full px-3 py-1 mr-4">
+                  <Smartphone className="w-4 h-4 mr-2 text-blue-600" />
+                  <span className="text-sm font-medium text-blue-700">{language === 'en' ? 'NEW: Mobile App Available' : 'NOVO: Dostupna mobilna aplikacija'}</span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-slate-800 mb-1">
+                    {language === 'en' ? 'Get the LukaMath Mobile App' : 'Preuzmite LukaMath mobilnu aplikaciju'}
+                  </h3>
+                  <p className="text-xs text-slate-600">
+                    {language === 'en' ? 'Better mobile experience with offline access' : 'Bolje mobilno iskustvo s offline pristupom'}
+                  </p>
+                </div>
+              </div>
+              
               <Link href="/pwa">
                 <Button 
-                  size="sm"
-                  variant="outline"
-                  className="bg-blue-600 text-white hover:bg-blue-700 border-blue-600 px-3 py-1 text-xs h-6"
+                  className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 text-sm"
                   onClick={() => trackEvent('download_app_click', 'engagement', 'app_features_top', 1)}
                 >
-                  {language === 'en' ? 'Try App' : 'Probaj'}
+                  <Smartphone className="w-4 h-4 mr-2" />
+                  {language === 'en' ? 'Get App' : 'Preuzmite'}
                 </Button>
               </Link>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Hero Section */}
         <section className="gradient-bg text-white py-20 relative overflow-hidden">
@@ -411,62 +422,63 @@ function AppFeatures() {
         </section>
 
         {/* Download App Promotion - Bottom */}
-        <section className="bg-gradient-to-r from-purple-600 to-blue-600 text-white py-8">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-6 items-center">
+        <section className="bg-gradient-to-r from-purple-600 to-blue-600 text-white py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-2xl font-bold mb-3">
+                <h2 className="text-4xl font-bold mb-6">
                   {language === 'en' ? 'Take Your Learning Mobile' : 'Učite gdje god da ste'}
                 </h2>
-                <p className="text-sm text-purple-100 mb-4 leading-relaxed">
+                <p className="text-lg text-purple-100 mb-8 leading-relaxed">
                   {language === 'en' ? 
                     'Install our Progressive Web App on your phone for the best mobile experience. Work offline, get push notifications, and access all features in a native app-like interface.' :
                     'Instalirajte našu Progressive Web App na svoj telefon za najbolje mobilno iskustvo. Radite offline, primajte push obavijesti i pristupite svim značajkama u sučelju koje izgleda kao izvorna aplikacija.'
                   }
                 </p>
                 
-                <div className="space-y-2 mb-4">
+                <div className="space-y-4 mb-8">
                   <div className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 mr-2" />
-                    <span className="text-sm">{language === 'en' ? 'Offline homework access' : 'Offline pristup domaćim zadacima'}</span>
+                    <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
+                    <span>{language === 'en' ? 'Offline homework access' : 'Offline pristup domaćim zadacima'}</span>
                   </div>
                   <div className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 mr-2" />
-                    <span className="text-sm">{language === 'en' ? 'Push notifications for new assignments' : 'Push obavijesti za nove zadatke'}</span>
+                    <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
+                    <span>{language === 'en' ? 'Push notifications for new assignments' : 'Push obavijesti za nove zadatke'}</span>
                   </div>
                   <div className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 mr-2" />
-                    <span className="text-sm">{language === 'en' ? 'Native app-like experience' : 'Iskustvo poput izvorne aplikacije'}</span>
+                    <CheckCircle className="w-5 h-5 text-emerald-400 mr-3" />
+                    <span>{language === 'en' ? 'Native app-like experience' : 'Iskustvo poput izvorne aplikacije'}</span>
                   </div>
                 </div>
                 
                 <Link href="/pwa">
                   <Button 
-                    className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 px-6 py-2 shadow-lg font-medium transition-transform duration-200"
+                    size="lg" 
+                    className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                     onClick={() => trackEvent('download_app_click', 'engagement', 'app_features_bottom', 1)}
                   >
-                    <Smartphone className="w-4 h-4 mr-1" />
+                    <Smartphone className="w-5 h-5 mr-2" />
                     {language === 'en' ? 'Get Mobile App' : 'Preuzmite mobilnu aplikaciju'}
                   </Button>
                 </Link>
               </div>
               
               <div className="relative">
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
                   <div className="text-center">
-                    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                      <Smartphone className="w-6 h-6 text-blue-600" />
+                    <div className="w-24 h-24 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                      <Smartphone className="w-12 h-12 text-blue-600" />
                     </div>
-                    <h3 className="text-lg font-bold mb-2">LukaMath PWA</h3>
-                    <p className="text-xs text-purple-100 mb-3">
+                    <h3 className="text-2xl font-bold mb-4">LukaMath PWA</h3>
+                    <p className="text-purple-100 mb-6">
                       {language === 'en' ? 'Installable on any device' : 'Može se instalirati na bilo koji uređaj'}
                     </p>
-                    <div className="grid grid-cols-2 gap-2 text-xs">
-                      <div className="bg-white/10 rounded-lg p-2">
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div className="bg-white/10 rounded-lg p-3">
                         <strong>iOS</strong><br />
                         {language === 'en' ? 'Safari > Share > Add to Home Screen' : 'Safari > Dijeli > Dodaj na početni zaslon'}
                       </div>
-                      <div className="bg-white/10 rounded-lg p-2">
+                      <div className="bg-white/10 rounded-lg p-3">
                         <strong>Android</strong><br />
                         {language === 'en' ? 'Chrome > Menu > Install App' : 'Chrome > Izbornik > Instaliraj aplikaciju'}
                       </div>
