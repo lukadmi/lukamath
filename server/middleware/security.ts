@@ -4,12 +4,20 @@ import { rateLimit } from 'express-rate-limit';
 // Rate limiting configurations
 export const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  max: 500, // Increased limit for development
   message: {
     error: 'Too many requests from this IP, please try again later.',
   },
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => {
+    // Skip rate limiting for development assets
+    return req.url.includes('/@fs/') || 
+           req.url.includes('/@vite/') || 
+           req.url.includes('/src/') ||
+           req.url.includes('/node_modules/') ||
+           req.url.startsWith('/attached_assets/');
+  },
 });
 
 export const authLimiter = rateLimit({

@@ -60,26 +60,52 @@ function AdminDashboard() {
   const [homeworkDialogOpen, setHomeworkDialogOpen] = useState(false);
   const [availabilityDialogOpen, setAvailabilityDialogOpen] = useState(false);
 
-  // Data queries
+  // Redirect if not authenticated or not admin/tutor
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p>Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
+          <p className="mb-4">Please log in to access the admin dashboard.</p>
+          <a href="/api/login" className="text-blue-600 hover:underline">
+            Login
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  // Data queries with proper typing
   const { data: students = [], isLoading: studentsLoading } = useQuery({
     queryKey: ["/api/admin/students"],
-  });
+  }) as { data: any[]; isLoading: boolean };
 
   const { data: allHomework = [], isLoading: homeworkLoading } = useQuery({
     queryKey: ["/api/admin/homework"],
-  });
+  }) as { data: any[]; isLoading: boolean };
 
   const { data: allQuestions = [], isLoading: questionsLoading } = useQuery({
     queryKey: ["/api/admin/questions"],
-  });
+  }) as { data: any[]; isLoading: boolean };
 
   const { data: contacts = [], isLoading: contactsLoading } = useQuery({
     queryKey: ["/api/admin/contacts"],
-  });
+  }) as { data: any[]; isLoading: boolean };
 
   const { data: availability = [], isLoading: availabilityLoading } = useQuery({
     queryKey: ["/api/availability"],
-  });
+  }) as { data: any[]; isLoading: boolean };
 
   // Forms
   const homeworkForm = useForm({
@@ -122,7 +148,7 @@ function AdminDashboard() {
         attachedFiles.forEach(file => {
           formData.append('files', file);
         });
-        formData.append('homeworkId', homework.id);
+        formData.append('homeworkId', (homework as any).id);
         formData.append('purpose', 'assignment');
 
         await apiRequest("/api/homework/files", {

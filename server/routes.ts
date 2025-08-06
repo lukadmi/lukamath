@@ -63,8 +63,19 @@ function convertArrayToCSV(array: any[]): string {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Security middleware
-  app.use(setSecurityHeaders);
+  // Security middleware (skip for development assets)
+  app.use((req, res, next) => {
+    // Skip security middleware for Vite dev assets
+    if (req.url.includes('/@fs/') || 
+        req.url.includes('/@vite/') || 
+        req.url.includes('/src/') ||
+        req.url.includes('/node_modules/') ||
+        req.url.startsWith('/attached_assets/')) {
+      return next();
+    }
+    setSecurityHeaders(req, res, next);
+  });
+  
   app.use(securityLogger);
   app.use(generalLimiter);
   app.use(sanitizeInput);
