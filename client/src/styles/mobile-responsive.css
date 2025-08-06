@@ -1,0 +1,213 @@
+/* Mobile-first responsive design utilities */
+
+/* Mobile base styles (default) */
+.container-responsive {
+  @apply px-4 sm:px-6 lg:px-8;
+}
+
+.grid-responsive-1-2 {
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8;
+}
+
+.grid-responsive-1-2-3 {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6;
+}
+
+.text-responsive-xl {
+  @apply text-2xl sm:text-3xl lg:text-4xl;
+}
+
+.text-responsive-lg {
+  @apply text-lg sm:text-xl lg:text-2xl;
+}
+
+.text-responsive-md {
+  @apply text-base sm:text-lg;
+}
+
+/* Mobile navigation improvements */
+.mobile-nav {
+  @apply fixed inset-x-0 top-0 z-50 bg-white shadow-lg lg:relative lg:shadow-none;
+}
+
+.mobile-menu-button {
+  @apply lg:hidden p-2 rounded-md hover:bg-gray-100;
+}
+
+.mobile-menu {
+  @apply lg:flex lg:items-center lg:space-x-4;
+}
+
+.mobile-menu-hidden {
+  @apply hidden lg:flex lg:items-center lg:space-x-4;
+}
+
+.mobile-menu-visible {
+  @apply block lg:flex lg:items-center lg:space-x-4;
+}
+
+/* Form improvements for mobile */
+.form-responsive {
+  @apply space-y-4 sm:space-y-6;
+}
+
+.form-grid-responsive {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+}
+
+.button-responsive {
+  @apply w-full sm:w-auto px-4 py-2 text-sm sm:text-base;
+}
+
+.button-group-responsive {
+  @apply flex flex-col sm:flex-row gap-2 sm:gap-4;
+}
+
+/* Card layout improvements */
+.card-mobile {
+  @apply p-4 sm:p-6;
+}
+
+.card-header-mobile {
+  @apply pb-3 sm:pb-4;
+}
+
+/* Table responsiveness */
+.table-responsive {
+  @apply overflow-x-auto;
+}
+
+.table-mobile {
+  @apply min-w-full divide-y divide-gray-200;
+}
+
+.table-cell-mobile {
+  @apply px-3 py-2 sm:px-6 sm:py-4 text-sm;
+}
+
+/* Dashboard layout */
+.dashboard-grid {
+  @apply grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6;
+}
+
+.dashboard-main {
+  @apply lg:col-span-3;
+}
+
+.dashboard-sidebar {
+  @apply lg:col-span-1;
+}
+
+/* Modal improvements for mobile */
+.modal-mobile {
+  @apply mx-4 sm:mx-auto max-w-full sm:max-w-lg;
+}
+
+.modal-content-mobile {
+  @apply max-h-[80vh] overflow-y-auto;
+}
+
+/* Image and media responsive */
+.image-responsive {
+  @apply w-full h-auto max-w-full;
+}
+
+/* Spacing utilities for mobile */
+.section-padding-mobile {
+  @apply py-8 sm:py-12 lg:py-16;
+}
+
+.content-padding-mobile {
+  @apply px-4 sm:px-6 lg:px-8;
+}
+
+/* Touch targets for mobile */
+.touch-target {
+  @apply min-h-[44px] min-w-[44px];
+}
+
+/* Hide/show on different screen sizes */
+.mobile-only {
+  @apply block sm:hidden;
+}
+
+.tablet-only {
+  @apply hidden sm:block lg:hidden;
+}
+
+.desktop-only {
+  @apply hidden lg:block;
+}
+
+.mobile-hidden {
+  @apply hidden sm:block;
+}
+
+/* Mobile-specific component improvements */
+.admin-panel-mobile {
+  @apply flex flex-col lg:flex-row;
+}
+
+.sidebar-mobile {
+  @apply w-full lg:w-64 lg:fixed lg:inset-y-0 lg:left-0;
+}
+
+.main-content-mobile {
+  @apply flex-1 lg:pl-64;
+}
+
+/* File upload area mobile */
+.upload-area-mobile {
+  @apply p-4 sm:p-8 border-2 border-dashed border-gray-300 rounded-lg text-center;
+}
+
+/* Progress indicators mobile */
+.progress-mobile {
+  @apply w-full bg-gray-200 rounded-full h-2 sm:h-3;
+}
+
+/* Alert and notification mobile */
+.alert-mobile {
+  @apply p-3 sm:p-4 rounded-md;
+}
+
+/* Navigation tabs mobile */
+.tabs-mobile {
+  @apply flex flex-col sm:flex-row;
+}
+
+.tab-mobile {
+  @apply flex-1 px-3 py-2 text-center border-b-2 border-transparent;
+}
+
+.tab-active-mobile {
+  @apply border-blue-500 text-blue-600;
+}
+
+/* Form validation error styling */
+.error-message-mobile {
+  @apply text-sm text-red-600 mt-1;
+}
+
+/* Loading states mobile */
+.loading-mobile {
+  @apply flex items-center justify-center py-8 sm:py-12;
+}
+
+/* Mobile calendar improvements */
+.calendar-mobile {
+  @apply w-full overflow-x-auto;
+}
+
+.calendar-grid-mobile {
+  @apply grid grid-cols-7 gap-1 sm:gap-2 min-w-[280px];
+}
+
+/* Mobile homework cards */
+.homework-card-mobile {
+  @apply p-3 sm:p-4 border rounded-lg;
+}
+
+.homework-meta-mobile {
+  @apply flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-600;
+}

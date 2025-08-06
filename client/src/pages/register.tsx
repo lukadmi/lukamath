@@ -11,14 +11,22 @@ import { useToast } from '@/hooks/use-toast';
 import { useMutation } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { Link } from 'wouter';
+import { ArrowLeft, UserPlus, GraduationCap, Globe, Target } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+
+// Validation schemas
+const nameSchema = z.string().min(1, 'This field is required').max(50, 'Name must be less than 50 characters');
+const emailSchema = z.string().email('Please enter a valid email address');
+const mathLevelSchema = z.enum(['middle', 'high-school', 'university', 'sat-act'], { required_error: 'Please select a math level' });
+const languageSchema = z.enum(['en', 'hr'], { required_error: 'Please select a language' });
 
 const registerSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Please enter a valid email address'),
-  language: z.enum(['en', 'hr'], { required_error: 'Please select a language' }),
-  mathLevel: z.enum(['middle', 'high-school', 'university', 'sat-act'], { required_error: 'Please select your current math level' }),
-  parentEmail: z.string().email('Please enter a valid parent/guardian email').optional().or(z.literal('')),
+  firstName: nameSchema,
+  lastName: nameSchema,
+  email: emailSchema,
+  language: languageSchema,
+  mathLevel: mathLevelSchema,
+  parentEmail: emailSchema.optional().or(z.literal('')),
   goals: z.string().min(10, 'Please describe your math learning goals (at least 10 characters)'),
 });
 

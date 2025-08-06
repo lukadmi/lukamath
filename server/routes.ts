@@ -10,8 +10,65 @@ import {
   insertQuestionSchema 
 } from "@shared/schema";
 import { z } from "zod";
+import { 
+  generalLimiter, 
+  authLimiter, 
+  apiLimiter, 
+  uploadLimiter,
+  sanitizeInput, 
+  setSecurityHeaders, 
+  validateFileUpload,
+  securityLogger 
+} from "./middleware/security";
+
+// Utility function to convert data to CSV format
+function convertToCSV(data: any): string {
+  if (!Array.isArray(data)) {
+    // If it's an object with multiple arrays (full backup), convert each section
+    if (typeof data === 'object' && data !== null) {
+      let csvContent = '';
+      Object.keys(data).forEach(key => {
+        csvContent += `\n--- ${key.toUpperCase()} ---\n`;
+        if (Array.isArray(data[key]) && data[key].length > 0) {
+          csvContent += convertArrayToCSV(data[key]);
+        }
+        csvContent += '\n';
+      });
+      return csvContent;
+    }
+    return '';
+  }
+  
+  return convertArrayToCSV(data);
+}
+
+function convertArrayToCSV(array: any[]): string {
+  if (array.length === 0) return '';
+  
+  const headers = Object.keys(array[0]);
+  const csvHeaders = headers.join(',');
+  
+  const csvRows = array.map(row => {
+    return headers.map(header => {
+      const value = row[header];
+      // Escape commas and quotes in CSV values
+      if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return value || '';
+    }).join(',');
+  });
+  
+  return [csvHeaders, ...csvRows].join('\n');
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Security middleware
+  app.use(setSecurityHeaders);
+  app.use(securityLogger);
+  app.use(generalLimiter);
+  app.use(sanitizeInput);
+
   // Auth middleware
   await setupAuth(app);
 
@@ -72,7 +129,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get upload URL for homework files (admin/tutor only)
-  app.post("/api/homework/upload-url", isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
+  app.post("/api/homework/upload-url", uploadLimiter, isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
     try {
       const uploadURL = await objectStorageService.getObjectEntityUploadURL();
       res.json({ uploadURL });
@@ -384,6 +441,88 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching student progress:", error);
       res.status(500).json({ message: "Failed to fetch progress" });
+    }
+  });
+
+  // Data export endpoints (admin/tutor only)
+  app.get('/api/admin/export-summary', isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
+    try {
+      const students = await storage.getAllStudents();
+      const homework = await storage.getAllHomework();
+      const contacts = await storage.getAllContacts();
+      
+      const summary = {
+        students: students.length,
+        homework: homework.length,
+        contacts: contacts.length,
+        progress: 0, // Placeholder for progress records
+        total: students.length + homework.length + contacts.length,
+      };
+      
+      res.json(summary);
+    } catch (error) {
+      console.error("Error fetching export summary:", error);
+      res.status(500).json({ message: "Failed to fetch export summary" });
+    }
+  });
+
+  app.post('/api/admin/export', apiLimiter, isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
+    try {
+      const { type, dateRange, filters } = req.body;
+      
+      let data: any[] = [];
+      let filename = `lukamath-${type}`;
+      
+      switch (type) {
+        case 'students':
+          data = await storage.getAllStudents();
+          if (filters?.mathLevel) {
+            data = data.filter((student: any) => student.mathLevel === filters.mathLevel);
+          }
+          break;
+          
+        case 'homework':
+          data = await storage.getAllHomework();
+          if (filters?.status) {
+            data = data.filter((hw: any) => hw.status === filters.status);
+          }
+          break;
+          
+        case 'contacts':
+          data = await storage.getAllContacts();
+          break;
+          
+        case 'full-backup':
+          const students = await storage.getAllStudents();
+          const homework = await storage.getAllHomework();
+          const contacts = await storage.getAllContacts();
+          data = { students, homework, contacts };
+          break;
+          
+        default:
+          return res.status(400).json({ error: 'Invalid export type' });
+      }
+      
+      // Apply date filters if provided
+      if (dateRange?.start && dateRange?.end && Array.isArray(data)) {
+        const startDate = new Date(dateRange.start);
+        const endDate = new Date(dateRange.end);
+        data = data.filter((item: any) => {
+          const itemDate = new Date(item.createdAt || item.submittedAt || item.dueDate);
+          return itemDate >= startDate && itemDate <= endDate;
+        });
+      }
+      
+      // Convert to CSV format
+      const csvData = convertToCSV(data);
+      
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}-${new Date().toISOString().split('T')[0]}.csv"`);
+      res.send(csvData);
+      
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      res.status(500).json({ message: "Failed to export data" });
     }
   });
 
