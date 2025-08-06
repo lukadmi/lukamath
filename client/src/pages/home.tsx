@@ -5,7 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, FileText, BookOpen, Compass, Menu, X, Shield, ArrowRight, ChevronLeft, ChevronRight, Award, Globe, LogIn, User, Smartphone } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { LanguageContext, type Language, translations } from "@/hooks/useLanguage";
+import { useLanguage } from "@/hooks/useLanguage";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -212,19 +213,10 @@ const certificates = [
   }
 ];
 
-// Language Provider Component
-function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en");
-
-  const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations.en] || key;
-  };
-
-  return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
-      {children}
-    </LanguageContext.Provider>
-  );
+// Use useLanguage hook for translations
+function useTranslations() {
+  const { t } = useLanguage();
+  return t;
 }
 
 // Pricing Section Component
@@ -445,7 +437,7 @@ function HomeContent() {
   const [successModalOpen, setSuccessModalOpen] = useState(false);
   const { toast } = useToast();
   const { user, isAuthenticated } = useAuth();
-  const { language, setLanguage, t } = useContext(LanguageContext)!;
+  const { language, setLanguage, t } = useLanguage();
 
   const form = useForm<InsertContact>({
     resolver: zodResolver(insertContactSchema),
@@ -524,20 +516,20 @@ function HomeContent() {
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
                 <button onClick={() => scrollToSection('services')} className="nav-item text-slate-600 hover:text-blue-600 transition-colors">
-                  Services
+                  {t('nav.services')}
                 </button>
                 <button onClick={() => scrollToSection('about')} className="nav-item text-slate-600 hover:text-blue-600 transition-colors">
-                  About
+                  {t('nav.about')}
                 </button>
                 <button onClick={() => scrollToSection('pricing')} className="nav-item text-slate-600 hover:text-blue-600 transition-colors">
-                  Pricing
+                  {t('nav.pricing')}
                 </button>
                 <button onClick={() => scrollToSection('resources')} className="nav-item text-slate-600 hover:text-blue-600 transition-colors">
-                  Resources
+                  {t('nav.resources')}
                 </button>
                 <Link href="/blog">
                   <span className="nav-item text-slate-600 hover:text-blue-600 transition-colors cursor-pointer">
-                    Blog
+                    {t('nav.blog')}
                   </span>
                 </Link>
                 <Link href="/app-features">
@@ -568,7 +560,7 @@ function HomeContent() {
                   <Link href="/app">
                     <Button variant="outline" className="hidden md:flex">
                       <User className="w-4 h-4 mr-2" />
-                      {t("nav.app")}
+                      {t("nav.student_app")}
                     </Button>
                   </Link>
                   <a href="/api/logout">
@@ -592,7 +584,7 @@ function HomeContent() {
                     </Button>
                   </a>
                   <Button onClick={() => scrollToSection('contact')} className="bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 transition-transform">
-                    {t("hero.cta.primary")}
+                    {t("hero.cta_primary")}
                   </Button>
                 </div>
               )}
@@ -647,11 +639,10 @@ function HomeContent() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Ace Your Math Tests — 
-                <span className="text-gradient"> One Problem at a Time</span>
+                {t('hero.title')}
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed">
-                Personalized, online one-on-one sessions that turn confusion into confidence.
+                {t('hero.subtitle')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button 
@@ -659,7 +650,7 @@ function HomeContent() {
                   className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                 >
                   <Play className="w-5 h-5 mr-2" />
-                  Book Your Free 15-Min Trial
+                  {t('hero.cta_primary')}
                 </Button>
                 <Link href="/app-features">
                   <Button 
@@ -667,7 +658,7 @@ function HomeContent() {
                     className="border-white bg-white text-slate-800 hover:bg-slate-100 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                   >
                     <Smartphone className="w-5 h-5 mr-2" />
-                    Explore Our App
+                    {t('hero.cta_secondary')}
                   </Button>
                 </Link>
               </div>
@@ -1110,9 +1101,5 @@ function HomeContent() {
 }
 
 export default function Home() {
-  return (
-    <LanguageProvider>
-      <HomeContent />
-    </LanguageProvider>
-  );
+  return <HomeContent />;
 }
