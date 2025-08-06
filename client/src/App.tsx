@@ -19,6 +19,11 @@ const AdminDashboard = lazy(() => import("@/pages/admin"));
 const AdminExport = lazy(() => import("@/pages/admin-export"));
 const Register = lazy(() => import("@/pages/register"));
 const NotFound = lazy(() => import("@/pages/not-found"));
+const PWAIndex = lazy(() => import("@/pages/pwa/index"));
+const PWAAuth = lazy(() => import("@/pages/pwa/auth"));
+const PWADashboard = lazy(() => import("@/pages/pwa/dashboard"));
+const PWAHomework = lazy(() => import("@/pages/pwa/homework"));
+const PWAProgress = lazy(() => import("@/pages/pwa/progress"));
 
 // Loading component
 function PageLoader() {
@@ -44,6 +49,11 @@ function Router() {
           <Route path="/admin" component={AdminDashboard}/>
           <Route path="/admin/export" component={AdminExport}/>
           <Route path="/register" component={Register}/>
+          <Route path="/pwa" component={PWAIndex}/>
+          <Route path="/pwa/auth" component={PWAAuth}/>
+          <Route path="/pwa/dashboard" component={PWADashboard}/>
+          <Route path="/pwa/homework" component={PWAHomework}/>
+          <Route path="/pwa/progress" component={PWAProgress}/>
           <Route component={NotFound} />
         </Switch>
       </Suspense>
