@@ -491,12 +491,10 @@ function AppFeatures() {
         </section>
 
         {/* CTA Section */}
-        <section className="gradient-bg text-white py-20 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-emerald-600/5"></div>
-          
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
-            <h2 className="text-4xl font-bold mb-6">{language === 'en' ? 'Ready to Get Organized with Your Math Homework?' : t('app_features.cta_title')}</h2>
-            <p className="text-xl text-blue-100 mb-8 leading-relaxed">
+        <section className="bg-white py-20">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-4xl font-bold text-slate-800 mb-6">{language === 'en' ? 'Ready to Get Organized with Your Math Homework?' : t('app_features.cta_title')}</h2>
+            <p className="text-xl text-slate-600 mb-8 leading-relaxed">
               {language === 'en' ? 
                 'Join students who are staying on top of their assignments and improving their math skills with Luka\'s dedicated homework management system.' :
                 t('app_features.cta_desc')
@@ -522,8 +520,7 @@ function AppFeatures() {
               
               <Link href="/">
                 <Button 
-                  variant="outline"
-                  className="border-white bg-white text-slate-800 hover:bg-slate-100 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
+                  className="bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                 >
                   {language === 'en' ? 'Learn More About Tutoring' : 'Saznajte više o poduci'}
                 </Button>

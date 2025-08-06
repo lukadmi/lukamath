@@ -257,24 +257,24 @@ function StudentAppContent() {
           </p>
           
           {/* Mobile App Promotion */}
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="bg-blue-50 border border-blue-100 rounded-md p-3 mb-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <div className="bg-blue-100 p-2 rounded-lg mr-3">
-                  <Smartphone className="w-6 h-6 text-blue-600" />
+                <div className="bg-blue-500 p-1.5 rounded-md mr-2">
+                  <Smartphone className="w-4 h-4 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-800">
-                    {language === 'en' ? 'Try our Mobile App!' : 'Probajte našu mobilnu aplikaciju!'}
+                  <h3 className="text-sm font-medium text-slate-700">
+                    {language === 'en' ? 'Try our Mobile App' : 'Probajte našu mobilnu aplikaciju'}
                   </h3>
-                  <p className="text-sm text-slate-600">
-                    {language === 'en' ? 'Better experience on your phone with offline access' : 'Bolje iskustvo na telefonu s offline pristupom'}
+                  <p className="text-xs text-slate-500">
+                    {language === 'en' ? 'Better mobile experience with offline access' : 'Bolje mobilno iskustvo s offline pristupom'}
                   </p>
                 </div>
               </div>
               <Link href="/pwa">
-                <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-                  {language === 'en' ? 'Open App' : 'Otvori aplikaciju'}
+                <Button size="sm" variant="outline" className="text-xs border-blue-200 text-blue-600 hover:bg-blue-50">
+                  {language === 'en' ? 'Open' : 'Otvori'}
                 </Button>
               </Link>
             </div>
