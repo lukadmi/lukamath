@@ -195,31 +195,32 @@ function AppFeatures() {
         </nav>
 
         {/* Download App Promotion - Top */}
-        <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-6">
+        <section className="bg-white border-b border-gray-100 py-3">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <div className="inline-flex items-center bg-white/10 backdrop-blur-sm rounded-full px-4 py-1 mb-3">
-                <Smartphone className="w-4 h-4 mr-1" />
-                <span className="text-xs font-medium">{language === 'en' ? 'NEW: Mobile App Available' : 'NOVO: Dostupna mobilna aplikacija'}</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="inline-flex items-center bg-blue-50 rounded-full px-3 py-1 mr-4">
+                  <Smartphone className="w-3 h-3 mr-1 text-blue-600" />
+                  <span className="text-xs font-medium text-blue-700">{language === 'en' ? 'NEW: Mobile App' : 'NOVO: Mobilna aplikacija'}</span>
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-slate-800 mb-0">
+                    {language === 'en' ? 'Get the LukaMath Mobile App' : 'Preuzmite LukaMath mobilnu aplikaciju'}
+                  </h3>
+                  <p className="text-xs text-slate-600">
+                    {language === 'en' ? 'Better mobile experience with offline access' : 'Bolje mobilno iskustvo s offline pristupom'}
+                  </p>
+                </div>
               </div>
-              
-              <h2 className="text-2xl font-bold mb-2">
-                {language === 'en' ? 'Get the LukaMath Mobile App' : 'Preuzmite LukaMath mobilnu aplikaciju'}
-              </h2>
-              <p className="text-sm text-blue-100 mb-4 max-w-xl mx-auto">
-                {language === 'en' ? 
-                  'Access your homework, track progress, and communicate with Luka on the go.' :
-                  'Pristupite svojim domaćim zadacima, pratite napredak i komunicirajte s Lukom u pokretu.'
-                }
-              </p>
               
               <Link href="/pwa">
                 <Button 
-                  className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 px-6 py-2 shadow-lg font-medium transition-transform duration-200"
+                  size="sm"
+                  className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-1 text-xs"
                   onClick={() => trackEvent('download_app_click', 'engagement', 'app_features_top', 1)}
                 >
-                  <Smartphone className="w-4 h-4 mr-1" />
-                  {language === 'en' ? 'Download App' : 'Preuzmite aplikaciju'}
+                  <Smartphone className="w-3 h-3 mr-1" />
+                  {language === 'en' ? 'Get App' : 'Preuzmite'}
                 </Button>
               </Link>
             </div>
@@ -422,69 +423,27 @@ function AppFeatures() {
         </section>
 
         {/* Download App Promotion - Bottom */}
-        <section className="bg-gradient-to-r from-purple-600 to-blue-600 text-white py-8">
+        <section className="bg-white border-t border-gray-100 py-4">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-6 items-center">
-              <div>
-                <h2 className="text-2xl font-bold mb-3">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="text-center sm:text-left">
+                <h3 className="text-lg font-bold text-slate-800 mb-1">
                   {language === 'en' ? 'Take Your Learning Mobile' : 'Učite gdje god da ste'}
-                </h2>
-                <p className="text-sm text-purple-100 mb-4 leading-relaxed">
-                  {language === 'en' ? 
-                    'Install our Progressive Web App on your phone for the best mobile experience. Work offline, get push notifications, and access all features in a native app-like interface.' :
-                    'Instalirajte našu Progressive Web App na svoj telefon za najbolje mobilno iskustvo. Radite offline, primajte push obavijesti i pristupite svim značajkama u sučelju koje izgleda kao izvorna aplikacija.'
-                  }
+                </h3>
+                <p className="text-sm text-slate-600">
+                  {language === 'en' ? 'Install our app for offline access and push notifications' : 'Instalirajte našu aplikaciju za offline pristup i push obavijesti'}
                 </p>
-                
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 mr-2" />
-                    <span className="text-sm">{language === 'en' ? 'Offline homework access' : 'Offline pristup domaćim zadacima'}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 mr-2" />
-                    <span className="text-sm">{language === 'en' ? 'Push notifications for new assignments' : 'Push obavijesti za nove zadatke'}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-emerald-400 mr-2" />
-                    <span className="text-sm">{language === 'en' ? 'Native app-like experience' : 'Iskustvo poput izvorne aplikacije'}</span>
-                  </div>
-                </div>
-                
-                <Link href="/pwa">
-                  <Button 
-                    className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 px-6 py-2 shadow-lg font-medium transition-transform duration-200"
-                    onClick={() => trackEvent('download_app_click', 'engagement', 'app_features_bottom', 1)}
-                  >
-                    <Smartphone className="w-4 h-4 mr-1" />
-                    {language === 'en' ? 'Get Mobile App' : 'Preuzmite mobilnu aplikaciju'}
-                  </Button>
-                </Link>
               </div>
               
-              <div className="relative">
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
-                      <Smartphone className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <h3 className="text-lg font-bold mb-2">LukaMath PWA</h3>
-                    <p className="text-xs text-purple-100 mb-3">
-                      {language === 'en' ? 'Installable on any device' : 'Može se instalirati na bilo koji uređaj'}
-                    </p>
-                    <div className="grid grid-cols-2 gap-2 text-xs">
-                      <div className="bg-white/10 rounded-lg p-2">
-                        <strong>iOS</strong><br />
-                        {language === 'en' ? 'Safari > Share > Add to Home Screen' : 'Safari > Dijeli > Dodaj na početni zaslon'}
-                      </div>
-                      <div className="bg-white/10 rounded-lg p-2">
-                        <strong>Android</strong><br />
-                        {language === 'en' ? 'Chrome > Menu > Install App' : 'Chrome > Izbornik > Instaliraj aplikaciju'}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Link href="/pwa">
+                <Button 
+                  className="bg-blue-600 text-white hover:bg-blue-700 px-6 py-2 font-medium"
+                  onClick={() => trackEvent('download_app_click', 'engagement', 'app_features_bottom', 1)}
+                >
+                  <Smartphone className="w-4 h-4 mr-2" />
+                  {language === 'en' ? 'Get Mobile App' : 'Preuzmite mobilnu aplikaciju'}
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
