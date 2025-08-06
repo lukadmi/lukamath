@@ -1085,7 +1085,7 @@ function HomeContent() {
           </div>
           
           <div className="border-t border-slate-700 mt-12 pt-8 text-center text-slate-400">
-            <p>&copy; 2024 LukaMath. All rights reserved. | Privacy Policy | Terms of Service</p>
+            <p>© 2025 LukaMath. All rights reserved. | Privacy Policy | Terms of Service</p>
           </div>
         </div>
       </footer>
