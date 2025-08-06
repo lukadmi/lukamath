@@ -239,7 +239,7 @@ function AppFeatures() {
               
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                 {language === 'en' ? 'Your Personal' : 'Vaš osobni'}
-                <span className="text-gradient">{language === 'en' ? ' Homework Management System' : ' sustav za upravljanje domaćim zadacima'}</span>
+                <span className="text-gradient">{language === 'en' ? ' Homework Management System' : ' sustav za upravljanje domaćom zadaćom'}</span>
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed max-w-3xl mx-auto">
                 {language === 'en' ? 
