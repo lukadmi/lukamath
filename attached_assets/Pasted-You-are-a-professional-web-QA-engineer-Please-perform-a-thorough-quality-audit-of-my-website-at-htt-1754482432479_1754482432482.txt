@@ -1,0 +1,43 @@
+You are a professional web QA engineer. Please perform a thorough quality audit of my website at https://your-site.com and produce:
+
+1. **Performance Analysis**  
+   - Page load times (desktop & mobile)  
+   - Largest Contentful Paint (LCP), First Input Delay (FID), Cumulative Layout Shift (CLS)  
+   - Suggestions to reduce bundle size, lazy-load resources, leverage caching/CDN
+
+2. **Accessibility Review**  
+   - WCAG 2.1 compliance check (color contrast, alt text, ARIA roles)  
+   - Keyboard-only navigation and screen-reader compatibility  
+   - Any missing labels or semantic HTML issues
+
+3. **SEO Audit**  
+   - Title tags, meta descriptions, heading hierarchy  
+   - Structured data (schema.org)  
+   - Mobile-friendliness and crawlability (robots.txt, sitemap.xml)
+
+4. **UX & Usability**  
+   - Clarity of calls-to-action and navigation  
+   - Readability of typography & spacing  
+   - Form validation feedback and error handling
+
+5. **Responsive Design**  
+   - Layout integrity across common breakpoints (320px, 768px, 1024px, 1440px)  
+   - Touch targets, menu behavior, image scaling
+
+6. **Security Basics**  
+   - HTTPS configuration and certificate validity  
+   - Any mixed-content warnings  
+   - HTTP headers (CSP, HSTS, X-Frame-Options)
+
+7. **Content Consistency & Accuracy**  
+   - Verify that critical information (pricing, features, contact details, dates) is consistent across all pages  
+   - Check for factual accuracy, correct links, up-to-date legal disclaimers and copyright notices  
+   - Grammar, spelling, and tone consistency throughout site copy  
+   - Data validation: confirm dynamic content (user profiles, forms, dashboards) displays correct and up-to-date values
+
+8. **Inner Design Consistency**  
+   - Consistent use of brand colors, typography, button styles, iconography, and spacing across pages  
+   - Uniform component behavior (modals, dropdowns, form controls)  
+   - Consistent grid/layout guidelines and asset usage
+
+For each area, list what’s working well, what needs improvement, and at least one concrete recommendation or tool (e.g. Lighthouse, axe-core, WebPageTest, Grammarly) to verify/fix the issue.
