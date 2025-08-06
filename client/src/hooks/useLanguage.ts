@@ -186,16 +186,21 @@ export const translations = {
     "services.sat_act": "SAT/ACT matematički bootcamp",
     "services.sat_desc": "Strategije testiranja i vježba za tvoj najbolji rezultat",
     "services.sat_tagline": "Najpopularnije",
+    "services.most_popular": "Najpopularnije",
     "services.per_hour": "po satu",
     "services.book_now": "Rezerviraj",
     
+    // Certificates
+    "certificates.title": "Uvjerenja i certifikati",
+    "certificates.subtitle": "Kontinuirano učenje za pružanje najbolje matematičke edukacije",
+    
     // About Section
-    "about.title": "O Luki",
+    "about.title": "Upoznajte svog mentora za matematiku",
     "about.subtitle": "Strastveni edukator s više od 5 godina iskustva u podučavanju",
-    "about.description": "Pozdrav! Ja sam Luka, predani profesor matematike s ljubavlju prema pomaganju učenicima da svladaju izazove matematike i izgrade trajno samopouzdanje. Moj personalizirani pristup fokusiran je na razumijevanje jedinstvenog stila učenja svakog učenika i prilagodbu mojih metoda podučavanja.",
-    "about.experience": "Više od 5 godina iskustva",
-    "about.students": "Više od 200 zadovoljnih učenika",
-    "about.success_rate": "95% stopa uspjeha",
+    "about.description": "Ja sam Luka, i već više od 5 godina pomagam učenicima da svladaju strah od matematike. S diplomom iz Data Science u tijeku i strašću za podučavanjem, specijaliziram se za pretvaranje složenih koncepata u jednostavne.",
+    "about.experience": "Više od 5 godina iskustva u podučavanju",
+    "about.education": "Diploma iz Data Science na vrhunskom sveučilištu",
+    "about.specialization": "Specijaliziran za pripremu testova",
     
     // Testimonials
     "testimonials.title": "Što učenici kažu",

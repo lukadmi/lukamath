@@ -733,7 +733,7 @@ function HomeContent() {
                       service.id === 'middle' ? t('services.middle_tagline') :
                       service.id === 'high' ? t('services.high_tagline') :
                       service.id === 'university' ? t('services.university_tagline') :
-                      t('services.most_popular')
+                      t('services.sat_tagline')
                     }
                   </p>
                   {service.popular && (
@@ -791,9 +791,11 @@ function HomeContent() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-slate-800 mb-4 flex items-center justify-center">
               <Award className="w-8 h-8 mr-3 text-blue-600" />
-              Credentials and Certifications
+              {language === 'en' ? 'Credentials and Certifications' : t('certificates.title')}
             </h2>
-            <p className="text-lg text-slate-600">Continuous learning to provide the best math education</p>
+            <p className="text-lg text-slate-600">
+              {language === 'en' ? 'Continuous learning to provide the best math education' : t('certificates.subtitle')}
+            </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -840,8 +842,12 @@ function HomeContent() {
       <section id="resources" className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-800 mb-4">Free Math Resources</h2>
-            <p className="text-xl text-slate-600">Study guides, practice problems, and helpful tips</p>
+            <h2 className="text-4xl font-bold text-slate-800 mb-4">
+              {language === 'en' ? 'Free Math Resources' : t('resources.title')}
+            </h2>
+            <p className="text-xl text-slate-600">
+              {language === 'en' ? 'Study guides, practice problems, and helpful tips' : t('resources.subtitle')}
+            </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -851,10 +857,32 @@ function HomeContent() {
                   <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${resource.color}`}>
                     <resource.icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-bold mb-3">{resource.title}</h3>
-                  <p className="text-slate-600 mb-4">{resource.description}</p>
+                  <h3 className="text-xl font-bold mb-3">
+                    {language === 'en' ? resource.title : t(`resources.${
+                      resource.title === 'Algebra Quick Reference' ? 'algebra_title' :
+                      resource.title === 'Geometry Cheat Sheet' ? 'geometry_title' :
+                      resource.title === 'SAT Math Strategy' ? 'sat_title' :
+                      resource.title === 'Calculus Study Guide' ? 'calculus_title' :
+                      resource.title === 'Practice Problem Sets' ? 'practice_title' :
+                      'calculator_title'
+                    }`)}
+                  </h3>
+                  <p className="text-slate-600 mb-4">
+                    {language === 'en' ? resource.description : t(`resources.${
+                      resource.title === 'Algebra Quick Reference' ? 'algebra_desc' :
+                      resource.title === 'Geometry Cheat Sheet' ? 'geometry_desc' :
+                      resource.title === 'SAT Math Strategy' ? 'sat_desc' :
+                      resource.title === 'Calculus Study Guide' ? 'calculus_desc' :
+                      resource.title === 'Practice Problem Sets' ? 'practice_desc' :
+                      'calculator_desc'
+                    }`)}
+                  </p>
                   <Button variant="link" className="p-0 h-auto font-semibold text-left">
-                    {resource.action} <ArrowRight className="w-4 h-4 ml-2" />
+                    {language === 'en' ? resource.action : t(`resources.${
+                      resource.action === 'Download PDF' ? 'download_pdf' :
+                      resource.action === 'Access Problems' ? 'access_problems' :
+                      'view_guide'
+                    }`)} <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </CardContent>
               </Card>
@@ -866,8 +894,12 @@ function HomeContent() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-800 mb-4">Latest Math Insights</h2>
-            <p className="text-xl text-slate-600">Expert tips, study strategies, and math concepts explained simply</p>
+            <h2 className="text-4xl font-bold text-slate-800 mb-4">
+              {language === 'en' ? 'Latest Math Insights' : t('blog.title')}
+            </h2>
+            <p className="text-xl text-slate-600">
+              {language === 'en' ? 'Expert tips, study strategies, and math concepts explained simply' : t('blog.subtitle')}
+            </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -887,7 +919,7 @@ function HomeContent() {
                       {post.readTime}
                     </span>
                     <Button variant="link" className="p-0 h-auto font-semibold">
-                      Read More <ArrowRight className="w-4 h-4 ml-1" />
+                      {language === 'en' ? 'Read More' : t('blog.read_more')} <ArrowRight className="w-4 h-4 ml-1" />
                     </Button>
                   </div>
                 </CardContent>
@@ -899,7 +931,7 @@ function HomeContent() {
             <Link href="/blog">
               <Button className="bg-blue-600 text-white hover:bg-blue-700 px-8 py-3 h-auto">
                 <BookOpen className="w-5 h-5 mr-2" />
-                View All Articles
+                {language === 'en' ? 'View All Articles' : t('blog.view_all')}
               </Button>
             </Link>
           </div>
@@ -909,15 +941,21 @@ function HomeContent() {
       <section id="contact" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-800 mb-4">Ready to Start Learning?</h2>
-            <p className="text-xl text-slate-600">Book your free trial session and see the difference personalized tutoring makes</p>
+            <h2 className="text-4xl font-bold text-slate-800 mb-4">
+              {language === 'en' ? 'Ready to Start Learning?' : t('contact.title')}
+            </h2>
+            <p className="text-xl text-slate-600">
+              {language === 'en' ? 'Book your free trial session and see the difference personalized tutoring makes' : t('contact.subtitle')}
+            </p>
           </div>
           
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <Card className="bg-slate-50">
               <CardHeader>
-                <CardTitle className="text-2xl">Book Your Free Trial</CardTitle>
+                <CardTitle className="text-2xl">
+                  {language === 'en' ? 'Book Your Free Trial' : t('contact.form_title')}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <Form {...form}>
@@ -928,9 +966,11 @@ function HomeContent() {
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Full Name *</FormLabel>
+                            <FormLabel>
+                              {language === 'en' ? 'Full Name *' : `${t('contact.full_name')} *`}
+                            </FormLabel>
                             <FormControl>
-                              <Input placeholder="Your full name" {...field} />
+                              <Input placeholder={language === 'en' ? 'Your full name' : t('contact.full_name')} {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -941,9 +981,11 @@ function HomeContent() {
                         name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Email Address *</FormLabel>
+                            <FormLabel>
+                              {language === 'en' ? 'Email Address *' : `${t('contact.email')} *`}
+                            </FormLabel>
                             <FormControl>
-                              <Input type="email" placeholder="your.email@example.com" {...field} />
+                              <Input type="email" placeholder={language === 'en' ? 'your.email@example.com' : t('contact.email')} {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -957,9 +999,11 @@ function HomeContent() {
                         name="phone"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Phone Number</FormLabel>
+                            <FormLabel>
+                              {language === 'en' ? 'Phone Number' : t('contact.phone')}
+                            </FormLabel>
                             <FormControl>
-                              <Input type="tel" placeholder="(555) 123-4567" {...field} value={field.value || ""} />
+                              <Input type="tel" placeholder={language === 'en' ? '(555) 123-4567' : t('contact.phone')} {...field} value={field.value || ""} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -970,18 +1014,28 @@ function HomeContent() {
                         name="subject"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Math Level *</FormLabel>
+                            <FormLabel>
+                              {language === 'en' ? 'Math Level *' : `${t('contact.math_level')} *`}
+                            </FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                               <FormControl>
                                 <SelectTrigger>
-                                  <SelectValue placeholder="Select your math level" />
+                                  <SelectValue placeholder={language === 'en' ? 'Select your math level' : t('contact.math_level')} />
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <SelectItem value="middle-school">Middle School Math (Grades 6-8)</SelectItem>
-                                <SelectItem value="high-school">High School Math (Grades 9-12)</SelectItem>
-                                <SelectItem value="university">University Math (College Level)</SelectItem>
-                                <SelectItem value="sat-act">SAT/ACT Prep (Test Preparation)</SelectItem>
+                                <SelectItem value="middle-school">
+                                  {language === 'en' ? 'Middle School Math (Grades 6-8)' : t('level.middle_school')}
+                                </SelectItem>
+                                <SelectItem value="high-school">
+                                  {language === 'en' ? 'High School Math (Grades 9-12)' : t('level.high_school')}
+                                </SelectItem>
+                                <SelectItem value="university">
+                                  {language === 'en' ? 'University Math (College Level)' : t('level.university')}
+                                </SelectItem>
+                                <SelectItem value="sat-act">
+                                  {language === 'en' ? 'SAT/ACT Prep (Test Preparation)' : t('level.sat_act')}
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                             <FormMessage />
@@ -995,10 +1049,12 @@ function HomeContent() {
                       name="message"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Tell me about your math goals *</FormLabel>
+                          <FormLabel>
+                            {language === 'en' ? 'Tell me about your math goals *' : `${t('contact.goals')} *`}
+                          </FormLabel>
                           <FormControl>
                             <Textarea 
-                              placeholder="What specific topics do you need help with? What are your goals?"
+                              placeholder={language === 'en' ? 'What specific topics do you need help with? What are your goals?' : t('contact.goals_placeholder')}
                               className="resize-none"
                               rows={4}
                               {...field}
@@ -1015,63 +1071,79 @@ function HomeContent() {
                       disabled={contactMutation.isPending}
                     >
                       <Send className="w-5 h-5 mr-2" />
-                      {contactMutation.isPending ? "Sending..." : "Book My Free Trial Session"}
+                      {contactMutation.isPending ? 
+                        (language === 'en' ? 'Sending...' : t('common.sending')) : 
+                        (language === 'en' ? 'Book My Free Trial Session' : t('contact.submit'))
+                      }
                     </Button>
                   </form>
                 </Form>
                 <div className="text-center mt-4 text-sm text-slate-600 flex items-center justify-center">
                   <Clock className="w-4 h-4 mr-2" />
-                  I'll respond within 24 hours to schedule your session
+                  {language === 'en' ? "I'll respond within 24 hours to schedule your session" : t('contact.response_time')}
                 </div>
               </CardContent>
             </Card>
             
             {/* Contact Info */}
             <div>
-              <h3 className="text-2xl font-bold mb-6">Let's Connect</h3>
+              <h3 className="text-2xl font-bold mb-6">
+                {language === 'en' ? "Let's Connect" : t('contact.lets_connect')}
+              </h3>
               <div className="space-y-6 mb-8">
                 <div className="flex items-start">
                   <Mail className="w-6 h-6 text-blue-600 mr-4 mt-1" />
                   <div>
-                    <div className="font-semibold">Email</div>
+                    <div className="font-semibold">
+                      {language === 'en' ? 'Email' : t('contact.email_label')}
+                    </div>
                     <div className="text-slate-600">luka@lukamath.com</div>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Phone className="w-6 h-6 text-blue-600 mr-4 mt-1" />
                   <div>
-                    <div className="font-semibold">Phone</div>
+                    <div className="font-semibold">
+                      {language === 'en' ? 'Phone' : t('contact.phone_label')}
+                    </div>
                     <div className="text-slate-600">+385 97 6507 908</div>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Clock className="w-6 h-6 text-blue-600 mr-4 mt-1" />
                   <div>
-                    <div className="font-semibold">Available Hours (CET)</div>
-                    <div className="text-slate-600">Mon-Fri: 3pm-9pm<br />Sat-Sun: 10am-6pm</div>
+                    <div className="font-semibold">
+                      {language === 'en' ? 'Available Hours (CET)' : t('contact.hours')}
+                    </div>
+                    <div className="text-slate-600">
+                      {language === 'en' ? 'Mon-Fri: 3pm-9pm' : 'Pon-Pet: 15-21h'}<br />
+                      {language === 'en' ? 'Sat-Sun: 10am-6pm' : 'Sub-Ned: 10-18h'}
+                    </div>
                   </div>
                 </div>
               </div>
               
               <Card className="bg-gradient-to-r from-blue-600 to-emerald-600 text-white">
                 <CardContent className="p-6">
-                  <h4 className="text-xl font-bold mb-4">Why Choose LukaMath?</h4>
+                  <h4 className="text-xl font-bold mb-4">
+                    {language === 'en' ? 'Why Choose LukaMath?' : t('why.title')}
+                  </h4>
                   <ul className="space-y-2">
                     <li className="flex items-center">
                       <Check className="w-5 h-5 mr-2 text-yellow-400" />
-                      Personalized learning approach
+                      {language === 'en' ? 'Personalized learning approach' : t('why.personalized')}
                     </li>
                     <li className="flex items-center">
                       <Check className="w-5 h-5 mr-2 text-yellow-400" />
-                      Proven track record of success
+                      {language === 'en' ? 'Proven track record of success' : t('why.proven')}
                     </li>
                     <li className="flex items-center">
                       <Check className="w-5 h-5 mr-2 text-yellow-400" />
-                      Flexible scheduling options
+                      {language === 'en' ? 'Flexible scheduling options' : t('why.flexible')}
                     </li>
                     <li className="flex items-center">
                       <Check className="w-5 h-5 mr-2 text-yellow-400" />
-                      100% satisfaction guarantee
+                      {language === 'en' ? '100% satisfaction guarantee' : t('why.guarantee')}
                     </li>
                   </ul>
                 </CardContent>
@@ -1090,32 +1162,46 @@ function HomeContent() {
                 <span className="text-2xl font-bold">LukaMath</span>
               </div>
               <p className="text-slate-300 mb-4 max-w-md">
-                Helping students build confidence and achieve success in mathematics through personalized, one-on-one tutoring.
+                {language === 'en' ? 'Helping students build confidence and achieve success in mathematics through personalized, one-on-one tutoring.' : t('footer.description')}
               </p>
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+              <h4 className="text-lg font-semibold mb-4">
+                {language === 'en' ? 'Quick Links' : t('footer.quick_links')}
+              </h4>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-white transition-colors">Services</button></li>
-                <li><button onClick={() => scrollToSection('about')} className="text-slate-300 hover:text-white transition-colors">About</button></li>
-                <li><button onClick={() => scrollToSection('testimonials')} className="text-slate-300 hover:text-white transition-colors">Reviews</button></li>
-                <li><button onClick={() => scrollToSection('pricing')} className="text-slate-300 hover:text-white transition-colors">Pricing</button></li>
-                <li><button onClick={() => scrollToSection('resources')} className="text-slate-300 hover:text-white transition-colors">Resources</button></li>
+                <li><button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Services' : t('nav.services')}
+                </button></li>
+                <li><button onClick={() => scrollToSection('about')} className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'About' : t('nav.about')}
+                </button></li>
+                <li><button onClick={() => scrollToSection('testimonials')} className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Reviews' : t('nav.testimonials')}
+                </button></li>
+                <li><button onClick={() => scrollToSection('pricing')} className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Pricing' : t('nav.pricing')}
+                </button></li>
+                <li><button onClick={() => scrollToSection('resources')} className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Resources' : t('nav.resources')}
+                </button></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4">Contact</h4>
+              <h4 className="text-lg font-semibold mb-4">
+                {language === 'en' ? 'Contact' : t('footer.contact')}
+              </h4>
               <ul className="space-y-2 text-slate-300">
                 <li>luka@lukamath.com</li>
-                <li>Available 7 days a week</li>
+                <li>{language === 'en' ? 'Available 7 days a week' : t('footer.available')}</li>
               </ul>
             </div>
           </div>
           
           <div className="border-t border-slate-700 mt-12 pt-8 text-center text-slate-400">
-            <p>© 2025 LukaMath. All rights reserved. | Privacy Policy | Terms of Service</p>
+            <p>{language === 'en' ? '© 2025 LukaMath. All rights reserved. | Privacy Policy | Terms of Service' : t('footer.copyright')}</p>
           </div>
         </div>
       </footer>
@@ -1127,9 +1213,11 @@ function HomeContent() {
               <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-8 h-8 text-emerald-600" />
               </div>
-              <DialogTitle className="text-2xl font-bold text-slate-800 mb-2">Message Sent!</DialogTitle>
+              <DialogTitle className="text-2xl font-bold text-slate-800 mb-2">
+                {language === 'en' ? 'Message Sent!' : t('success.title')}
+              </DialogTitle>
               <p className="text-slate-600">
-                Thank you for your interest! I'll get back to you within 24 hours to schedule your free trial session.
+                {language === 'en' ? "Thank you for your interest! I'll get back to you within 24 hours to schedule your free trial session." : t('success.message')}
               </p>
             </div>
           </DialogHeader>
