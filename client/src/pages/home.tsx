@@ -1233,19 +1233,19 @@ function HomeContent() {
                 {language === 'en' ? 'Math Levels' : 'Razine matematike'}
               </h4>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-white transition-colors">
+                <li><button onClick={() => scrollToSection('pricing')} className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'Middle School Math' : t('level.middle_school')}
                 </button></li>
-                <li><button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-white transition-colors">
+                <li><button onClick={() => scrollToSection('pricing')} className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'High School Math' : t('level.high_school')}
                 </button></li>
-                <li><button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-white transition-colors">
+                <li><button onClick={() => scrollToSection('pricing')} className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'Statistics' : t('level.statistics')}
                 </button></li>
-                <li><button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-white transition-colors">
+                <li><button onClick={() => scrollToSection('pricing')} className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'Linear Algebra' : t('level.linear_algebra')}
                 </button></li>
-                <li><button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-white transition-colors">
+                <li><button onClick={() => scrollToSection('pricing')} className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'SAT/ACT Prep' : t('level.sat_act')}
                 </button></li>
               </ul>

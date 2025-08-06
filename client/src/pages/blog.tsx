@@ -334,25 +334,7 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Newsletter Signup */}
-      <section className="py-16 gradient-bg text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Stay Updated with Math Tips</h2>
-          <p className="text-xl text-blue-100 mb-8">
-            Get weekly math insights, study tips, and exclusive content delivered to your inbox.
-          </p>
-          <div className="max-w-md mx-auto flex gap-3">
-            <Input 
-              type="email" 
-              placeholder="Enter your email"
-              className="bg-white text-slate-800 border-0 flex-1"
-            />
-            <Button className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 font-semibold px-6">
-              Subscribe
-            </Button>
-          </div>
-        </div>
-      </section>
+
 
       {/* Footer */}
       <footer className="bg-slate-800 text-white py-12">
@@ -373,19 +355,19 @@ export default function Blog() {
                 {language === 'en' ? 'Math Levels' : 'Razine matematike'}
               </h4>
               <ul className="space-y-2">
-                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                <li><Link href="/#pricing" className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'Middle School Math' : t('level.middle_school')}
                 </Link></li>
-                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                <li><Link href="/#pricing" className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'High School Math' : t('level.high_school')}
                 </Link></li>
-                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                <li><Link href="/#pricing" className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'Statistics' : t('level.statistics')}
                 </Link></li>
-                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                <li><Link href="/#pricing" className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'Linear Algebra' : t('level.linear_algebra')}
                 </Link></li>
-                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                <li><Link href="/#pricing" className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'SAT/ACT Prep' : t('level.sat_act')}
                 </Link></li>
               </ul>
@@ -399,13 +381,13 @@ export default function Blog() {
                 <li><Link href="/register" className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'Sign Up Free' : 'Registrirajte se besplatno'}
                 </Link></li>
-                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                <li><Link href="/#contact" className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'Free 15-Min Trial' : 'Besplatno 15-min probno'}
                 </Link></li>
-                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                <li><Link href="/#about" className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'About Luka' : t('nav.about')}
                 </Link></li>
-                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                <li><Link href="/#pricing" className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'Pricing' : t('nav.pricing')}
                 </Link></li>
               </ul>
