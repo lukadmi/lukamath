@@ -124,7 +124,7 @@ export const translations = {
     // Math Levels
     "level.middle_school": "Middle School Math (Grades 6-8)",
     "level.high_school": "High School Math (Grades 9-12)", 
-    "level.university": "University Math (College Level)",
+    "level.university": "Sveučilišna matematika",
     "level.sat_act": "SAT/ACT Prep (Test Preparation)",
     
     // Why Choose
@@ -166,7 +166,7 @@ export const translations = {
     
     // Hero Section
     "hero.title": "Savladajte matematiku",
-    "hero.title_highlight": "uz personalizirano podučavanje",
+    "hero.title_highlight": " — uz personalizirano podučavanje",
     "hero.subtitle": "Stručno individualno podučavanje matematike od osnovne do sveučilišne razine. Izgradite samopouzdanje, poboljšajte ocjene i postignite svoje akademske ciljeve.",
     "hero.cta_primary": "Rezerviraj probni sat (15min)",
     "hero.cta_secondary": "Istraži našu aplikaciju",
@@ -293,7 +293,7 @@ export const translations = {
     "level.sat_act": "Državna matura (priprema za testove)",
     "level.middle_school_desc": "Osnove i temeljne vještine za uspjeh u srednjoj školi",
     "level.high_school_desc": "Napredni koncepti i priprema za fakultet", 
-    "level.statistics_desc": "Statistička analiza i verojatnost za fakultetski uspjeh",
+    "level.university_desc": "Napredna statistika i linearna algebra",
     "level.linear_algebra_desc": "Matrice, vektori i linearne transformacije",
     "level.sat_act_desc": "Strategije testova i vježba za najbolji rezultat na Državnoj maturi",
     
