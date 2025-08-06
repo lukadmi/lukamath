@@ -195,31 +195,27 @@ function AppFeatures() {
         </nav>
 
         {/* Download App Promotion - Top */}
-        <section className="bg-white border-b border-gray-100 py-3">
+        <section className="bg-white border-b border-gray-100 py-1">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between">
               <div className="flex items-center">
-                <div className="inline-flex items-center bg-blue-50 rounded-full px-3 py-1 mr-4">
+                <div className="inline-flex items-center bg-blue-50 rounded-full px-2 py-0.5 mr-3">
                   <Smartphone className="w-3 h-3 mr-1 text-blue-600" />
-                  <span className="text-xs font-medium text-blue-700">{language === 'en' ? 'NEW: Mobile App' : 'NOVO: Mobilna aplikacija'}</span>
+                  <span className="text-xs font-medium text-blue-700">{language === 'en' ? 'NEW' : 'NOVO'}</span>
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-800 mb-0">
-                    {language === 'en' ? 'Get the LukaMath Mobile App' : 'Preuzmite LukaMath mobilnu aplikaciju'}
-                  </h3>
-                  <p className="text-xs text-slate-600">
-                    {language === 'en' ? 'Better mobile experience with offline access' : 'Bolje mobilno iskustvo s offline pristupom'}
-                  </p>
+                  <span className="text-xs font-medium text-slate-800">
+                    {language === 'en' ? 'Try our Mobile App for better experience' : 'Probajte našu mobilnu aplikaciju za bolje iskustvo'}
+                  </span>
                 </div>
               </div>
               
               <Link href="/pwa">
                 <Button 
                   size="sm"
-                  className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-1 text-xs"
+                  className="bg-blue-600 text-white hover:bg-blue-700 px-3 py-1 text-xs h-6"
                   onClick={() => trackEvent('download_app_click', 'engagement', 'app_features_top', 1)}
                 >
-                  <Smartphone className="w-3 h-3 mr-1" />
                   {language === 'en' ? 'Get App' : 'Preuzmite'}
                 </Button>
               </Link>
