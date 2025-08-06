@@ -1011,7 +1011,7 @@ function HomeContent() {
                   <Phone className="w-6 h-6 text-blue-600 mr-4 mt-1" />
                   <div>
                     <div className="font-semibold">Phone</div>
-                    <div className="text-slate-600">(555) 123-MATH</div>
+                    <div className="text-slate-600">+385 97 6507 908</div>
                   </div>
                 </div>
                 <div className="flex items-start">
