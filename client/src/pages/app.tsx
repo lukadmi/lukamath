@@ -200,7 +200,7 @@ function StudentAppContent() {
                   LukaMath
                 </div>
               </Link>
-              <span className="ml-4 text-slate-500">Student Portal</span>
+              <span className="ml-4 text-slate-500">{language === 'en' ? 'Student Portal' : 'Studentski portal'}</span>
             </div>
             
             <div className="flex items-center space-x-4">
@@ -224,13 +224,13 @@ function StudentAppContent() {
                 <Link href="/">
                   <Button variant="outline" size="sm">
                     <Home className="w-4 h-4 mr-1" />
-                    Home
+                    {language === 'en' ? 'Home' : 'Početna'}
                   </Button>
                 </Link>
                 <a href="/api/logout">
                   <Button variant="ghost" size="sm">
                     <LogOut className="w-4 h-4 mr-1" />
-                    Logout
+                    {language === 'en' ? 'Logout' : t('app.logout')}
                   </Button>
                 </a>
               </div>
@@ -243,10 +243,10 @@ function StudentAppContent() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900 mb-2">
-            Welcome back, {(user as any)?.firstName || "Student"}!
+            {language === 'en' ? `Welcome back, ${(user as any)?.firstName || "Student"}!` : `${t('app.welcome')} ${(user as any)?.firstName || "učenik"}!`}
           </h1>
           <p className="text-slate-600">
-            Track your progress, submit homework, and ask questions.
+            {language === 'en' ? 'Track your progress, submit homework, and ask questions.' : 'Pratite svoj napredak, predajte domaće zadatke i postavite pitanja.'}
           </p>
         </div>
 
@@ -254,15 +254,15 @@ function StudentAppContent() {
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="homework" className="flex items-center space-x-2">
               <BookOpen className="w-4 h-4" />
-              <span>Homework</span>
+              <span>{language === 'en' ? 'Homework' : t('app.homework')}</span>
             </TabsTrigger>
             <TabsTrigger value="questions" className="flex items-center space-x-2">
               <MessageSquare className="w-4 h-4" />
-              <span>Q&A</span>
+              <span>{language === 'en' ? 'Q&A' : t('app.questions')}</span>
             </TabsTrigger>
             <TabsTrigger value="progress" className="flex items-center space-x-2">
               <BarChart3 className="w-4 h-4" />
-              <span>Progress</span>
+              <span>{language === 'en' ? 'Progress' : t('app.progress')}</span>
             </TabsTrigger>
             <TabsTrigger value="scheduling" className="flex items-center space-x-2">
               <Calendar className="w-4 h-4" />

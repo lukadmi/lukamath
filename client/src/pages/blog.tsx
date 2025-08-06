@@ -83,6 +83,21 @@ const blogPosts = [
   }
 ];
 
+const getCategoryTranslation = (category: string, language: string, t: any) => {
+  if (language === 'en') return category;
+  
+  const translations: { [key: string]: string } = {
+    "All": "Sve kategorije",
+    "Test Prep": "Priprema za testove", 
+    "Algebra": "Algebra",
+    "Geometry": "Geometrija",
+    "Calculus": "Kalkulus",
+    "Study Skills": "Vještine učenja"
+  };
+  
+  return translations[category] || category;
+};
+
 const categories = ["All", "Test Prep", "Algebra", "Geometry", "Calculus", "Study Skills"];
 
 export default function Blog() {
@@ -119,11 +134,20 @@ export default function Blog() {
               <Link href="/">
                 <Button variant="ghost" className="flex items-center">
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Home
+                  {language === 'en' ? 'Back to Home' : 'Povratak na početnu'}
                 </Button>
               </Link>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setLanguage(language === "en" ? "hr" : "en")}
+                className="flex items-center space-x-1 mr-2"
+              >
+                <Globe className="w-4 h-4" />
+                <span>{language === "en" ? "EN" : "HR"}</span>
+              </Button>
               <Button className="bg-blue-600 text-white hover:bg-blue-700">
-                Book Free Trial
+                {language === 'en' ? 'Book Free Trial' : 'Rezerviraj probni sat'}
               </Button>
             </div>
           </div>
@@ -135,11 +159,13 @@ export default function Blog() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
-              Math Insights & Study Tips
+              {language === 'en' ? 'Math Insights & Study Tips' : t('blog.title')}
             </h1>
             <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-              Expert advice, study strategies, and math concepts explained simply. 
-              Everything you need to excel in mathematics.
+              {language === 'en' ? 
+                'Expert advice, study strategies, and math concepts explained simply. Everything you need to excel in mathematics.' :
+                t('blog.subtitle')
+              }
             </p>
             
             {/* Search and Filter */}
@@ -149,7 +175,7 @@ export default function Blog() {
                   <div className="flex-1">
                     <Input
                       type="text"
-                      placeholder="Search articles..."
+                      placeholder={language === 'en' ? 'Search articles...' : 'Pretraži članke...'}
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       className="bg-white text-slate-800 border-0 h-12"
@@ -169,7 +195,7 @@ export default function Blog() {
                         : "bg-white/20 text-white border-white/30 hover:bg-white/30"
                       }
                     >
-                      {category}
+                      {getCategoryTranslation(category, language, t)}
                     </Button>
                   ))}
                 </div>

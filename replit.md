@@ -66,3 +66,7 @@ Preferred communication style: Simple, everyday language.
 - **Mobile Responsive Design**: All dashboard components optimized for phones/tablets with responsive CSS utilities
 - **Data Export/Backup**: Admin tools to export student progress, homework history, contact data as CSV files
 - **Security Hardening**: Input sanitization, rate limiting, CSRF protection, and security headers for production deployment
+- **Complete Bilingual Implementation**: Full Croatian translations across entire platform including blog and student app sections
+- **Language-Specific Terminology**: Croatian education system terms ("Državna matura", grade levels 5.-8. razred/1.-4. razred)
+- **Seamless Language Switching**: Language toggle buttons in all pages with persistent language preference
+- **Croatian Market Ready**: Accurate Croatian translations (not Serbian/Bosnian) for targeting Croatian students
