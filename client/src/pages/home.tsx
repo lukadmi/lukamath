@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Link } from "wouter";
-import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, PlayCircle, BookOpen, Compass, Menu, X, Shield, ArrowRight, ChevronLeft, ChevronRight, Award, Globe, LogIn, User, Smartphone } from "lucide-react";
+import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, FileText, BookOpen, Compass, Menu, X, Shield, ArrowRight, ChevronLeft, ChevronRight, Award, Globe, LogIn, User, Smartphone } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { LanguageContext, type Language, translations } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
@@ -121,11 +121,11 @@ const resources = [
     action: "Download PDF"
   },
   {
-    title: "Calculus Fundamentals",
-    description: "Free video series covering limits and derivatives",
-    icon: PlayCircle,
+    title: "Calculus Study Guide",
+    description: "Comprehensive PDF guide covering limits, derivatives, and integrals",
+    icon: FileText,
     color: "bg-purple-100 text-purple-600", 
-    action: "Watch Video"
+    action: "Download PDF"
   },
   {
     title: "Practice Problem Sets",
