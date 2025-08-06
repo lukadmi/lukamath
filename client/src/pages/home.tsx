@@ -718,7 +718,12 @@ function HomeContent() {
                     Ace Your Math Tests — 
                     <span className="text-gradient"> One Problem at a Time</span>
                   </>
-                ) : t('hero.title')}
+                ) : (
+                  <>
+                    {t('hero.title')} - 
+                    <span className="text-yellow-400">{t('hero.title_highlight')}</span>
+                  </>
+                )}
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed">
                 {language === 'en' ? 
@@ -808,7 +813,12 @@ function HomeContent() {
                     }
                   </p>
                   <div className={`text-2xl font-bold mb-2 ${service.color}`}>
-                    ${service.price}{language === 'en' ? '/hr' : t('services.per_hour')}
+                    {language === 'en' ? `$${service.price}/hr` : 
+                      service.id === 'middle' ? '15€/h' :
+                      service.id === 'high' ? '20€/h' :
+                      service.id === 'university' ? '25€/h' :
+                      '20€/h'
+                    }
                   </div>
                   <p className="text-sm text-slate-500">
                     {language === 'en' ? service.tagline : 

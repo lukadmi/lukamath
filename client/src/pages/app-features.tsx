@@ -107,7 +107,7 @@ function AppFeatures() {
                   {language === 'en' ? 'Blog' : t('nav.blog')}
                 </Link>
                 <Link href="/app-features" className="text-blue-600 font-semibold">
-                  {language === 'en' ? 'App Features' : t('nav.app_features')}
+                  {language === 'en' ? 'App Features' : 'Značajke aplikacije'}
                 </Link>
                 
                 <div className="flex items-center space-x-4">
@@ -159,7 +159,7 @@ function AppFeatures() {
                   {language === 'en' ? 'Blog' : t('nav.blog')}
                 </Link>
                 <Link href="/app-features" className="block text-blue-600 font-semibold">
-                  {language === 'en' ? 'App Features' : t('nav.app_features')}
+                  {language === 'en' ? 'App Features' : 'Značajke aplikacije'}
                 </Link>
                 
                 <div className="pt-4 border-t border-gray-200 space-y-4">

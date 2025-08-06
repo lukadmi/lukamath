@@ -93,7 +93,7 @@ const getCategoryTranslation = (category: string, language: string, t: any) => {
     "Test Prep": "Priprema za testove", 
     "Algebra": "Algebra",
     "Geometry": "Geometrija",
-    "Calculus": "Kalkulus",
+    "Calculus": "Funkcije",
     "Study Skills": "Vještine učenja"
   };
   
@@ -156,9 +156,11 @@ export default function Blog() {
                 <Globe className="w-4 h-4" />
                 <span>{language === "en" ? "EN" : "HR"}</span>
               </Button>
-              <Button className="bg-blue-600 text-white hover:bg-blue-700">
-                {language === 'en' ? 'Book Free Trial' : 'Rezerviraj probni sat'}
-              </Button>
+              <Link href="/#contact">
+                <Button className="bg-blue-600 text-white hover:bg-blue-700">
+                  {language === 'en' ? 'Book Free Trial' : 'Rezerviraj probni sat'}
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -221,7 +223,7 @@ export default function Blog() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-slate-800 mb-8 flex items-center">
               <TrendingUp className="w-8 h-8 mr-3 text-blue-600" />
-              Featured Articles
+              {language === 'en' ? 'Featured Articles' : t('blog.featured_articles')}
             </h2>
             
             <div className="grid lg:grid-cols-2 gap-8">
@@ -281,7 +283,7 @@ export default function Blog() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-slate-800 mb-8 flex items-center">
             <BookOpen className="w-8 h-8 mr-3 text-blue-600" />
-            All Articles
+            {language === 'en' ? 'All Articles' : t('blog.all_articles')}
           </h2>
           
           {regularPosts.length === 0 ? (

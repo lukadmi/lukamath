@@ -165,10 +165,11 @@ export const translations = {
     "nav.home": "Početna",
     
     // Hero Section
-    "hero.title": "Svladajte matematiku s personaliziranim online podučavanjem",
+    "hero.title": "Savladajte matematiku",
+    "hero.title_highlight": "uz personalizirano podučavanje",
     "hero.subtitle": "Stručno individualno podučavanje matematike od osnovne do sveučilišne razine. Izgradite samopouzdanje, poboljšajte ocjene i postignite svoje akademske ciljeve.",
     "hero.cta_primary": "Rezerviraj probni sat (15min)",
-    "hero.cta_secondary": "Saznaj više o uslugama",
+    "hero.cta_secondary": "Istraži našu aplikaciju",
     "hero.trial_duration": "15-minutni besplatni probni sat",
     
     // Services Section
@@ -178,7 +179,7 @@ export const translations = {
     "services.middle_desc": "Osnove algebre, razlomci i temelji rješavanja problema",
     "services.middle_tagline": "Počni snažno s osnovama",
     "services.high_school": "Matematika za srednju školu",
-    "services.high_desc": "Algebra, geometrija, trigonometrija i predkalkulus", 
+    "services.high_desc": "Algebra, geometrija, trigonometrija i funkcije", 
     "services.high_tagline": "Svladaj napredne koncepte",
     "services.university": "Sveučilišna matematika",
     "services.university_desc": "Statistika i linearna algebra za sveučilišni uspjeh",
@@ -197,7 +198,7 @@ export const translations = {
     // About Section
     "about.title": "Upoznajte svog mentora za matematiku",
     "about.subtitle": "Strastveni edukator s više od 5 godina iskustva u podučavanju",
-    "about.description": "Ja sam Luka, i već više od 5 godina pomagam učenicima da svladaju strah od matematike. S diplomom iz Data Science u tijeku i strašću za podučavanjem, specijaliziram se za pretvaranje složenih koncepata u jednostavne.",
+    "about.description": "Ja sam Luka, i već više od 5 godina pomažem učenicima da svladaju strah od matematike. S diplomom iz Data Science u tijeku i strašću za podučavanjem, specijaliziram se za pretvaranje složenih koncepata u jednostavne.",
     "about.experience": "Više od 5 godina iskustva u podučavanju",
     "about.education": "Diploma iz Data Science na vrhunskom sveučilištu",
     "about.specialization": "Specijaliziran za pripremu testova",
@@ -207,13 +208,13 @@ export const translations = {
     "testimonials.subtitle": "Prava povratna informacija učenika koji su postigli svoje matematičke ciljeve",
     
     // Pricing
-    "pricing.title": "Jednostavno, transparentno cjenik",
+    "pricing.title": "Jednostavan i transparentan cjenik",
     "pricing.subtitle": "Prvo odaberite svoju razinu matematike kako biste vidjeli odgovarajuće cijene",
     "pricing.select_level": "Odaberite svoju razinu matematike",
-    "pricing.per_session": "po sesiji",
+    "pricing.per_session": "po terminu",
     "pricing.most_popular": "Najpopularnije",
     "pricing.get_started": "Počni",
-    "pricing.packages": "Paketi",
+    "pricing.packages": "paketi",
     "pricing.choose_package": "Odaberite paket koji odgovara vašim ciljevima učenja",
     "pricing.single_session": "Pojedinačni sat",
     "pricing.hour": "sat",
@@ -248,7 +249,7 @@ export const translations = {
     "resources.geometry_desc": "Formule za površinu, opseg i volumen jednostavno objašnjene",
     "resources.sat_title": "Državna matura - strategija", 
     "resources.sat_desc": "Strategije pristupa testu za maksimizaciju rezultata",
-    "resources.calculus_title": "Priručnik za kalkulus",
+    "resources.calculus_title": "Priručnik za funkcije",
     "resources.calculus_desc": "Sveobuhvatan PDF vodič koji pokriva limite, derivacije i integrale",
     "resources.practice_title": "Zbirke zadataka",
     "resources.practice_desc": "Stotine problema s korak-po-korak rješenjima",
@@ -263,6 +264,8 @@ export const translations = {
     "blog.subtitle": "Stručni savjeti, strategije učenja i matematički koncepti jednostavno objašnjeni",
     "blog.view_all": "Pogledaj sve članke",
     "blog.read_more": "Čitaj više",
+    "blog.featured_articles": "Istaknuti članci",
+    "blog.all_articles": "Svi članci",
     
     // Contact
     "contact.title": "Spreman si početi učiti?",
@@ -275,7 +278,7 @@ export const translations = {
     "contact.goals": "Opišite mi svoje matematičke ciljeve",
     "contact.goals_placeholder": "S kojim specifičnim temama trebate pomoć? Koji su vaši ciljevi?",
     "contact.submit": "Rezerviraj moj probni sat (15min)",
-    "contact.response_time": "Odgovorit ću u roku od 24 sata za dogovaranje sesije",
+    "contact.response_time": "Odgovorit ću u roku od 24 sata za dogovaranje termina",
     "contact.lets_connect": "Povežimo se",
     "contact.email_label": "Email",
     "contact.phone_label": "Telefon", 
@@ -302,10 +305,10 @@ export const translations = {
     "why.guarantee": "100% jamstvo zadovoljstva",
     
     // Footer
-    "footer.description": "Pomaganje učenicima u izgradnji samopouzdanja i postizanju uspjeha u matematici kroz personalizirano individualno podučavanje.",
+    "footer.description": "Pomažem učenicima u izgradnji samopouzdanja i postizanju uspjeha u matematici kroz personalizirano individualno podučavanje.",
     "footer.quick_links": "Brze veze",
     "footer.contact": "Kontakt",
-    "footer.copyright": "© 2024 LukaMath. Sva prava zadržana. | Pravila privatnosti | Uvjeti korištenja",
+    "footer.copyright": "© 2025 LukaMath. Sva prava zadržana. | Pravila privatnosti | Uvjeti korištenja",
     "footer.available": "Dostupan 7 dana u tjednu",
     
     // Success Modal
@@ -316,17 +319,17 @@ export const translations = {
     "app_features.title": "Studentska aplikacija LukaMath",
     "app_features.subtitle": "Sve što trebate za uspjeh u matematici na jednom mjestu",
     "app_features.homework_title": "Upravljanje domaćim zadacima",
-    "app_features.homework_desc": "Primajte zadatke od Luke, pratite krajnje rokove i predajte završene radove u jednom organiziranom nadzorskom panelu",
+    "app_features.homework_desc": "Primajte zadatke od Luke, pratite krajnje rokove i predajte završene radove - sve na jednom mjestu",
     "app_features.qa_title": "Direktno pitanje Luki",
-    "app_features.qa_desc": "Pitajte Luku bilo kada i dobijte detaljno objašnjenje za bilo koji matematički problem",
+    "app_features.qa_desc": "Pitajte Luku bilo kada i dobijte detaljno objašnjenje za bilo koji matematički zadatak",
     "app_features.progress_title": "Praćenje napretka",
     "app_features.progress_desc": "Vizualni grafovi koji prikazuju vaše poboljšanje u različitim matematičkim temama i zadacima",
     "app_features.calendar_title": "Kalendar dostupnosti",
-    "app_features.calendar_desc": "Provjerite Lukovu dostupnost i zakazujte sesije podučavanja u pogodnim terminima",
+    "app_features.calendar_desc": "Provjerite Lukinu dostupnost i zakazujte termine podučavanja u pogodnim terminima",
     "app_features.feedback_title": "Povratne informacije i ocjenjivanje",
     "app_features.feedback_desc": "Primajte detaljne povratne informacije o vašim domaćim zadacima s ocjenama i prijedlozima za poboljšanje",
     "app_features.timeline_title": "Vremenska crta zadataka",
-    "app_features.timeline_desc": "Jasna pregled nadolazećih krajnjih rokova, završenih radova i čekajućih zadataka",
+    "app_features.timeline_desc": "Jasna pregled nadolazećih rokova, završenih radova i čekajućih zadataka",
     "app_features.get_started": "Registrirajte se besplatno",
     "app_features.learn_more": "Saznaj više",
     "app_features.features_title": "Sve što trebate da ostanete organizirani",
@@ -338,9 +341,13 @@ export const translations = {
     "app_features.step2_title": "Primajte zadatke",
     "app_features.step2_desc": "Dobijte domaće zadatke od Luke, pratite rokove, postavite pitanja i predajte svoj završeni rad.",
     "app_features.step3_title": "Zakazivanje i napredak",
-    "app_features.step3_desc": "Provjerite Lukinu dostupnost za sesije, pratite svoje ocjene i nadgledajte svoje poboljšanje kroz vrijeme.",
-    "app_features.cta_title": "Spremni ste organizirati svoje matematičke domaće zadatke?",
-    "app_features.cta_desc": "Pridružite se učenicima koji vladaju svojim zadacima i poboljšavaju svoje matematičke vještine uz Lukin posvećeni sustav za upravljanje domaćim zadacima.",
+    "app_features.step3_desc": "Provjerite Lukinu dostupnost za termine, pratite svoje ocjene i nadgledajte svoje poboljšanje kroz vrijeme.",
+    "app_features.cta_title": "Jeste li spremni zakoračiti u novi svijet matematike?",
+    "app_features.cta_desc": "Pridružite se učenicima koji vladaju svojim zadacima i poboljšavaju svoje matematičke vještine uz posvećeni sustav za upravljanje domaćim zadacima.",
+
+    // PWA
+    "pwa.install_app": "Instalirajte našu aplikaciju",
+    "pwa.homework": "domaća zadaća",
 
     // Register Page
     "register.title": "Registracija na LukaMath",
