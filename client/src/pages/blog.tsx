@@ -339,7 +339,7 @@ export default function Blog() {
       {/* Footer */}
       <footer className="bg-slate-800 text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
             <div>
               <div className="flex items-center mb-4">
                 <Calculator className="w-8 h-8 mr-2" />
@@ -401,6 +401,17 @@ export default function Blog() {
                 <li><Link href="/#pricing" className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'Pricing' : t('nav.pricing')}
                 </Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4">
+                {language === 'en' ? 'Contact' : t('footer.contact')}
+              </h4>
+              <ul className="space-y-2 text-slate-300">
+                <li>luka@lukamath.com</li>
+                <li>+385 97 6507 908</li>
+                <li>{language === 'en' ? 'Available 7 days a week' : t('footer.available')}</li>
               </ul>
             </div>
           </div>

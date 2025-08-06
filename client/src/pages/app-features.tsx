@@ -532,7 +532,7 @@ function AppFeatures() {
         {/* Footer */}
         <footer className="bg-slate-800 text-white py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid md:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
               <div>
                 <div className="flex items-center mb-4">
                   <Calculator className="w-8 h-8 text-blue-400 mr-2" />
@@ -573,6 +573,15 @@ function AppFeatures() {
                   <Link href="/#contact" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Free 15-Min Trial' : 'Besplatno 15-min probno'}</Link>
                   <Link href="/#about" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'About Luka' : t('nav.about')}</Link>
                   <Link href="/#pricing" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Pricing' : t('nav.pricing')}</Link>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="font-semibold mb-4">{language === 'en' ? 'Contact' : t('footer.contact')}</h3>
+                <div className="space-y-2 text-slate-400">
+                  <p>luka@lukamath.com</p>
+                  <p>+385 97 6507 908</p>
+                  <p>{language === 'en' ? 'Available 7 days a week' : t('footer.available')}</p>
                 </div>
               </div>
             </div>
