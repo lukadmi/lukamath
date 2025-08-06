@@ -333,7 +333,7 @@ export const translations = {
     "app_features.get_started": "Registrirajte se besplatno",
     "app_features.learn_more": "Saznaj više",
     "app_features.features_title": "Sve što trebate da ostanete organizirani",
-    "app_features.features_subtitle": "Vaš osobni sustav za upravljanje domaćom zadaćom dizajniran da vas drži na pravom putu s zadacima, pitanjima i napretkom uz Luku kao vašeg privatnog nastavnika.",
+    "app_features.features_subtitle": "Vaš osobni sustav za upravljanje domaćom zadaćom dizajniran da vas drži na pravom putu sa zadacima, pitanjima i napretkom uz vašeg osobnog nastavnika.",
     "app_features.how_it_works_title": "Kako LukaMath aplikacija funkcionira",
     "app_features.how_it_works_subtitle": "Jednostavni koraci za transformaciju vašeg iskustva učenja matematike",
     "app_features.step1_title": "Stvorite svoj račun",
