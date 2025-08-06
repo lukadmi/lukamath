@@ -222,7 +222,7 @@ function useTranslations() {
 }
 
 // Pricing Section Component
-function PricingSection() {
+function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: string) => void }) {
   const [selectedLevel, setSelectedLevel] = useState<string>("middle-school");
   const { language, t } = useLanguage();
   
@@ -938,7 +938,7 @@ function HomeContent() {
         </div>
       </section>
       {/* Pricing Section */}
-      <PricingSection />
+      <PricingSection scrollToSection={scrollToSection} />
       {/* Resources Section */}
       <section id="resources" className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
