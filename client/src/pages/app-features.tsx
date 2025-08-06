@@ -558,11 +558,11 @@ function AppFeatures() {
               <div>
                 <h3 className="font-semibold mb-4">{language === 'en' ? 'Math Levels' : 'Razine matematike'}</h3>
                 <div className="space-y-2">
-                  <Link href="/#pricing" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Middle School Math' : t('level.middle_school')}</Link>
-                  <Link href="/#pricing" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'High School Math' : t('level.high_school')}</Link>
-                  <Link href="/#pricing" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Statistics' : t('level.statistics')}</Link>
-                  <Link href="/#pricing" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Linear Algebra' : t('level.linear_algebra')}</Link>
-                  <Link href="/#pricing" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'SAT/ACT Prep' : t('level.sat_act')}</Link>
+                  <Link href="/#services" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Middle School Math' : t('level.middle_school')}</Link>
+                  <Link href="/#services" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'High School Math' : t('level.high_school')}</Link>
+                  <Link href="/#services" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Statistics' : t('level.statistics')}</Link>
+                  <Link href="/#services" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Linear Algebra' : t('level.linear_algebra')}</Link>
+                  <Link href="/#services" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'SAT/ACT Prep' : t('level.sat_act')}</Link>
                 </div>
               </div>
               
