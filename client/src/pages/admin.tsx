@@ -60,32 +60,6 @@ function AdminDashboard() {
   const [homeworkDialogOpen, setHomeworkDialogOpen] = useState(false);
   const [availabilityDialogOpen, setAvailabilityDialogOpen] = useState(false);
 
-  // Redirect if not authenticated or not admin/tutor
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p>Loading dashboard...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
-          <p className="mb-4">Please log in to access the admin dashboard.</p>
-          <a href="/api/login" className="text-blue-600 hover:underline">
-            Login
-          </a>
-        </div>
-      </div>
-    );
-  }
-
   // Data queries with proper typing
   const { data: students = [], isLoading: studentsLoading } = useQuery({
     queryKey: ["/api/admin/students"],
@@ -876,6 +850,34 @@ function AdminDashboard() {
       </main>
     </div>
   );
+
+  // Handle loading and authentication states AFTER all hooks
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p>Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
+          <p className="mb-4">Please log in to access the admin dashboard.</p>
+          <a href="/api/login" className="text-blue-600 hover:underline">
+            Login
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  return dashboardContent;
 }
 
 export default AdminDashboard;
