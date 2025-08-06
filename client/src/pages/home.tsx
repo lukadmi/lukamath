@@ -372,7 +372,7 @@ function PricingSection() {
                       <ul className="space-y-3 mb-8">
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                          {language === 'en' ? 'Four 1-hour sessions' : t('pricing.four_sessions')}
+                          {language === 'en' ? 'Four 1-hour sessions (use within 1 month)' : t('pricing.four_sessions')}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-400 mr-3" />
@@ -412,7 +412,7 @@ function PricingSection() {
                       <ul className="space-y-3 mb-8">
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                          {language === 'en' ? 'Eight 1-hour sessions' : t('pricing.eight_sessions')}
+                          {language === 'en' ? 'Eight 1-hour sessions (use within 2 months)' : t('pricing.eight_sessions')}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />

@@ -224,7 +224,7 @@ export const translations = {
     "pricing.progress_tracking": "Praćenje napretka",
     "pricing.book_session": "Rezerviraj sat",
     "pricing.four_session_package": "Paket od 4 sata",
-    "pricing.four_sessions": "Četiri termina od sat vremena",
+    "pricing.four_sessions": "Četiri termina od sat vremena (iskoristiti u roku od 1 mjeseca)",
     "pricing.save": "Uštedite",
     "pricing.total": "ukupno",
     "pricing.structured_path": "Strukturirani put učenja",
@@ -232,7 +232,7 @@ export const translations = {
     "pricing.priority_scheduling": "Prioritetno raspoređivanje",
     "pricing.start_package": "Počni paket",
     "pricing.eight_session_intensive": "Intenzivni program od 8 sati",
-    "pricing.eight_sessions": "Osam termina od sat vremena",
+    "pricing.eight_sessions": "Osam termina od sat vremena (iskoristiti u roku od 2 mjeseca)",
     "pricing.comprehensive_curriculum": "Sveobuhvatan nastavni plan",
     "pricing.progress_assessments": "Procjene napretka",
     "pricing.flexible_scheduling": "Fleksibilno raspoređivanje",
@@ -285,11 +285,13 @@ export const translations = {
     // Math Levels
     "level.middle_school": "Matematika za osnovnu školu (5.-8. razred)",
     "level.high_school": "Matematika za srednju školu (1.-4. razred)", 
-    "level.university": "Sveučilišna matematika (sveučilišna razina)",
+    "level.statistics": "Statistika",
+    "level.linear_algebra": "Linearna algebra",
     "level.sat_act": "Državna matura (priprema za testove)",
     "level.middle_school_desc": "Osnove i temeljne vještine za uspjeh u srednjoj školi",
     "level.high_school_desc": "Napredni koncepti i priprema za fakultet", 
-    "level.university_desc": "Statistika i linearna algebra za fakultetski uspjeh",
+    "level.statistics_desc": "Statistička analiza i verojatnost za fakultetski uspjeh",
+    "level.linear_algebra_desc": "Matrice, vektori i linearne transformacije",
     "level.sat_act_desc": "Strategije testova i vježba za najbolji rezultat na Državnoj maturi",
     
     // Why Choose
