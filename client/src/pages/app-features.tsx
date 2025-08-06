@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Calculator, Users, BookOpen, Target, MessageSquare, TrendingUp, CheckCircle, Award, Clock, Smartphone, ArrowRight, Menu, X, Globe, LogIn, User, Calendar } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { LanguageContext, type Language, translations } from "@/hooks/useLanguage";
+import { useLanguage } from "@/hooks/useLanguage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -62,16 +62,7 @@ const stats = [
 function AppFeatures() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isAuthenticated, user } = useAuth();
-  const [language, setLanguage] = useState<Language>("en");
-
-  const t = (key: string) => {
-    const keys = key.split('.');
-    let value: any = translations[language];
-    for (const k of keys) {
-      value = value?.[k];
-    }
-    return value || key;
-  };
+  const { language, setLanguage, t } = useLanguage();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);

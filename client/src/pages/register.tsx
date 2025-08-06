@@ -13,6 +13,7 @@ import { apiRequest } from '@/lib/queryClient';
 import { Link } from 'wouter';
 import { ArrowLeft, UserPlus, GraduationCap, Globe, Target } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
+import { useLanguage } from '@/hooks/useLanguage';
 
 // Validation schemas
 const nameSchema = z.string().min(1, 'This field is required').max(50, 'Name must be less than 50 characters');
@@ -35,6 +36,7 @@ type RegisterData = z.infer<typeof registerSchema>;
 export default function Register() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
+  const { language, setLanguage, t } = useLanguage();
 
   const form = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
@@ -42,8 +44,8 @@ export default function Register() {
       firstName: '',
       lastName: '',
       email: '',
-      language: 'en',
-      mathLevel: '',
+      language: 'en' as const,
+      mathLevel: undefined,
       parentEmail: '',
       goals: '',
     },
@@ -65,43 +67,51 @@ export default function Register() {
     onSuccess: () => {
       setIsSubmitted(true);
       toast({
-        title: 'Registration Successful!',
-        description: 'Welcome to LukaMath! Please check your email for next steps.',
+        title: language === 'en' ? 'Registration Successful!' : t('register.success_title'),
+        description: language === 'en' ? 'Welcome to LukaMath! Please check your email for next steps.' : t('register.success_message'),
       });
     },
     onError: (error: any) => {
       toast({
-        title: 'Registration Failed',
-        description: error.message || 'Something went wrong. Please try again.',
+        title: language === 'en' ? 'Registration Failed' : 'Registracija neuspješna',
+        description: error.message || (language === 'en' ? 'Something went wrong. Please try again.' : 'Nešto je pošlo po zlu. Molimo pokušajte ponovo.'),
         variant: 'destructive',
       });
     },
   });
 
-  const onSubmit = (data: RegisterData) => {
+  const onSubmit = form.handleSubmit((data: RegisterData) => {
     registerMutation.mutate(data);
-  };
+  });
 
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl text-green-600">Registration Complete!</CardTitle>
+            <CardTitle className="text-2xl text-green-600">
+              {language === 'en' ? 'Registration Complete!' : t('register.success_title')}
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 text-center">
             <p className="text-gray-600">
-              Thank you for joining LukaMath! Your registration has been submitted successfully.
+              {language === 'en' ? 
+                'Thank you for joining LukaMath! Your registration has been submitted successfully.' :
+                'Hvala što ste se pridružili LukaMath-u! Vaša registracija je uspješno poslana.'
+              }
             </p>
             <p className="text-sm text-gray-500">
-              Luka will review your registration and contact you within 24 hours to schedule your first tutoring session.
+              {language === 'en' ?
+                'Luka will review your registration and contact you within 24 hours to schedule your first tutoring session.' :
+                'Luka će pregledati vašu registraciju i kontaktirati vas u roku od 24 sata za zakazivanje prve sesije podučavanja.'
+              }
             </p>
             <div className="space-y-2">
               <Button asChild className="w-full">
-                <Link href="/">Return to Home</Link>
+                <Link href="/">{language === 'en' ? 'Return to Home' : t('register.back_home')}</Link>
               </Button>
               <Button asChild variant="outline" className="w-full">
-                <Link href="/api/login">Login to Your Account</Link>
+                <Link href="/api/login">{language === 'en' ? 'Login to Your Account' : 'Prijavite se na vaš račun'}</Link>
               </Button>
             </div>
           </CardContent>
@@ -113,10 +123,26 @@ export default function Register() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900 flex items-center justify-center p-4">
       <Card className="w-full max-w-2xl">
-        <CardHeader className="text-center">
-          <CardTitle className="text-3xl text-blue-900">Join LukaMath</CardTitle>
+        <CardHeader className="text-center space-y-4">
+          <div className="flex justify-end">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setLanguage(language === "en" ? "hr" : "en")}
+              className="text-blue-600 hover:text-blue-800"
+            >
+              <Globe className="w-4 h-4 mr-1" />
+              {language === "en" ? "HR" : "EN"}
+            </Button>
+          </div>
+          <CardTitle className="text-3xl text-blue-900">
+            {language === 'en' ? 'Join LukaMath' : t('register.title')}
+          </CardTitle>
           <p className="text-gray-600 mt-2">
-            Start your personalized math tutoring journey with expert guidance
+            {language === 'en' ? 
+              'Start your personalized math tutoring journey with expert guidance' :
+              t('register.subtitle')
+            }
           </p>
         </CardHeader>
         <CardContent>
@@ -201,7 +227,7 @@ export default function Register() {
                 <Label>Current Math Level *</Label>
                 <Select
                   value={form.watch('mathLevel')}
-                  onValueChange={(value) => form.setValue('mathLevel', value)}
+                  onValueChange={(value) => form.setValue('mathLevel', value as 'middle' | 'high-school' | 'university' | 'sat-act')}
                 >
                   <SelectTrigger className="hover:scale-105 transition-transform">
                     <SelectValue placeholder="Select your level" />
