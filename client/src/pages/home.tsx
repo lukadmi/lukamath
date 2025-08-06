@@ -346,7 +346,10 @@ function PricingSection() {
                           {language === 'en' ? 'Practice materials' : t('pricing.practice_materials')}
                         </li>
                       </ul>
-                      <Button className="w-full bg-slate-600 hover:bg-slate-700">
+                      <Button 
+                        className="w-full bg-slate-600 hover:bg-slate-700"
+                        onClick={() => scrollToSection('contact')}
+                      >
                         {language === 'en' ? 'Book Session' : t('pricing.book_session')}
                       </Button>
                     </CardContent>
@@ -391,7 +394,10 @@ function PricingSection() {
                           {language === 'en' ? 'Priority scheduling' : t('pricing.priority_scheduling')}
                         </li>
                       </ul>
-                      <Button className="w-full bg-yellow-400 text-slate-800 hover:bg-yellow-300 font-semibold">
+                      <Button 
+                        className="w-full bg-yellow-400 text-slate-800 hover:bg-yellow-300 font-semibold"
+                        onClick={() => scrollToSection('contact')}
+                      >
                         {language === 'en' ? 'Start Package' : t('pricing.start_package')}
                       </Button>
                     </CardContent>
@@ -431,7 +437,10 @@ function PricingSection() {
                           {language === 'en' ? 'Flexible scheduling' : t('pricing.flexible_scheduling')}
                         </li>
                       </ul>
-                      <Button className="w-full bg-emerald-600 hover:bg-emerald-700">
+                      <Button 
+                        className="w-full bg-emerald-600 hover:bg-emerald-700"
+                        onClick={() => scrollToSection('contact')}
+                      >
                         {language === 'en' ? 'Start Intensive' : t('pricing.start_intensive')}
                       </Button>
                     </CardContent>
