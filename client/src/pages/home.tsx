@@ -579,13 +579,19 @@ function HomeContent() {
                 </div>
               ) : (
                 <div className="flex items-center space-x-2">
+                  <Link href="/register">
+                    <Button variant="ghost" className="hidden sm:flex hover:scale-105 transition-transform">
+                      <User className="w-4 h-4 mr-2" />
+                      Register
+                    </Button>
+                  </Link>
                   <a href="/api/login">
-                    <Button variant="outline" className="hidden md:flex">
+                    <Button variant="outline" className="hidden md:flex hover:scale-105 transition-transform">
                       <LogIn className="w-4 h-4 mr-2" />
                       {t("nav.login")}
                     </Button>
                   </a>
-                  <Button onClick={() => scrollToSection('contact')} className="bg-blue-600 text-white hover:bg-blue-700">
+                  <Button onClick={() => scrollToSection('contact')} className="bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 transition-transform">
                     {t("hero.cta.primary")}
                   </Button>
                 </div>

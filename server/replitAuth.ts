@@ -155,3 +155,32 @@ export const isAuthenticated: RequestHandler = async (req, res, next) => {
     return;
   }
 };
+
+// Role-based access control middleware
+export const requireRole = (roles: string | string[]): RequestHandler => {
+  const allowedRoles = Array.isArray(roles) ? roles : [roles];
+  
+  return async (req: any, res, next) => {
+    try {
+      const userId = req.user?.claims?.sub;
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      // Get user from database to check role
+      const { storage } = await import("./storage");
+      const user = await storage.getUser(userId);
+      
+      if (!user || !allowedRoles.includes(user.role || "student")) {
+        return res.status(403).json({ message: "Access denied. Insufficient permissions." });
+      }
+
+      // Add user info to request for convenience
+      req.currentUser = user;
+      next();
+    } catch (error) {
+      console.error("Error checking user role:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  };
+};

@@ -1,7 +1,8 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth, isAuthenticated, requireRole } from "./replitAuth";
+import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 import { 
   insertContactSchema, 
   insertHomeworkSchema, 
@@ -26,22 +27,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin middleware - check if user is admin
-  const isAdmin = async (req: any, res: any, next: any) => {
-    try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      if (!user || user.role !== 'admin') {
-        return res.status(403).json({ message: "Admin access required" });
-      }
-      next();
-    } catch (error) {
-      res.status(500).json({ message: "Failed to verify admin status" });
-    }
-  };
+  // Object storage service
+  const objectStorageService = new ObjectStorageService();
 
   // Admin routes
-  app.get('/api/admin/students', isAuthenticated, isAdmin, async (req: any, res) => {
+  app.get('/api/admin/students', isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
     try {
       const students = await storage.getAllStudents();
       res.json(students);
@@ -51,7 +41,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/admin/homework', isAuthenticated, isAdmin, async (req: any, res) => {
+  app.get('/api/admin/homework', isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
     try {
       const homework = await storage.getAllHomework();
       res.json(homework);
@@ -61,7 +51,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/admin/questions', isAuthenticated, isAdmin, async (req: any, res) => {
+  app.get('/api/admin/questions', isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
     try {
       const questions = await storage.getAllQuestions();
       res.json(questions);
@@ -71,7 +61,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get('/api/admin/contacts', isAuthenticated, isAdmin, async (req: any, res) => {
+  app.get('/api/admin/contacts', isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
     try {
       const contacts = await storage.getAllContacts();
       res.json(contacts);
@@ -81,34 +71,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // File upload endpoint for homework
-  app.post("/api/homework/files", isAuthenticated, async (req: any, res) => {
+  // Get upload URL for homework files (admin/tutor only)
+  app.post("/api/homework/upload-url", isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
     try {
-      const { homeworkId, purpose } = req.body;
+      const uploadURL = await objectStorageService.getObjectEntityUploadURL();
+      res.json({ uploadURL });
+    } catch (error) {
+      console.error("Error generating upload URL:", error);
+      res.status(500).json({ message: "Failed to generate upload URL" });
+    }
+  });
+
+  // Save homework file metadata after upload
+  app.post("/api/homework/files", isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
+    try {
+      const { homeworkId, fileName, fileUrl, fileType, purpose } = req.body;
       const uploaderId = req.user.claims.sub;
       
-      // In a real implementation, you would handle actual file uploads here
-      // For now, we'll simulate file storage and create database records
-      const mockFiles = [
-        {
-          homeworkId,
-          fileName: "sample_worksheet.pdf",
-          fileUrl: "/files/sample_worksheet.pdf",
-          fileType: "pdf",
-          uploadedBy: uploaderId,
-          purpose: purpose || "assignment"
-        }
-      ];
+      // Normalize the file URL from object storage
+      const normalizedPath = objectStorageService.normalizeObjectEntityPath(fileUrl);
       
-      const savedFiles = await storage.addMultipleHomeworkFiles(mockFiles);
+      const fileData = {
+        homeworkId,
+        fileName,
+        fileUrl: normalizedPath,
+        fileType,
+        uploadedBy: uploaderId,
+        purpose: purpose || "assignment"
+      };
+      
+      const savedFile = await storage.addHomeworkFile(fileData);
       
       res.json({ 
-        message: "Files uploaded successfully",
-        files: savedFiles
+        message: "File metadata saved successfully",
+        file: savedFile
       });
     } catch (error) {
-      console.error("Error uploading files:", error);
-      res.status(500).json({ message: "Failed to upload files" });
+      console.error("Error saving file metadata:", error);
+      res.status(500).json({ message: "Failed to save file metadata" });
+    }
+  });
+
+  // Serve homework files (authenticated users only)
+  app.get("/objects/:objectPath(*)", isAuthenticated, async (req, res) => {
+    try {
+      const objectFile = await objectStorageService.getObjectEntityFile(req.path);
+      objectStorageService.downloadObject(objectFile, res);
+    } catch (error) {
+      console.error("Error accessing file:", error);
+      if (error instanceof ObjectNotFoundError) {
+        return res.sendStatus(404);
+      }
+      return res.sendStatus(500);
     }
   });
 
@@ -135,6 +149,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
           message: "Internal server error" 
         });
       }
+    }
+  });
+
+  // Student registration endpoint (public)
+  const registerSchema = z.object({
+    firstName: z.string().min(1),
+    lastName: z.string().min(1),
+    email: z.string().email(),
+    language: z.enum(['en', 'hr']),
+    mathLevel: z.string().min(1),
+    parentEmail: z.string().email().optional().or(z.literal('')),
+    goals: z.string().min(10),
+  });
+
+  app.post("/api/register", async (req, res) => {
+    try {
+      const validatedData = registerSchema.parse(req.body);
+      
+      // Check if user already exists
+      const existingUser = await storage.getUserByEmail(validatedData.email);
+      if (existingUser) {
+        return res.status(400).json({ 
+          message: "An account with this email already exists. Please sign in instead." 
+        });
+      }
+
+      // Create new student user
+      const newUser = await storage.upsertUser({
+        email: validatedData.email,
+        firstName: validatedData.firstName,
+        lastName: validatedData.lastName,
+        role: 'student',
+        language: validatedData.language,
+      });
+
+      // Create a contact record with registration details
+      await storage.createContact({
+        name: `${validatedData.firstName} ${validatedData.lastName}`,
+        email: validatedData.email,
+        phone: validatedData.parentEmail || '',
+        subject: validatedData.mathLevel,
+        message: `New student registration - Math Level: ${validatedData.mathLevel}\n\nGoals: ${validatedData.goals}${validatedData.parentEmail ? `\n\nParent/Guardian Email: ${validatedData.parentEmail}` : ''}`,
+      });
+
+      res.status(201).json({ 
+        message: "Registration successful! Welcome to LukaMath.",
+        userId: newUser.id
+      });
+    } catch (error) {
+      console.error("Error during registration:", error);
+      res.status(500).json({ message: "Registration failed. Please try again." });
     }
   });
 
@@ -173,7 +238,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/homework", isAuthenticated, async (req: any, res) => {
+  app.post("/api/homework", isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
     try {
       const tutorId = req.user.claims.sub;
       const validatedData = insertHomeworkSchema.parse({
