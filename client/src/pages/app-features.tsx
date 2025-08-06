@@ -558,10 +558,11 @@ function AppFeatures() {
               <div>
                 <h3 className="font-semibold mb-4">{language === 'en' ? 'Math Levels' : 'Razine matematike'}</h3>
                 <div className="space-y-2">
-                  <span className="block text-slate-400">{language === 'en' ? 'Middle School Math' : 'Matematika za osnovnu školu'}</span>
-                  <span className="block text-slate-400">{language === 'en' ? 'High School Math' : 'Matematika za srednju školu'}</span>
-                  <span className="block text-slate-400">{language === 'en' ? 'University Math' : 'Sveučilišna matematika'}</span> 
-                  <span className="block text-slate-400">{language === 'en' ? 'SAT/ACT Prep' : 'Državna matura'}</span>
+                  <Link href="/" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Middle School Math' : t('level.middle_school')}</Link>
+                  <Link href="/" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'High School Math' : t('level.high_school')}</Link>
+                  <Link href="/" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Statistics' : t('level.statistics')}</Link>
+                  <Link href="/" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Linear Algebra' : t('level.linear_algebra')}</Link>
+                  <Link href="/" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'SAT/ACT Prep' : t('level.sat_act')}</Link>
                 </div>
               </div>
               
@@ -571,9 +572,9 @@ function AppFeatures() {
                   {isAuthenticated ? (
                     <Link href="/app" className="block text-blue-400 hover:text-blue-300 transition-colors">{language === 'en' ? 'My Dashboard' : 'Moja ploča'}</Link>
                   ) : (
-                    <a href="/api/login" className="block text-blue-400 hover:text-blue-300 transition-colors">{language === 'en' ? 'Sign Up Free' : 'Registrirajte se besplatno'}</a>
+                    <Link href="/register" className="block text-blue-400 hover:text-blue-300 transition-colors">{language === 'en' ? 'Sign Up Free' : 'Registrirajte se besplatno'}</Link>
                   )}
-                  <span className="block text-slate-400">{language === 'en' ? 'Free 15-Min Trial' : 'Besplatno 15-min probno'}</span>
+                  <Link href="/" className="block text-slate-400 hover:text-white transition-colors">{language === 'en' ? 'Free 15-Min Trial' : 'Besplatno 15-min probno'}</Link>
                 </div>
               </div>
             </div>

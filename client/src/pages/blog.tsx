@@ -355,13 +355,66 @@ export default function Blog() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-800 text-white py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex items-center justify-center mb-4">
-            <Calculator className="w-6 h-6 mr-2" />
-            <span className="text-xl font-bold">LukaMath</span>
+      <footer className="bg-slate-800 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="md:col-span-2">
+              <div className="flex items-center mb-4">
+                <Calculator className="w-8 h-8 mr-2" />
+                <span className="text-2xl font-bold">LukaMath</span>
+              </div>
+              <p className="text-slate-300 mb-4 max-w-md">
+                {language === 'en' ? 'Helping students build confidence and achieve success in mathematics through personalized, one-on-one tutoring.' : t('footer.description')}
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4">
+                {language === 'en' ? 'Math Levels' : 'Razine matematike'}
+              </h4>
+              <ul className="space-y-2">
+                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Middle School Math' : t('level.middle_school')}
+                </Link></li>
+                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'High School Math' : t('level.high_school')}
+                </Link></li>
+                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Statistics' : t('level.statistics')}
+                </Link></li>
+                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Linear Algebra' : t('level.linear_algebra')}
+                </Link></li>
+                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'SAT/ACT Prep' : t('level.sat_act')}
+                </Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4">
+                {language === 'en' ? 'Get Started' : 'Počnite'}
+              </h4>
+              <ul className="space-y-2">
+                <li><Link href="/register" className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Sign Up Free' : 'Registrirajte se besplatno'}
+                </Link></li>
+                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Free 15-Min Trial' : 'Besplatno 15-min probno'}
+                </Link></li>
+                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'About Luka' : t('nav.about')}
+                </Link></li>
+                <li><Link href="/" className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Pricing' : t('nav.pricing')}
+                </Link></li>
+              </ul>
+            </div>
           </div>
-          <p className="text-slate-400">© 2024 LukaMath. Making math simple, one student at a time.</p>
+          
+          <div className="border-t border-slate-700 mt-12 pt-8 text-center text-slate-400">
+            <p>{language === 'en' ? '© 2025 LukaMath. All rights reserved. | Privacy Policy | Terms of Service' : t('footer.copyright')}</p>
+          </div>
         </div>
       </footer>
     </div>

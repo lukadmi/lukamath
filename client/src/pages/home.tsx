@@ -1230,21 +1230,43 @@ function HomeContent() {
             
             <div>
               <h4 className="text-lg font-semibold mb-4">
-                {language === 'en' ? 'Quick Links' : t('footer.quick_links')}
+                {language === 'en' ? 'Math Levels' : 'Razine matematike'}
               </h4>
               <ul className="space-y-2">
                 <li><button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-white transition-colors">
-                  {language === 'en' ? 'Services' : t('nav.services')}
+                  {language === 'en' ? 'Middle School Math' : t('level.middle_school')}
+                </button></li>
+                <li><button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'High School Math' : t('level.high_school')}
+                </button></li>
+                <li><button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Statistics' : t('level.statistics')}
+                </button></li>
+                <li><button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Linear Algebra' : t('level.linear_algebra')}
+                </button></li>
+                <li><button onClick={() => scrollToSection('services')} className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'SAT/ACT Prep' : t('level.sat_act')}
+                </button></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-lg font-semibold mb-4">
+                {language === 'en' ? 'Get Started' : 'Počnite'}
+              </h4>
+              <ul className="space-y-2">
+                <li><Link href="/register" className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Sign Up Free' : 'Registrirajte se besplatno'}
+                </Link></li>
+                <li><button onClick={() => scrollToSection('contact')} className="text-slate-300 hover:text-white transition-colors">
+                  {language === 'en' ? 'Free 15-Min Trial' : 'Besplatno 15-min probno'}
                 </button></li>
                 <li><button onClick={() => scrollToSection('about')} className="text-slate-300 hover:text-white transition-colors">
-                  {language === 'en' ? 'About' : t('nav.about')}
+                  {language === 'en' ? 'About Luka' : t('nav.about')}
                 </button></li>
-
                 <li><button onClick={() => scrollToSection('pricing')} className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'Pricing' : t('nav.pricing')}
-                </button></li>
-                <li><button onClick={() => scrollToSection('resources')} className="text-slate-300 hover:text-white transition-colors">
-                  {language === 'en' ? 'Resources' : t('nav.resources')}
                 </button></li>
               </ul>
             </div>
@@ -1255,6 +1277,7 @@ function HomeContent() {
               </h4>
               <ul className="space-y-2 text-slate-300">
                 <li>luka@lukamath.com</li>
+                <li>+385 97 6507 908</li>
                 <li>{language === 'en' ? 'Available 7 days a week' : t('footer.available')}</li>
               </ul>
             </div>
