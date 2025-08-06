@@ -70,3 +70,6 @@ Preferred communication style: Simple, everyday language.
 - **Language-Specific Terminology**: Croatian education system terms ("Državna matura", grade levels 5.-8. razred/1.-4. razred)
 - **Seamless Language Switching**: Language toggle buttons in all pages with persistent language preference
 - **Croatian Market Ready**: Accurate Croatian translations (not Serbian/Bosnian) for targeting Croatian students
+- **Google Analytics Integration**: Comprehensive tracking system implemented across all pages and interactions
+- **Event Tracking**: Contact form submissions, registration attempts, navigation clicks, and CTA button interactions
+- **Analytics Infrastructure**: Proper initialization, page view tracking, and custom event tracking with detailed categorization

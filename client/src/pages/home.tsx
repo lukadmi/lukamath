@@ -7,6 +7,7 @@ import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Ma
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/hooks/useLanguage";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -479,6 +480,9 @@ function HomeContent() {
       return response.json();
     },
     onSuccess: () => {
+      // Track contact form submission in Google Analytics
+      trackEvent('contact_form_submit', 'engagement', 'home_page', 1);
+      
       setSuccessModalOpen(true);
       form.reset();
       toast({
@@ -503,6 +507,8 @@ function HomeContent() {
   };
 
   const onSubmit = (data: InsertContact) => {
+    // Track form submission attempt
+    trackEvent('contact_form_attempt', 'engagement', 'home_page', 1);
     contactMutation.mutate(data);
   };
 
@@ -551,12 +557,18 @@ function HomeContent() {
                   {language === 'en' ? 'Resources' : t('nav.resources')}
                 </button>
                 <Link href="/blog">
-                  <span className="nav-item text-slate-600 hover:text-blue-600 transition-colors cursor-pointer">
+                  <span 
+                    className="nav-item text-slate-600 hover:text-blue-600 transition-colors cursor-pointer"
+                    onClick={() => trackEvent('navigation_click', 'engagement', 'blog_link', 1)}
+                  >
                     {language === 'en' ? 'Blog' : t('nav.blog')}
                   </span>
                 </Link>
                 <Link href="/app-features">
-                  <span className="nav-item text-slate-600 hover:text-blue-600 transition-colors cursor-pointer">
+                  <span 
+                    className="nav-item text-slate-600 hover:text-blue-600 transition-colors cursor-pointer"
+                    onClick={() => trackEvent('navigation_click', 'engagement', 'app_features_link', 1)}
+                  >
                     App
                   </span>
                 </Link>
@@ -595,18 +607,29 @@ function HomeContent() {
               ) : (
                 <div className="flex items-center space-x-2">
                   <Link href="/register">
-                    <Button variant="ghost" className="hidden sm:flex hover:scale-105 transition-transform">
+                    <Button 
+                      variant="ghost" 
+                      className="hidden sm:flex hover:scale-105 transition-transform"
+                      onClick={() => trackEvent('navigation_click', 'conversion', 'register_button', 1)}
+                    >
                       <User className="w-4 h-4 mr-2" />
                       Register
                     </Button>
                   </Link>
                   <a href="/api/login">
-                    <Button variant="outline" className="hidden md:flex hover:scale-105 transition-transform">
+                    <Button 
+                      variant="outline" 
+                      className="hidden md:flex hover:scale-105 transition-transform"
+                      onClick={() => trackEvent('navigation_click', 'engagement', 'login_button', 1)}
+                    >
                       <LogIn className="w-4 h-4 mr-2" />
                       {language === 'en' ? 'Login' : t("nav.login")}
                     </Button>
                   </a>
-                  <Button onClick={() => scrollToSection('contact')} className="bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 transition-transform">
+                  <Button onClick={() => {
+                    trackEvent('cta_click', 'engagement', 'nav_book_trial', 1);
+                    scrollToSection('contact');
+                  }} className="bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 transition-transform">
                     {language === 'en' ? 'Book Free Trial Session' : t("hero.cta_primary")}
                   </Button>
                 </div>
@@ -677,7 +700,10 @@ function HomeContent() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button 
-                  onClick={() => scrollToSection('contact')}
+                  onClick={() => {
+                    trackEvent('cta_click', 'engagement', 'hero_book_trial', 1);
+                    scrollToSection('contact');
+                  }}
                   className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                 >
                   <Play className="w-5 h-5 mr-2" />
@@ -687,6 +713,7 @@ function HomeContent() {
                   <Button 
                     variant="outline"
                     className="border-white bg-white text-slate-800 hover:bg-slate-100 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
+                    onClick={() => trackEvent('cta_click', 'engagement', 'hero_explore_app', 1)}
                   >
                     <Smartphone className="w-5 h-5 mr-2" />
                     {language === 'en' ? 'Explore Our App' : t('hero.cta_secondary')}

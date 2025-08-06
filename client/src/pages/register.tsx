@@ -14,6 +14,7 @@ import { Link } from 'wouter';
 import { ArrowLeft, UserPlus, GraduationCap, Globe, Target } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { useLanguage } from '@/hooks/useLanguage';
+import { trackEvent } from '@/lib/analytics';
 
 // Validation schemas
 const nameSchema = z.string().min(1, 'This field is required').max(50, 'Name must be less than 50 characters');
@@ -65,6 +66,9 @@ export default function Register() {
       return response.json();
     },
     onSuccess: () => {
+      // Track registration conversion in Google Analytics
+      trackEvent('registration_complete', 'conversion', 'student_registration', 1);
+      
       setIsSubmitted(true);
       toast({
         title: language === 'en' ? 'Registration Successful!' : t('register.success_title'),
@@ -81,6 +85,8 @@ export default function Register() {
   });
 
   const onSubmit = form.handleSubmit((data: RegisterData) => {
+    // Track registration attempt
+    trackEvent('registration_attempt', 'engagement', data.mathLevel, 1);
     registerMutation.mutate(data);
   });
 
