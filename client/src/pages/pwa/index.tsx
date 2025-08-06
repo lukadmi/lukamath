@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
-import { Calculator, Globe, Smartphone, BookOpen } from 'lucide-react';
+import { Calculator, Globe, Smartphone, BookOpen, Download, Share } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Helmet } from 'react-helmet-async';
@@ -46,6 +46,9 @@ export default function PWAIndex() {
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
   const [, setLocation] = useLocation();
   
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showInstallButton, setShowInstallButton] = useState(false);
+
   useEffect(() => {
     // Register PWA service worker
     if ('serviceWorker' in navigator) {
@@ -55,13 +58,32 @@ export default function PWAIndex() {
     }
 
     // Add to home screen prompt
-    let deferredPrompt: any;
-    window.addEventListener('beforeinstallprompt', (e) => {
+    const handleBeforeInstallPrompt = (e: any) => {
       e.preventDefault();
-      deferredPrompt = e;
-      // Show install button if needed
-    });
+      setDeferredPrompt(e);
+      setShowInstallButton(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
   }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      
+      if (outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      }
+      
+      setDeferredPrompt(null);
+      setShowInstallButton(false);
+    }
+  };
 
   const t = selectedLanguage ? translations[selectedLanguage] : translations.en;
 
@@ -178,6 +200,17 @@ export default function PWAIndex() {
             </Card>
 
             <div className="space-y-3">
+              {/* Install App Button */}
+              {showInstallButton && (
+                <Button 
+                  onClick={handleInstallClick} 
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 h-12 mb-3"
+                >
+                  <Download className="w-5 h-5 mr-2" />
+                  {selectedLanguage === 'hr' ? 'Instaliraj aplikaciju' : 'Install App'}
+                </Button>
+              )}
+              
               <Button onClick={handleContinue} className="w-full bg-blue-600 hover:bg-blue-700 h-12">
                 {t.getStarted}
               </Button>
@@ -190,6 +223,20 @@ export default function PWAIndex() {
                   </Button>
                 </Link>
               </div>
+              
+              {/* Share Button for iOS/other devices */}
+              {!showInstallButton && navigator.userAgent.includes('iPhone') && (
+                <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                  <div className="flex items-center text-sm text-blue-800">
+                    <Share className="w-4 h-4 mr-2" />
+                    <span>
+                      {selectedLanguage === 'hr' 
+                        ? 'iOS: Dodirnite Dijeli → Dodaj na početni zaslon' 
+                        : 'iOS: Tap Share → Add to Home Screen'}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}

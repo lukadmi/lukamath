@@ -39,7 +39,8 @@ import {
   FileText,
   Send,
   TrendingUp,
-  BarChart3
+  BarChart3,
+  Smartphone
 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Link } from "wouter";
@@ -221,6 +222,12 @@ function StudentAppContent() {
                   <User className="w-4 h-4" />
                   <span>{(user as any)?.firstName || (user as any)?.email || "Student"}</span>
                 </div>
+                <Link href="/pwa">
+                  <Button variant="outline" size="sm" className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100">
+                    <Smartphone className="w-4 h-4 mr-1" />
+                    {language === 'en' ? 'Mobile App' : 'Mobilna aplikacija'}
+                  </Button>
+                </Link>
                 <Link href="/">
                   <Button variant="outline" size="sm">
                     <Home className="w-4 h-4 mr-1" />
@@ -245,9 +252,33 @@ function StudentAppContent() {
           <h1 className="text-3xl font-bold text-slate-900 mb-2">
             {language === 'en' ? `Welcome back, ${(user as any)?.firstName || "Student"}!` : `${t('app.welcome')} ${(user as any)?.firstName || "učenik"}!`}
           </h1>
-          <p className="text-slate-600">
+          <p className="text-slate-600 mb-4">
             {language === 'en' ? 'Track your progress, submit homework, and ask questions.' : 'Pratite svoj napredak, predajte domaće zadatke i postavite pitanja.'}
           </p>
+          
+          {/* Mobile App Promotion */}
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <div className="bg-blue-100 p-2 rounded-lg mr-3">
+                  <Smartphone className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-800">
+                    {language === 'en' ? 'Try our Mobile App!' : 'Probajte našu mobilnu aplikaciju!'}
+                  </h3>
+                  <p className="text-sm text-slate-600">
+                    {language === 'en' ? 'Better experience on your phone with offline access' : 'Bolje iskustvo na telefonu s offline pristupom'}
+                  </p>
+                </div>
+              </div>
+              <Link href="/pwa">
+                <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                  {language === 'en' ? 'Open App' : 'Otvori aplikaciju'}
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">

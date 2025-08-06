@@ -79,3 +79,5 @@ Preferred communication style: Simple, everyday language.
 - **Progressive Web App (PWA)**: Standalone student app developed with mandatory language selection, complete authentication flow, homework management, progress tracking, and offline capabilities via service worker
 - **PWA Features**: Mobile-optimized interface, bottom navigation, bilingual support, background sync for homework submissions, installable app experience with manifest.json
 - **PWA Architecture**: Dedicated /pwa routes for entry point, authentication, dashboard, homework management, and progress tracking with proper mobile responsive design
+- **PWA Integration**: PWA linked from main /app page with prominent mobile app promotion section and header navigation button
+- **Download button implemented on /pwa page for app installation on mobile devices with iOS-specific instructions for Safari users
