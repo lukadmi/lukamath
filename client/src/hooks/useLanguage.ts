@@ -167,7 +167,7 @@ export const translations = {
     // Hero Section
     "hero.title": "Svladajte matematiku s personaliziranim online podučavanjem",
     "hero.subtitle": "Stručno individualno podučavanje matematike od osnovne do sveučilišne razine. Izgradite samopouzdanje, poboljšajte ocjene i postignite svoje akademske ciljeve.",
-    "hero.cta_primary": "Rezerviraj besplatni probni sat",
+    "hero.cta_primary": "Rezerviraj probni sat (15min)",
     "hero.cta_secondary": "Saznaj više o uslugama",
     "hero.trial_duration": "15-minutni besplatni probni sat",
     
@@ -274,7 +274,7 @@ export const translations = {
     "contact.math_level": "Razina matematike",
     "contact.goals": "Opišite mi svoje matematičke ciljeve",
     "contact.goals_placeholder": "S kojim specifičnim temama trebate pomoć? Koji su vaši ciljevi?",
-    "contact.submit": "Rezerviraj moj 15-minutni besplatni probni sat",
+    "contact.submit": "Rezerviraj moj probni sat (15min)",
     "contact.response_time": "Odgovorit ću u roku od 24 sata za dogovaranje sesije",
     "contact.lets_connect": "Povežimo se",
     "contact.email_label": "Email",
