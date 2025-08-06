@@ -516,20 +516,20 @@ function HomeContent() {
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
                 <button onClick={() => scrollToSection('services')} className="nav-item text-slate-600 hover:text-blue-600 transition-colors">
-                  {t('nav.services')}
+                  {language === 'en' ? 'Services' : t('nav.services')}
                 </button>
                 <button onClick={() => scrollToSection('about')} className="nav-item text-slate-600 hover:text-blue-600 transition-colors">
-                  {t('nav.about')}
+                  {language === 'en' ? 'About' : t('nav.about')}
                 </button>
                 <button onClick={() => scrollToSection('pricing')} className="nav-item text-slate-600 hover:text-blue-600 transition-colors">
-                  {t('nav.pricing')}
+                  {language === 'en' ? 'Pricing' : t('nav.pricing')}
                 </button>
                 <button onClick={() => scrollToSection('resources')} className="nav-item text-slate-600 hover:text-blue-600 transition-colors">
-                  {t('nav.resources')}
+                  {language === 'en' ? 'Resources' : t('nav.resources')}
                 </button>
                 <Link href="/blog">
                   <span className="nav-item text-slate-600 hover:text-blue-600 transition-colors cursor-pointer">
-                    {t('nav.blog')}
+                    {language === 'en' ? 'Blog' : t('nav.blog')}
                   </span>
                 </Link>
                 <Link href="/app-features">
@@ -560,7 +560,7 @@ function HomeContent() {
                   <Link href="/app">
                     <Button variant="outline" className="hidden md:flex">
                       <User className="w-4 h-4 mr-2" />
-                      {t("nav.student_app")}
+                      {language === 'en' ? 'Student App' : t("nav.student_app")}
                     </Button>
                   </Link>
                   <a href="/api/logout">
@@ -580,11 +580,11 @@ function HomeContent() {
                   <a href="/api/login">
                     <Button variant="outline" className="hidden md:flex hover:scale-105 transition-transform">
                       <LogIn className="w-4 h-4 mr-2" />
-                      {t("nav.login")}
+                      {language === 'en' ? 'Login' : t("nav.login")}
                     </Button>
                   </a>
                   <Button onClick={() => scrollToSection('contact')} className="bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 transition-transform">
-                    {t("hero.cta_primary")}
+                    {language === 'en' ? 'Book Free Trial Session' : t("hero.cta_primary")}
                   </Button>
                 </div>
               )}
@@ -639,10 +639,18 @@ function HomeContent() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                {t('hero.title')}
+                {language === 'en' ? (
+                  <>
+                    Ace Your Math Tests — 
+                    <span className="text-gradient"> One Problem at a Time</span>
+                  </>
+                ) : t('hero.title')}
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed">
-                {t('hero.subtitle')}
+                {language === 'en' ? 
+                  'Personalized, online one-on-one sessions that turn confusion into confidence.' : 
+                  t('hero.subtitle')
+                }
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button 
@@ -650,7 +658,7 @@ function HomeContent() {
                   className="bg-yellow-400 text-slate-800 hover:bg-yellow-300 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                 >
                   <Play className="w-5 h-5 mr-2" />
-                  {t('hero.cta_primary')}
+                  {language === 'en' ? 'Book Your Free 15-Min Trial' : t('hero.cta_primary')}
                 </Button>
                 <Link href="/app-features">
                   <Button 
@@ -658,7 +666,7 @@ function HomeContent() {
                     className="border-white bg-white text-slate-800 hover:bg-slate-100 hover:scale-105 text-lg px-8 py-4 h-auto shadow-lg font-semibold transition-transform duration-200"
                   >
                     <Smartphone className="w-5 h-5 mr-2" />
-                    {t('hero.cta_secondary')}
+                    {language === 'en' ? 'Explore Our App' : t('hero.cta_secondary')}
                   </Button>
                 </Link>
               </div>
@@ -684,8 +692,12 @@ function HomeContent() {
       <section id="services" className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-800 mb-4">Math Made Simple</h2>
-            <p className="text-xl text-slate-600">From middle school foundations to university-level concepts</p>
+            <h2 className="text-4xl font-bold text-slate-800 mb-4">
+              {language === 'en' ? 'Math Made Simple' : t('services.title')}
+            </h2>
+            <p className="text-xl text-slate-600">
+              {language === 'en' ? 'From middle school foundations to university-level concepts' : t('services.subtitle')}
+            </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -695,15 +707,38 @@ function HomeContent() {
                   <div className={`text-4xl font-bold mb-4 ${service.color}`}>
                     {service.icon}
                   </div>
-                  <CardTitle className="text-2xl mb-3">{service.title}</CardTitle>
+                  <CardTitle className="text-2xl mb-3">
+                    {language === 'en' ? service.title : 
+                      service.id === 'middle' ? t('services.middle_school') :
+                      service.id === 'high' ? t('services.high_school') :
+                      service.id === 'university' ? t('services.university') :
+                      t('services.sat_act')
+                    }
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-slate-600 mb-4">{service.description}</p>
-                  <div className={`text-2xl font-bold mb-2 ${service.color}`}>${service.price}/hr</div>
-                  <p className="text-sm text-slate-500">{service.tagline}</p>
+                  <p className="text-slate-600 mb-4">
+                    {language === 'en' ? service.description : 
+                      service.id === 'middle' ? t('services.middle_desc') :
+                      service.id === 'high' ? t('services.high_desc') :
+                      service.id === 'university' ? t('services.university_desc') :
+                      t('services.sat_desc')
+                    }
+                  </p>
+                  <div className={`text-2xl font-bold mb-2 ${service.color}`}>
+                    ${service.price}{language === 'en' ? '/hr' : t('services.per_hour')}
+                  </div>
+                  <p className="text-sm text-slate-500">
+                    {language === 'en' ? service.tagline : 
+                      service.id === 'middle' ? t('services.middle_tagline') :
+                      service.id === 'high' ? t('services.high_tagline') :
+                      service.id === 'university' ? t('services.university_tagline') :
+                      t('services.most_popular')
+                    }
+                  </p>
                   {service.popular && (
                     <Badge className="mt-2 bg-blue-600 text-white">
-                      Most Popular
+                      {language === 'en' ? 'Most Popular' : t('services.most_popular')}
                     </Badge>
                   )}
                 </CardContent>
@@ -717,21 +752,25 @@ function HomeContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-slate-800 mb-6">Meet Your Math Mentor</h2>
-              <p className="text-lg text-slate-600 mb-6 leading-relaxed">I'm Luka, and I've been helping students conquer their math fears for over 5 years. With a degree in Data Science in progress and a passion for teaching, I specialize in making complex concepts simple.</p>
+              <h2 className="text-4xl font-bold text-slate-800 mb-6">
+                {language === 'en' ? 'Meet Your Math Mentor' : t('about.title')}
+              </h2>
+              <p className="text-lg text-slate-600 mb-6 leading-relaxed">
+                {language === 'en' ? "I'm Luka, and I've been helping students conquer their math fears for over 5 years. With a degree in Data Science in progress and a passion for teaching, I specialize in making complex concepts simple." : t('about.description')}
+              </p>
               <div className="space-y-4">
                 <div className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-emerald-600 mr-3" />
-                  <span>5+ years of tutoring experience</span>
+                  <span>{language === 'en' ? '5+ years of tutoring experience' : t('about.experience')}</span>
                 </div>
                 <div className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-emerald-600 mr-3" />
-                  <span>Data Science degree from top university</span>
+                  <span>{language === 'en' ? 'Data Science degree from top university' : t('about.education')}</span>
                 </div>
                 
                 <div className="flex items-center">
                   <CheckCircle className="w-5 h-5 text-emerald-600 mr-3" />
-                  <span>Specialized in test preparation</span>
+                  <span>{language === 'en' ? 'Specialized in test preparation' : t('about.specialization')}</span>
                 </div>
               </div>
             </div>
