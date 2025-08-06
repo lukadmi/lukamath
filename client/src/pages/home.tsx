@@ -30,6 +30,7 @@ const mathLevels = [
     title: "Middle School Math",
     description: "Grades 6-8",
     price: 20,
+    priceEur: 15,
     color: "text-blue-600"
   },
   {
@@ -38,6 +39,7 @@ const mathLevels = [
     title: "High School Math", 
     description: "Grades 9-12",
     price: 30,
+    priceEur: 20,
     color: "text-emerald-600"
   },
   {
@@ -46,6 +48,7 @@ const mathLevels = [
     title: "University Math",
     description: "College Level", 
     price: 40,
+    priceEur: 25,
     color: "text-purple-600"
   },
   {
@@ -53,7 +56,8 @@ const mathLevels = [
     icon: "🏆",
     title: "SAT/ACT Prep",
     description: "Test Preparation",
-    price: 45, 
+    price: 45,
+    priceEur: 20,
     color: "text-orange-600",
     popular: true
   }
@@ -66,6 +70,7 @@ const services = [
     title: "Middle School Math",
     description: "Basic algebra, fractions, and foundational problem-solving",
     price: 20,
+    priceEur: 15,
     color: "text-blue-600",
     tagline: "Start strong with the basics"
   },
@@ -75,6 +80,7 @@ const services = [
     title: "High School Math", 
     description: "Algebra, geometry, trigonometry, and pre-calculus",
     price: 30,
+    priceEur: 20,
     color: "text-emerald-600",
     tagline: "Master advanced concepts"
   },
@@ -84,6 +90,7 @@ const services = [
     title: "University Math",
     description: "Statistics and linear algebra for college success", 
     price: 40,
+    priceEur: 25,
     color: "text-purple-600",
     tagline: "Excel in higher mathematics"
   },
@@ -92,7 +99,8 @@ const services = [
     icon: "🏆",
     title: "SAT/ACT Math Bootcamp",
     description: "Test strategies and practice for your best score",
-    price: 45, 
+    price: 45,
+    priceEur: 20,
     color: "text-blue-600",
     tagline: "Most Popular",
     popular: true
@@ -228,7 +236,7 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
   
   const selectedMathLevel = mathLevels.find(level => level.id === selectedLevel);
   
-  const getPricingPackages = (hourlyRate: number) => {
+  const getPricingPackages = (hourlyRate: number, isEuros: boolean = false) => {
     const singleSession = hourlyRate;
     const fourSessionPrice = Math.round(hourlyRate * 4 * 0.85); // 15% discount
     const eightSessionPrice = Math.round(hourlyRate * 8 * 0.8); // 20% discount
@@ -290,7 +298,9 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                   <p className="text-sm text-slate-600 mb-3">
                     {language === 'en' ? level.description : t(`level.${level.id.replace('-', '_')}_desc`)}
                   </p>
-                  <div className={`text-xl font-bold ${level.color}`}>${level.price}/hr</div>
+                  <div className={`text-xl font-bold ${level.color}`}>
+                    {language === 'en' ? `$${level.price}/hr` : `${level.priceEur}€/h`}
+                  </div>
                   {level.popular && (
                     <Badge className="mt-2 bg-blue-600 text-white">
                       {language === 'en' ? 'Most Popular' : t('pricing.most_popular')}
@@ -315,7 +325,9 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
             </div>
             
             {(() => {
-              const packages = getPricingPackages(selectedMathLevel.price);
+              const isEuros = language === 'hr';
+              const currentPrice = isEuros ? selectedMathLevel.priceEur : selectedMathLevel.price;
+              const packages = getPricingPackages(currentPrice, isEuros);
               
               return (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -326,7 +338,7 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                         {language === 'en' ? 'Single Session' : t('pricing.single_session')}
                       </CardTitle>
                       <div className="text-4xl font-bold text-blue-600">
-                        ${packages.single.price}<span className="text-lg text-slate-600">/
+                        {isEuros ? `${packages.single.price}€` : `$${packages.single.price}`}<span className="text-lg text-slate-600">/
                         {language === 'en' ? 'hour' : t('pricing.hour')}
                         </span>
                       </div>
@@ -367,7 +379,7 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                         {language === 'en' ? '4-Session Package' : t('pricing.four_session_package')}
                       </CardTitle>
                       <div className="text-4xl font-bold">
-                        ${packages.package.price}<span className="text-lg opacity-80"> (${packages.package.perHour}/
+                        {isEuros ? `${packages.package.price}€` : `$${packages.package.price}`}<span className="text-lg opacity-80"> ({isEuros ? `${packages.package.perHour}€` : `$${packages.package.perHour}`}/
                         {language === 'en' ? 'hr' : t('pricing.hr')})</span>
                       </div>
                     </CardHeader>
@@ -379,7 +391,7 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                          {language === 'en' ? `Save $${packages.package.savings} total` : `${t('pricing.save')} $${packages.package.savings} ${t('pricing.total')}`}
+                          {language === 'en' ? `Save $${packages.package.savings} total` : `${t('pricing.save')} ${isEuros ? `${packages.package.savings}€` : `$${packages.package.savings}`} ${t('pricing.total')}`}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-400 mr-3" />
@@ -410,7 +422,7 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                         {language === 'en' ? '8-Session Intensive' : t('pricing.eight_session_intensive')}
                       </CardTitle>
                       <div className="text-4xl font-bold text-emerald-600">
-                        ${packages.intensive.price}<span className="text-lg text-slate-600"> (${packages.intensive.perHour}/
+                        {isEuros ? `${packages.intensive.price}€` : `$${packages.intensive.price}`}<span className="text-lg text-slate-600"> ({isEuros ? `${packages.intensive.perHour}€` : `$${packages.intensive.perHour}`}/
                         {language === 'en' ? 'hr' : t('pricing.hr')})</span>
                       </div>
                     </CardHeader>
@@ -422,7 +434,7 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                          {language === 'en' ? `Save $${packages.intensive.savings} total` : `${t('pricing.save')} $${packages.intensive.savings} ${t('pricing.total')}`}
+                          {language === 'en' ? `Save $${packages.intensive.savings} total` : `${t('pricing.save')} ${isEuros ? `${packages.intensive.savings}€` : `$${packages.intensive.savings}`} ${t('pricing.total')}`}
                         </li>
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
