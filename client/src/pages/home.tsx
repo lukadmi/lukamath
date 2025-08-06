@@ -1079,7 +1079,6 @@ function HomeContent() {
               <h4 className="text-lg font-semibold mb-4">Contact</h4>
               <ul className="space-y-2 text-slate-300">
                 <li>luka@lukamath.com</li>
-                <li>(555) 123-MATH</li>
                 <li>Available 7 days a week</li>
               </ul>
             </div>
