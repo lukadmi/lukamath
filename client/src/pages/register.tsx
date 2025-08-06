@@ -19,7 +19,7 @@ import { trackEvent } from '@/lib/analytics';
 // Validation schemas
 const nameSchema = z.string().min(1, 'This field is required').max(50, 'Name must be less than 50 characters');
 const emailSchema = z.string().email('Please enter a valid email address');
-const mathLevelSchema = z.enum(['middle', 'high-school', 'university', 'sat-act'], { required_error: 'Please select a math level' });
+const mathLevelSchema = z.enum(['middle-school', 'high-school', 'statistics', 'linear-algebra', 'sat-act'], { required_error: 'Please select a math level' });
 const languageSchema = z.enum(['en', 'hr'], { required_error: 'Please select a language' });
 
 const registerSchema = z.object({
@@ -84,11 +84,11 @@ export default function Register() {
     },
   });
 
-  const onSubmit = form.handleSubmit((data: RegisterData) => {
+  const onSubmit = (data: RegisterData) => {
     // Track registration attempt
     trackEvent('registration_attempt', 'engagement', data.mathLevel, 1);
     registerMutation.mutate(data);
-  });
+  };
 
   if (isSubmitted) {
     return (
@@ -233,15 +233,16 @@ export default function Register() {
                 <Label>Current Math Level *</Label>
                 <Select
                   value={form.watch('mathLevel')}
-                  onValueChange={(value) => form.setValue('mathLevel', value as 'middle' | 'high-school' | 'university' | 'sat-act')}
+                  onValueChange={(value) => form.setValue('mathLevel', value as 'middle-school' | 'high-school' | 'statistics' | 'linear-algebra' | 'sat-act')}
                 >
                   <SelectTrigger className="hover:scale-105 transition-transform">
                     <SelectValue placeholder="Select your level" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="middle">Middle School Math</SelectItem>
+                    <SelectItem value="middle-school">Middle School Math</SelectItem>
                     <SelectItem value="high-school">High School Math</SelectItem>
-                    <SelectItem value="university">University Math</SelectItem>
+                    <SelectItem value="statistics">Statistics</SelectItem>
+                    <SelectItem value="linear-algebra">Linear Algebra</SelectItem>
                     <SelectItem value="sat-act">SAT/ACT Prep</SelectItem>
                   </SelectContent>
                 </Select>

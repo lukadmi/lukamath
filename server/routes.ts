@@ -226,7 +226,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     lastName: z.string().min(1),
     email: z.string().email(),
     language: z.enum(['en', 'hr']),
-    mathLevel: z.string().min(1),
+    mathLevel: z.enum(['middle-school', 'high-school', 'statistics', 'linear-algebra', 'sat-act']),
     parentEmail: z.string().email().optional().or(z.literal('')),
     goals: z.string().min(10),
   });
