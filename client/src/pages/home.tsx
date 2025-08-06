@@ -283,7 +283,7 @@ function PricingSection() {
                 onClick={() => setSelectedLevel(level.id)}
               >
                 <CardContent className="p-6 text-center">
-                  <div className="text-4xl mb-3">{level.icon}</div>
+                  <div className={`text-4xl mb-3 ${level.color}`}>{level.icon}</div>
                   <h4 className="text-lg font-bold mb-2">
                     {language === 'en' ? level.title : t(`level.${level.id.replace('-', '_')}`)}
                   </h4>
@@ -344,10 +344,6 @@ function PricingSection() {
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
                           {language === 'en' ? 'Practice materials' : t('pricing.practice_materials')}
-                        </li>
-                        <li className="flex items-center">
-                          <Check className="w-5 h-5 text-emerald-600 mr-3" />
-                          {language === 'en' ? 'Progress tracking' : t('pricing.progress_tracking')}
                         </li>
                       </ul>
                       <Button className="w-full bg-slate-600 hover:bg-slate-700">
@@ -1093,8 +1089,11 @@ function HomeContent() {
                                 <SelectItem value="high-school">
                                   {language === 'en' ? 'High School Math (Grades 9-12)' : t('level.high_school')}
                                 </SelectItem>
-                                <SelectItem value="university">
-                                  {language === 'en' ? 'University Math (College Level)' : t('level.university')}
+                                <SelectItem value="statistics">
+                                  {language === 'en' ? 'Statistics' : t('level.statistics')}
+                                </SelectItem>
+                                <SelectItem value="linear-algebra">
+                                  {language === 'en' ? 'Linear Algebra' : t('level.linear_algebra')}
                                 </SelectItem>
                                 <SelectItem value="sat-act">
                                   {language === 'en' ? 'SAT/ACT Prep (Test Preparation)' : t('level.sat_act')}
@@ -1240,9 +1239,7 @@ function HomeContent() {
                 <li><button onClick={() => scrollToSection('about')} className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'About' : t('nav.about')}
                 </button></li>
-                <li><button onClick={() => scrollToSection('testimonials')} className="text-slate-300 hover:text-white transition-colors">
-                  {language === 'en' ? 'Reviews' : t('nav.testimonials')}
-                </button></li>
+
                 <li><button onClick={() => scrollToSection('pricing')} className="text-slate-300 hover:text-white transition-colors">
                   {language === 'en' ? 'Pricing' : t('nav.pricing')}
                 </button></li>
