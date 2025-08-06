@@ -293,7 +293,9 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                 <CardContent className="p-6 text-center">
                   <div className={`text-4xl mb-3 ${level.color}`}>{level.icon}</div>
                   <h4 className="text-lg font-bold mb-2">
-                    {language === 'en' ? level.title : t(`level.${level.id.replace('-', '_')}`)}
+                    {language === 'en' ? level.title : 
+                     level.id === 'university' ? 'Sveučilišna matematika' :
+                     t(`level.${level.id.replace('-', '_')}`)}
                   </h4>
                   <p className="text-sm text-slate-600 mb-3">
                     {language === 'en' ? level.description : t(`level.${level.id.replace('-', '_')}_desc`)}
@@ -741,8 +743,9 @@ function HomeContent() {
                   </>
                 ) : (
                   <>
-                    {t('hero.title')} - 
-                    <span className="text-yellow-400">{t('hero.title_highlight')}</span>
+                    {t('hero.title')}
+                    <span className="text-white"> — </span>
+                    <span className="text-yellow-400">uz personalizirano podučavanje</span>
                   </>
                 )}
               </h1>
