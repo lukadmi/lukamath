@@ -61,13 +61,12 @@ export async function handler(event) {
     };
   }
 
-  // Decap expects JSON with the token
+  // Instead of returning JSON, redirect to Decap CMS with the token in the hash
+  const CMS_URL = "https://lukamath.com/admin/#/callback";
   return {
-    statusCode: 200,
+    statusCode: 302,
     headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
+      Location: `${CMS_URL}?token=${encodeURIComponent(data.access_token)}`,
     },
-    body: JSON.stringify({ token: data.access_token }),
   };
 }
