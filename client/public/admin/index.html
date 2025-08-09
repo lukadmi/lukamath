@@ -4,28 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Luka Math</title>
-
-    <!-- (optional) if you have these files, they’ll be picked up -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#0ea5e9" />
   </head>
   <body>
-    <!-- React mounts here -->
     <div id="root"></div>
-
-    <!-- Your app entry -->
     <script type="module" src="/src/main.tsx"></script>
-
-    <!-- Netlify Identity (needed for invite/login + CMS access) -->
-    <script defer src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", (user) => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => (document.location.href = "/admin/"));
-          }
-        });
-      }
-    </script>
   </body>
 </html>
+
