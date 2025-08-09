@@ -1,7 +1,9 @@
 backend:
   name: github
-  repo: lukadmi/lukamath   # your GitHub repo
+  repo: lukadmi/lukamath      # <-- your GitHub repo (owner/repo)
   branch: main
+  base_url: /.netlify/functions
+  auth_endpoint: auth
 
 publish_mode: editorial_workflow
 
