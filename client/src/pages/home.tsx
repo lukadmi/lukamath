@@ -130,27 +130,6 @@ const resources = [
     icon: Target,
     color: "bg-yellow-100 text-yellow-600",
     action: "Download PDF"
-  },
-  {
-    title: "Calculus Study Guide",
-    description: "Comprehensive PDF guide covering limits, derivatives, and integrals",
-    icon: FileText,
-    color: "bg-purple-100 text-purple-600", 
-    action: "Download PDF"
-  },
-  {
-    title: "Practice Problem Sets",
-    description: "Hundreds of problems with step-by-step solutions",
-    icon: Edit3,
-    color: "bg-red-100 text-red-600",
-    action: "Access Problems"
-  },
-  {
-    title: "Calculator Tips",
-    description: "Master your graphing calculator for tests",
-    icon: Calculator,
-    color: "bg-green-100 text-green-600",
-    action: "View Guide"
   }
 ];
 
@@ -574,7 +553,7 @@ function HomeContent() {
   return (
     <div className="font-inter antialiased">
       <Helmet>
-        <title>{language === 'en' ? 'LukaMath - Online Math Tutoring | Ace Your Math Tests' : 'LukaMath - Online matematičko instruiranje | Pobijedi na matematici'}</title>
+        <title>{language === 'en' ? 'LukaMath Online Math Tutoring | Ace Your Math Tests' : 'LukaMath Instrukcije iz matematike | Rasturi ispite iz matematike'}</title>
         <meta name="description" content={language === 'en' ? 'Professional online math tutoring with personalized one-on-one sessions. Algebra, Geometry, Calculus, SAT/ACT prep. Free 15-minute trial available.' : 'Profesionalno online matematičko instruiranje s personaliziranim sesijama jedan na jedan. Algebra, geometrija, analiza. Besplatna 15-minutna proba dostupna.'} />
         <meta property="og:title" content={language === 'en' ? 'LukaMath - Online Math Tutoring' : 'LukaMath - Online matematičko instruiranje'} />
         <meta property="og:description" content={language === 'en' ? 'Professional online math tutoring with personalized one-on-one sessions. Free 15-minute trial available.' : 'Profesionalno online matematičko instruiranje s personaliziranim sesijama. Besplatna 15-minutna proba dostupna.'} />
@@ -941,9 +920,25 @@ function HomeContent() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <Badge className="bg-blue-600 text-white mb-2 text-xs">{cert.type}</Badge>
-                      <h3 className="font-bold text-lg text-slate-800 mb-1 leading-tight">{cert.title}</h3>
+                      <h3 className="font-bold text-lg text-slate-800 mb-1 leading-tight">
+                        {language === 'en' ? cert.title : t(`cert.${
+                          cert.title === 'Math for Data Science' ? 'math_data_science' :
+                          cert.title === 'Master of Data Science' ? 'master_data_science' :
+                          cert.title === 'Virtual Teaching Specialization' ? 'virtual_teaching' :
+                          cert.title === 'Data Analytics Certificate' ? 'data_analytics' :
+                          'data_science_math'
+                        }`)}
+                      </h3>
                       <p className="font-medium text-slate-600 mb-2">{cert.institution}</p>
-                      <p className="text-sm text-slate-500 leading-relaxed">{cert.description}</p>
+                      <p className="text-sm text-slate-500 leading-relaxed">
+                        {language === 'en' ? cert.description : t(`cert.${
+                          cert.title === 'Math for Data Science' ? 'math_data_science_desc' :
+                          cert.title === 'Master of Data Science' ? 'master_data_science_desc' :
+                          cert.title === 'Virtual Teaching Specialization' ? 'virtual_teaching_desc' :
+                          cert.title === 'Data Analytics Certificate' ? 'data_analytics_desc' :
+                          'data_science_math_desc'
+                        }`)}
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -977,28 +972,18 @@ function HomeContent() {
                     {language === 'en' ? resource.title : t(`resources.${
                       resource.title === 'Algebra Quick Reference' ? 'algebra_title' :
                       resource.title === 'Geometry Cheat Sheet' ? 'geometry_title' :
-                      resource.title === 'SAT Math Strategy' ? 'sat_title' :
-                      resource.title === 'Calculus Study Guide' ? 'calculus_title' :
-                      resource.title === 'Practice Problem Sets' ? 'practice_title' :
-                      'calculator_title'
+                      'sat_title'
                     }`)}
                   </h3>
                   <p className="text-slate-600 mb-4">
                     {language === 'en' ? resource.description : t(`resources.${
                       resource.title === 'Algebra Quick Reference' ? 'algebra_desc' :
                       resource.title === 'Geometry Cheat Sheet' ? 'geometry_desc' :
-                      resource.title === 'SAT Math Strategy' ? 'sat_desc' :
-                      resource.title === 'Calculus Study Guide' ? 'calculus_desc' :
-                      resource.title === 'Practice Problem Sets' ? 'practice_desc' :
-                      'calculator_desc'
+                      'sat_desc'
                     }`)}
                   </p>
                   <Button variant="link" className="p-0 h-auto font-semibold text-left">
-                    {language === 'en' ? resource.action : t(`resources.${
-                      resource.action === 'Download PDF' ? 'download_pdf' :
-                      resource.action === 'Access Problems' ? 'access_problems' :
-                      'view_guide'
-                    }`)} <ArrowRight className="w-4 h-4 ml-2" />
+                    {language === 'en' ? resource.action : t('resources.download_pdf')} <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </CardContent>
               </Card>
@@ -1280,7 +1265,7 @@ function HomeContent() {
                 <Calculator className="w-8 h-8 mr-2" />
                 <span className="text-2xl font-bold">LukaMath</span>
               </div>
-              <p className="text-slate-300 mb-4 max-w-md">
+              <p className="text-slate-300 mb-4 max-w-md text-left">
                 {language === 'en' ? 'Helping students build confidence and achieve success in mathematics through personalized, one-on-one tutoring.' : t('footer.description')}
               </p>
             </div>

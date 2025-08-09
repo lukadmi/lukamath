@@ -87,15 +87,7 @@ export const translations = {
     "resources.geometry_desc": "Area, perimeter, and volume formulas made simple",
     "resources.sat_title": "SAT Math Strategy", 
     "resources.sat_desc": "Test-taking strategies to maximize your score",
-    "resources.calculus_title": "Calculus Study Guide",
-    "resources.calculus_desc": "Comprehensive PDF guide covering limits, derivatives, and integrals",
-    "resources.practice_title": "Practice Problem Sets",
-    "resources.practice_desc": "Hundreds of problems with step-by-step solutions",
-    "resources.calculator_title": "Calculator Tips",
-    "resources.calculator_desc": "Master your graphing calculator for tests",
     "resources.download_pdf": "Download PDF",
-    "resources.access_problems": "Access Problems",
-    "resources.view_guide": "View Guide",
     
     // Blog
     "blog.title": "Latest Math Insights",
@@ -133,6 +125,20 @@ export const translations = {
     "why.proven": "Proven track record of success", 
     "why.flexible": "Flexible scheduling options",
     "why.guarantee": "100% satisfaction guarantee",
+    
+    // Certificates
+    "certificates.title": "Credentials and Certifications",
+    "certificates.subtitle": "Continuous learning to provide the best math education",
+    "cert.math_data_science": "Math for Data Science",
+    "cert.math_data_science_desc": "Statistical foundations and mathematical modeling",
+    "cert.master_data_science": "Master of Data Science",
+    "cert.master_data_science_desc": "Advanced analytics and machine learning",
+    "cert.virtual_teaching": "Virtual Teaching Specialization",
+    "cert.virtual_teaching_desc": "Online pedagogy and instructional design",
+    "cert.data_analytics": "Data Analytics Certificate",
+    "cert.data_analytics_desc": "Business intelligence and data visualization",
+    "cert.data_science_math": "Data Science Math Skills",
+    "cert.data_science_math_desc": "Mathematical foundations for data science",
     
     // Footer
     "footer.description": "Helping students build confidence and achieve success in mathematics through personalized, one-on-one tutoring.",
@@ -249,15 +255,19 @@ export const translations = {
     "resources.geometry_desc": "Formule za površinu, opseg i volumen jednostavno objašnjene",
     "resources.sat_title": "Državna matura - strategija", 
     "resources.sat_desc": "Strategije pristupa testu za maksimizaciju rezultata",
-    "resources.calculus_title": "Priručnik za funkcije",
-    "resources.calculus_desc": "Sveobuhvatan PDF vodič koji pokriva limite, derivacije i integrale",
-    "resources.practice_title": "Zbirke zadataka",
-    "resources.practice_desc": "Stotine problema s korak-po-korak rješenjima",
-    "resources.calculator_title": "Savjeti za kalkulator",
-    "resources.calculator_desc": "Svladaj svoj grafički kalkulator za testove",
     "resources.download_pdf": "Preuzmi PDF",
-    "resources.access_problems": "Pristupni zadacima",
-    "resources.view_guide": "Pogledaj vodič",
+    
+    // Certificates  
+    "cert.math_data_science": "Matematika za znanost o podacima",
+    "cert.math_data_science_desc": "Statističke osnove i matematičko modeliranje",
+    "cert.master_data_science": "Magistar znanosti o podacima", 
+    "cert.master_data_science_desc": "Napredna analitika i strojno učenje",
+    "cert.virtual_teaching": "Specijalizacija virtualnog poučavanja",
+    "cert.virtual_teaching_desc": "Online pedagogija i dizajn nastave",
+    "cert.data_analytics": "Certifikat za analitiku podataka",
+    "cert.data_analytics_desc": "Poslovna inteligencija i vizualizacija podataka",
+    "cert.data_science_math": "Matematičke vještine za znanost o podacima",
+    "cert.data_science_math_desc": "Matematičke osnove za znanost o podacima",
     
     // Blog
     "blog.title": "Najnoviji matematički uvidi",
