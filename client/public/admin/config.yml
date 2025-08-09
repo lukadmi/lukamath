@@ -1,32 +1,20 @@
 backend:
   name: github
-  repo: lukadmi/lukamath      # <-- your GitHub repo (owner/repo)
+  repo: lukadmi/lukamath   # change if your repo is different
   branch: main
   base_url: /.netlify/functions
   auth_endpoint: auth
 
-publish_mode: editorial_workflow
-
-media_folder: "client/public/logos"   # where uploaded images are stored in the repo
-public_folder: "/logos"               # how the site serves those images
+media_folder: "public/uploads"
+public_folder: "/uploads"
 
 collections:
-  - name: "content"
-    label: "Content"
-    files:
-      - name: "certificates"
-        label: "Certificates"
-        file: "client/public/content/certificates.json"
-        format: "json"
-        fields:
-          - label: Certificates
-            name: certificates
-            widget: list
-            summary: "{{fields.title}} – {{fields.institution}}"
-            fields:
-              - { label: Title,         name: title,         widget: string }
-              - { label: Institution,   name: institution,   widget: string }
-              - { label: Type,          name: type,          widget: string }
-              - { label: Description,   name: description,   widget: text }
-              - { label: Logo,          name: logo,          widget: image, required: false }
-              - { label: Logo Alt,      name: logoAlt,       widget: string, required: false }
+  - name: "posts"
+    label: "Posts"
+    folder: "src/posts"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
