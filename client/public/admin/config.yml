@@ -1,6 +1,7 @@
 backend:
-  name: git-gateway
-  branch: main   # if your default branch is 'main'
+  name: github
+  repo: lukadmi/lukamath   # your GitHub repo
+  branch: main
 
 publish_mode: editorial_workflow
 
