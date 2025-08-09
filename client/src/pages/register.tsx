@@ -238,20 +238,20 @@ export default function Register() {
                   <SelectTrigger className="hover:scale-105 transition-transform">
                     <SelectValue placeholder={language === 'en' ? 'Select your level' : 'Odaberite svoju razinu'} />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="middle-school">
+                  <SelectContent className="text-left">
+                    <SelectItem value="middle-school" className="text-left justify-start">
                       {language === 'en' ? 'Middle School Math' : 'Matematika za osnovnu školu (5.-8. razred)'}
                     </SelectItem>
-                    <SelectItem value="high-school">
+                    <SelectItem value="high-school" className="text-left justify-start">
                       {language === 'en' ? 'High School Math' : 'Matematika za srednju školu (1.-4. razred)'}
                     </SelectItem>
-                    <SelectItem value="statistics">
+                    <SelectItem value="statistics" className="text-left justify-start">
                       {language === 'en' ? 'Statistics' : 'Statistika'}
                     </SelectItem>
-                    <SelectItem value="linear-algebra">
+                    <SelectItem value="linear-algebra" className="text-left justify-start">
                       {language === 'en' ? 'Linear Algebra' : 'Linearna algebra'}
                     </SelectItem>
-                    <SelectItem value="sat-act">
+                    <SelectItem value="sat-act" className="text-left justify-start">
                       {language === 'en' ? 'SAT/ACT Prep' : 'Državna matura (priprema za testove)'}
                     </SelectItem>
                   </SelectContent>
