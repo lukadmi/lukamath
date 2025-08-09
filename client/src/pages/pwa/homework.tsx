@@ -39,10 +39,14 @@ const translations = {
     pastDue: "Past due",
     dashboard: "Dashboard",
     progress: "Progress",
-    messages: "Messages"
+    messages: "Messages",
+    submittedForReview: "Your homework has been submitted for review.",
+    submitError: "Failed to submit homework. Please try again.",
+    error: "Error",
+    submittedOn: "Submitted on"
   },
   hr: {
-    homework: "Domaći zadaci",
+    homework: "Domaća zadaća",
     pending: "Na čekanju",
     completed: "Završeno", 
     overdue: "Zakasnilo",
@@ -58,15 +62,19 @@ const translations = {
     markComplete: "Označi kao završeno",
     downloadFile: "Preuzmi datoteku",
     uploadFile: "Učitaj datoteku",
-    noHomework: "Nema domaćih zadataka",
-    submitSuccess: "Domaći zadatak je uspješno predan!",
+    noHomework: "Nema domaće zadaće",
+    submitSuccess: "Domaća zadaća je uspješno predana!",
     today: "Danas",
     tomorrow: "Sutra",
     thisWeek: "Ovaj tjedan",
     pastDue: "Zakasnilo",
     dashboard: "Aplikacija",
     progress: "Napredak", 
-    messages: "Poruke"
+    messages: "Poruke",
+    submittedForReview: "Vaša domaća zadaća je predana na pregled.",
+    submitError: "Greška pri predavanju domaće zadaće. Molimo pokušajte ponovo.",
+    error: "Greška",
+    submittedOn: "Predano"
   }
 };
 
@@ -103,15 +111,15 @@ export default function PWAHomework() {
     onSuccess: () => {
       toast({
         title: t.submitSuccess,
-        description: "Your homework has been submitted for review."
+        description: t.submittedForReview
       });
       queryClient.invalidateQueries({ queryKey: ['/api/homework'] });
       setSelectedHomework(null);
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to submit homework. Please try again.",
+        title: t.error,
+        description: t.submitError,
         variant: "destructive"
       });
     }
@@ -287,7 +295,7 @@ export default function PWAHomework() {
                       )}
                       <div className="flex items-center text-sm text-slate-500">
                         <Calendar className="w-4 h-4 mr-1" />
-                        {language === 'en' ? 'Submitted on' : 'Predano'} {new Date(hw.submittedAt).toLocaleDateString()}
+                        {t.submittedOn} {new Date(hw.submittedAt).toLocaleDateString()}
                       </div>
                     </CardContent>
                   </Card>

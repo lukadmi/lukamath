@@ -34,21 +34,22 @@ const translations = {
     mathLevel: "Math Level",
     currentGrade: "Current Grade",
     completionRate: "Completion Rate",
-    logout: "Logout"
+    logout: "Logout",
+    readyForMath: "Ready to tackle some math?"
   },
   hr: {
     dashboard: "Aplikacija",
     welcome: "Dobrodošli natrag",
-    homework: "Domaći zadaci",
+    homework: "Domaća zadaća",
     progress: "Napredak",
     messages: "Poruke", 
-    schedule: "Raspored",
+    schedule: "Termini",
     pending: "Na čekanju",
     completed: "Završeno",
     dueToday: "Dospijeva danas",
     overdue: "Zakasnilo",
     viewAll: "Pogledaj sve",
-    noHomework: "Još nema dodijeljenih domaćih zadataka",
+    noHomework: "Još nema dodijeljene domaće zadaće",
     noMessages: "Nema novih poruka",
     upcomingSession: "Nadolazeća sesija",
     nextSession: "Sljedeća sesija s Lukom",
@@ -58,7 +59,8 @@ const translations = {
     mathLevel: "Razina matematike",
     currentGrade: "Trenutna ocjena",
     completionRate: "Stopa završetka",
-    logout: "Odjavi se"
+    logout: "Odjavi se",
+    readyForMath: "Spremni za matematiku?"
   }
 };
 
@@ -157,7 +159,7 @@ export default function PWADashboard() {
             {t.welcome}, {user?.name?.split(' ')[0] || 'Student'}!
           </h2>
           <p className="text-slate-600">
-            {language === 'en' ? 'Ready to tackle some math?' : 'Spremni za matematiku?'}
+            {t.readyForMath}
           </p>
         </div>
 

@@ -27,14 +27,14 @@ const translations = {
   hr: {
     title: "Dobrodošli u LukaMath Student App",
     subtitle: "Vaš osobni pratitelj za učenje matematike",
-    description: "Pristupite domaćim zadacima, pratite napredak i komunicirajte s vašim instruktorom Lukom.",
+    description: "Pristupite domaćoj zadaći, pratite napredak i komunicirajte s vašim instruktorom Lukom.",
     selectLanguage: "Odaberite svoj jezik",
     continue: "Nastavi",
     features: {
-      homework: "Upravljanje domaćim zadacima",
+      homework: "Upravljanje domaćom zadaćom",
       progress: "Praćenje napretka",
       communication: "Direktno pitanje i odgovor s Lukom", 
-      calendar: "Zakazivanje sesija"
+      calendar: "Termini"
     },
     getStarted: "Počni",
     alreadyHaveAccount: "Već imate račun?",

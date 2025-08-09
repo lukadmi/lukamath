@@ -42,12 +42,17 @@ const translations = {
     recentAchievements: "Recent Achievements",
     goalProgress: "Goal Progress",
     masteredTopics: "Mastered Topics",
-    strugglingAreas: "Areas to Improve"
+    strugglingAreas: "Areas to Improve",
+    perfectScore: "Perfect Score!",
+    algebrQuizResult: "Got 100% on Algebra Quiz #5",
+    streakMaster: "Streak Master",
+    newBadge: "New",
+    homeworkStreak: "7 days of completed homework"
   },
   hr: {
     progress: "Napredak",
     dashboard: "Aplikacija",
-    homework: "Domaći zadaci",
+    homework: "Domaća zadaća",
     messages: "Poruke",
     overview: "Pregled",
     grades: "Ocjene",
@@ -55,7 +60,7 @@ const translations = {
     currentGrade: "Trenutna ocjena",
     completionRate: "Stopa završetka",
     averageGrade: "Prosjek ocjena",
-    homeworkCompleted: "Završenih domaćih zadataka",
+    homeworkCompleted: "Završenih domaćih zadaća",
     sessionsAttended: "Prisustvovanih sesija",
     improvementTrend: "Trend poboljšanja",
     gradeHistory: "Povijest ocjena",
@@ -68,12 +73,17 @@ const translations = {
     needsWork: "Treba porad",
     algebra: "Algebra",
     geometry: "Geometrija",
-    calculus: "Kalkulus",
+    calculus: "Funkcije",
     statistics: "Statistika",
     recentAchievements: "Nedavna postignuća",
     goalProgress: "Napredak prema cilju",
     masteredTopics: "Savladane teme",
-    strugglingAreas: "Područja za poboljšanje"
+    strugglingAreas: "Područja za poboljšanje",
+    perfectScore: "Savršen rezultat!",
+    algebrQuizResult: "Dobili ste 100% na kvizu iz algebre #5",
+    streakMaster: "Majstor nizova",
+    newBadge: "Novo",
+    homeworkStreak: "7 dana završenih domaćih zadaća"
   }
 };
 
@@ -250,14 +260,14 @@ export default function PWAProgress() {
               </div>
               <div className="flex-1">
                 <p className="font-medium text-slate-800">
-                  {language === 'en' ? 'Perfect Score!' : 'Savršen rezultat!'}
+                  {t.perfectScore}
                 </p>
                 <p className="text-sm text-slate-600">
-                  {language === 'en' ? 'Got 100% on Algebra Quiz #5' : 'Dobili ste 100% na kvizu iz algebre #5'}
+                  {t.algebrQuizResult}
                 </p>
               </div>
               <Badge className="bg-emerald-600">
-                {language === 'en' ? 'New' : 'Novo'}
+                {t.newBadge}
               </Badge>
             </div>
 
@@ -267,10 +277,10 @@ export default function PWAProgress() {
               </div>
               <div className="flex-1">
                 <p className="font-medium text-slate-800">
-                  {language === 'en' ? 'Streak Master' : 'Majstor nizova'}
+                  {t.streakMaster}
                 </p>
                 <p className="text-sm text-slate-600">
-                  {language === 'en' ? '7 days of completed homework' : '7 dana završenih domaćih zadataka'}
+                  {t.homeworkStreak}
                 </p>
               </div>
             </div>
