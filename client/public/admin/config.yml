@@ -1,0 +1,29 @@
+backend:
+  name: git-gateway
+  branch: main   # if your default branch is 'main'
+
+publish_mode: editorial_workflow
+
+media_folder: "client/public/logos"   # where uploaded images are stored in the repo
+public_folder: "/logos"               # how the site serves those images
+
+collections:
+  - name: "content"
+    label: "Content"
+    files:
+      - name: "certificates"
+        label: "Certificates"
+        file: "client/public/content/certificates.json"
+        format: "json"
+        fields:
+          - label: Certificates
+            name: certificates
+            widget: list
+            summary: "{{fields.title}} – {{fields.institution}}"
+            fields:
+              - { label: Title,         name: title,         widget: string }
+              - { label: Institution,   name: institution,   widget: string }
+              - { label: Type,          name: type,          widget: string }
+              - { label: Description,   name: description,   widget: text }
+              - { label: Logo,          name: logo,          widget: image, required: false }
+              - { label: Logo Alt,      name: logoAlt,       widget: string, required: false }
