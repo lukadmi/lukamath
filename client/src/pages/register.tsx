@@ -211,13 +211,13 @@ export default function Register() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Preferred Language *</Label>
+                <Label>{language === 'en' ? 'Preferred Language *' : 'Preferirani jezik *'}</Label>
                 <Select
                   value={form.watch('language')}
                   onValueChange={(value) => form.setValue('language', value as 'en' | 'hr')}
                 >
                   <SelectTrigger className="hover:scale-105 transition-transform">
-                    <SelectValue placeholder="Select language" />
+                    <SelectValue placeholder={language === 'en' ? 'Select language' : 'Odaberite jezik'} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="en">English</SelectItem>
@@ -230,20 +230,30 @@ export default function Register() {
               </div>
 
               <div className="space-y-2">
-                <Label>Current Math Level *</Label>
+                <Label>{language === 'en' ? 'Current Math Level *' : 'Razine matematike *'}</Label>
                 <Select
                   value={form.watch('mathLevel')}
                   onValueChange={(value) => form.setValue('mathLevel', value as 'middle-school' | 'high-school' | 'statistics' | 'linear-algebra' | 'sat-act')}
                 >
                   <SelectTrigger className="hover:scale-105 transition-transform">
-                    <SelectValue placeholder="Select your level" />
+                    <SelectValue placeholder={language === 'en' ? 'Select your level' : 'Odaberite svoju razinu'} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="middle-school">Middle School Math</SelectItem>
-                    <SelectItem value="high-school">High School Math</SelectItem>
-                    <SelectItem value="statistics">Statistics</SelectItem>
-                    <SelectItem value="linear-algebra">Linear Algebra</SelectItem>
-                    <SelectItem value="sat-act">SAT/ACT Prep</SelectItem>
+                    <SelectItem value="middle-school">
+                      {language === 'en' ? 'Middle School Math' : 'Matematika za osnovnu školu (5.-8. razred)'}
+                    </SelectItem>
+                    <SelectItem value="high-school">
+                      {language === 'en' ? 'High School Math' : 'Matematika za srednju školu (1.-4. razred)'}
+                    </SelectItem>
+                    <SelectItem value="statistics">
+                      {language === 'en' ? 'Statistics' : 'Statistika'}
+                    </SelectItem>
+                    <SelectItem value="linear-algebra">
+                      {language === 'en' ? 'Linear Algebra' : 'Linearna algebra'}
+                    </SelectItem>
+                    <SelectItem value="sat-act">
+                      {language === 'en' ? 'SAT/ACT Prep' : 'Državna matura (priprema za testove)'}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
                 {form.formState.errors.mathLevel && (
