@@ -28,3 +28,5 @@ collections:
               - { label: Description,  name: description,  widget: text }
               - { label: Logo,         name: logo,         widget: image, required: false }
               - { label: Logo Alt,     name: logoAlt,      widget: string, required: false }
+
+              
