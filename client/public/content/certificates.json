@@ -1,13 +1,13 @@
 {
-  "type": "CertificatesData",
-  "certificates": [
-    {
-      "title": "Sample Certificate",
-      "institution": "Your Institution",
-      "type": "Example",
-      "description": "Replace this with your real certificate data.",
-      "logo": "/uploads/example.png",
-      "logoAlt": "Example logo"
-    }
-  ]
+    "type":  "CertificatesData",
+    "certificates":  [
+                         {
+                             "title":  "Sample Certificate",
+                             "institution":  "Your Institution",
+                             "type":  "Example",
+                             "description":  "Replace this with your real certificate data.",
+                             "logo":  "/uploads/example.png",
+                             "logoAlt":  "Example logo"
+                         }
+                     ]
 }
