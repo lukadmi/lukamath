@@ -3,51 +3,42 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
-// Detect if running on Netlify
-const isNetlify = process.env.NETLIFY === "true";
-const previewHost =
-  process.env.DEPLOY_URL?.replace("https://", "") ||
-  "devserver-main--lukamath.netlify.app";
+// We can't use top-level await directly in defineConfig with TS without making it async,
+// so we conditionally import plugins in setup.
+export default defineConfig(async () => {
+  const plugins = [react(), runtimeErrorOverlay()];
 
-export default defineConfig({
-  plugins: [
-    react(),
-    runtimeErrorOverlay(),
-    ...(process.env.NODE_ENV !== "production" &&
-    process.env.REPL_ID !== undefined
-      ? [
-          await import("@replit/vite-plugin-cartographer").then((m) =>
-            m.cartographer(),
-          ),
-        ]
-      : []),
-  ],
-  resolve: {
-    alias: {
-      "@": path.resolve(import.meta.dirname, "client", "src"),
-      "@shared": path.resolve(import.meta.dirname, "shared"),
-      "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+  if (process.env.NODE_ENV !== "production" && process.env.REPL_ID !== undefined) {
+    const cartographer = await import("@replit/vite-plugin-cartographer").then((m) =>
+      m.cartographer()
+    );
+    plugins.push(cartographer);
+  }
+
+  return {
+    plugins,
+    resolve: {
+      alias: {
+        "@": path.resolve(import.meta.dirname, "client", "src"),
+        "@shared": path.resolve(import.meta.dirname, "shared"),
+        "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+      },
     },
-  },
-  root: path.resolve(import.meta.dirname, "client"),
-  build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
-    emptyOutDir: true,
-  },
-  server: {
-    fs: {
-      strict: true,
-      deny: ["**/.*"],
+    root: path.resolve(import.meta.dirname, "client"),
+    build: {
+      outDir: path.resolve(import.meta.dirname, "dist/public"),
+      emptyOutDir: true,
     },
-    port: 5173,
-    host: true,
-    allowedHosts: isNetlify ? "any" : undefined, // allow any host in Netlify preview
-    hmr: isNetlify
-      ? {
-          host: previewHost,
-          clientPort: 443,
-          protocol: "wss",
-        }
-      : undefined,
-  },
+    server: {
+      allowedHosts: [
+        "lukamath.netlify.app",                  // Your main Netlify site
+        "devserver-main--lukamath.netlify.app",  // Visual Editor preview domain
+        "localhost",                             // Local dev
+      ],
+      fs: {
+        strict: true,
+        deny: ["**/.*"],
+      },
+    },
+  };
 });
