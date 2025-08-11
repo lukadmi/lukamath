@@ -23,6 +23,22 @@ import { Helmet } from 'react-helmet-async';
 
 import anoushka_puri_f1YfrZ1o2r8_unsplash from "@assets/anoushka-puri-f1YfrZ1o2r8-unsplash.jpg";
 
+// === Stackbit content: Home hero ===
+type HomeDoc = { title: string; subtitle?: string; body?: string };
+
+function useHomeDoc() {
+  const [doc, setDoc] = useState<HomeDoc | null>(null);
+  useEffect(() => {
+    // cache-bust + no-store so preview always pulls latest JSON
+    fetch(`/content/home.json?v=${Date.now()}`, { cache: "no-store" })
+      .then(r => r.json())
+      .then(setDoc)
+      .catch(() => setDoc(null));
+  }, []);
+  return doc;
+}
+
+
 const mathLevels = [
   {
     id: "middle-school",
@@ -469,8 +485,8 @@ function HomeContent() {
       email: "",
       phone: "",
       subject: "",
-      message: ""
-    }
+      message: "",
+    },
   });
 
   const contactMutation = useMutation({
@@ -479,9 +495,7 @@ function HomeContent() {
       return response.json();
     },
     onSuccess: () => {
-      // Track contact form submission in Google Analytics
-      trackEvent('contact_form_submit', 'engagement', 'home_page', 1);
-      
+      trackEvent("contact_form_submit", "engagement", "home_page", 1);
       setSuccessModalOpen(true);
       form.reset();
       toast({
@@ -489,77 +503,63 @@ function HomeContent() {
         description: "Thank you for your interest! I'll get back to you within 24 hours.",
       });
     },
-    onError: (error) => {
+    onError: () => {
       toast({
         title: "Error",
         description: "Failed to send message. Please try again.",
         variant: "destructive",
       });
-    }
+    },
   });
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
-  // Handle URL hash navigation on page load
   useEffect(() => {
     const handleHashNavigation = () => {
-      const hash = window.location.hash.substring(1); // Remove the # symbol
+      const hash = window.location.hash.substring(1);
       if (hash) {
-        // Small delay to ensure the page has rendered
         setTimeout(() => {
           scrollToSection(hash);
         }, 100);
       }
     };
 
-    // Check hash on initial load
     handleHashNavigation();
-    
-    // Also listen for hash changes (if user uses back/forward buttons)
-    window.addEventListener('hashchange', handleHashNavigation);
-    
+    window.addEventListener("hashchange", handleHashNavigation);
+
     return () => {
-      window.removeEventListener('hashchange', handleHashNavigation);
+      window.removeEventListener("hashchange", handleHashNavigation);
     };
   }, []);
 
   const onSubmit = (data: InsertContact) => {
-    // Track form submission attempt
-    trackEvent('contact_form_attempt', 'engagement', 'home_page', 1);
+    trackEvent("contact_form_attempt", "engagement", "home_page", 1);
     contactMutation.mutate(data);
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      const nav = document.querySelector('nav');
+      const nav = document.querySelector("nav");
       if (nav) {
         if (window.scrollY > 100) {
-          nav.classList.add('shadow-lg');
+          nav.classList.add("shadow-lg");
         } else {
-          nav.classList.remove('shadow-lg');
+          nav.classList.remove("shadow-lg");
         }
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <div className="font-inter antialiased">
-      <Helmet>
-        <title>{language === 'en' ? 'LukaMath Online Math Tutoring | Ace Your Math Tests' : 'LukaMath Instrukcije iz matematike | Rasturi ispite iz matematike'}</title>
-        <meta name="description" content={language === 'en' ? 'Professional online math tutoring with personalized one-on-one sessions. Algebra, Geometry, Calculus, SAT/ACT prep. Free 15-minute trial available.' : 'Profesionalno online matematičko instruiranje s personaliziranim sesijama jedan na jedan. Algebra, geometrija, analiza. Besplatna 15-minutna proba dostupna.'} />
-        <meta property="og:title" content={language === 'en' ? 'LukaMath - Online Math Tutoring' : 'LukaMath - Online matematičko instruiranje'} />
-        <meta property="og:description" content={language === 'en' ? 'Professional online math tutoring with personalized one-on-one sessions. Free 15-minute trial available.' : 'Profesionalno online matematičko instruiranje s personaliziranim sesijama. Besplatna 15-minutna proba dostupna.'} />
-        <link rel="canonical" href="https://lukamath.replit.app/" />
-        <html lang={language} />
-      </Helmet>
       {/* Navigation */}
       <nav className="bg-white shadow-sm sticky top-0 z-50 transition-shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -708,32 +708,23 @@ function HomeContent() {
         </div>
       </nav>
       {/* Hero Section */}
-      <section className="gradient-bg text-white py-20 relative overflow-hidden">
+      <section className="gradient-bg text-white py-20 relative overflow-hidden" data-sb-object-id="client/public/content/home.json">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-emerald-600/5"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                {language === 'en' ? (
-                  <>
-                    Ace Your Math Tests — 
-                    <span className="text-gradient"> One Problem at a Time</span>
-                  </>
-                ) : (
-                  <>
-                    {t('hero.title')}
-                    <span className="text-white"> — </span>
-                    <span className="text-yellow-400">uz personalizirano podučavanje</span>
-                  </>
-                )}
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight" data-sb-field-path="title">
+                {homeDoc?.title ?? "Ace Your Math Tests — One Problem at a Time"}
               </h1>
-              <p className="text-xl mb-8 text-blue-100 leading-relaxed">
-                {language === 'en' ? 
-                  'Personalized, online one-on-one sessions that turn confusion into confidence.' : 
-                  t('hero.subtitle')
-                }
+              <p className="text-xl mb-8 text-blue-100 leading-relaxed" data-sb-field-path="subtitle">
+                {homeDoc?.subtitle ?? "Personalized, online one-on-one sessions that turn confusion into confidence."}
               </p>
+              {homeDoc?.body && (
+                <p className="text-lg text-blue-200 mb-8" data-sb-field-path="body">
+                  {homeDoc.body}
+                </p>
+              )}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button 
                   onClick={() => {
@@ -1339,10 +1330,12 @@ function HomeContent() {
                 <CheckCircle className="w-8 h-8 text-emerald-600" />
               </div>
               <DialogTitle className="text-2xl font-bold text-slate-800 mb-2">
-                {language === 'en' ? 'Message Sent!' : t('success.title')}
+                {language === "en" ? "Message Sent!" : t("success.title")}
               </DialogTitle>
               <p className="text-slate-600">
-                {language === 'en' ? "Thank you for your interest! I'll get back to you within 24 hours to schedule your free trial session." : t('success.message')}
+                {language === "en"
+                  ? "Thank you for your interest! I'll get back to you within 24 hours to schedule your free trial session."
+                  : t("success.message")}
               </p>
             </div>
           </DialogHeader>

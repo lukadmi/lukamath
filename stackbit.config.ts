@@ -1,4 +1,5 @@
-﻿import { defineStackbitConfig } from "@stackbit/types";
+﻿// stackbit.config.ts
+import { defineStackbitConfig } from "@stackbit/types";
 import { GitContentSource } from "@stackbit/cms-git";
 
 export default defineStackbitConfig({
@@ -7,12 +8,10 @@ export default defineStackbitConfig({
   contentSources: [
     new GitContentSource({
       rootPath: __dirname,
-
-      // Matches your repo layout
       contentDirs: ["client/public/content"],
 
       models: [
-        // ---- Data (not a page) ----
+        // Data used inside pages (not a standalone page)
         {
           name: "CertificatesData",
           type: "data",
@@ -36,16 +35,42 @@ export default defineStackbitConfig({
           ]
         },
 
-        // ---- Page (will appear in sitemap) ----
+        // === Page models that appear in the Visual Editor sitemap ===
+
+        // Home → "/"
         {
           name: "Home",
-          type: "page",                       // <- marks this as a page model
+          type: "page",
           filePath: "client/public/content/home.json",
-          urlPath: "/",                       // <- constant URL for the homepage
+          urlPath: "/",
           fields: [
             { name: "title", type: "string", required: true },
             { name: "subtitle", type: "string" },
             { name: "body", type: "markdown" }
+          ]
+        },
+
+        // Blog → "/blog"
+        {
+          name: "BlogPage",
+          type: "page",
+          filePath: "client/public/content/blog.json",
+          urlPath: "/blog",
+          fields: [
+            { name: "title", type: "string", required: true },
+            { name: "intro", type: "markdown" }
+          ]
+        },
+
+        // App → "/app"
+        {
+          name: "AppPage",
+          type: "page",
+          filePath: "client/public/content/app.json",
+          urlPath: "/app",
+          fields: [
+            { name: "title", type: "string", required: true },
+            { name: "intro", type: "markdown" }
           ]
         }
       ],
