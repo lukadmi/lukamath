@@ -1,5 +1,4 @@
-﻿// stackbit.config.ts
-import { defineStackbitConfig, SiteMapEntry } from "@stackbit/types";
+﻿import { defineStackbitConfig } from "@stackbit/types";
 import { GitContentSource } from "@stackbit/cms-git";
 
 export default defineStackbitConfig({
@@ -8,9 +7,12 @@ export default defineStackbitConfig({
   contentSources: [
     new GitContentSource({
       rootPath: __dirname,
+
+      // Matches your repo layout
       contentDirs: ["client/public/content"],
 
       models: [
+        // ---- Data (not a page) ----
         {
           name: "CertificatesData",
           type: "data",
@@ -33,11 +35,13 @@ export default defineStackbitConfig({
             }
           ]
         },
+
+        // ---- Page (will appear in sitemap) ----
         {
           name: "Home",
-          type: "page",
-          urlPath: "/",
+          type: "page",                       // <- marks this as a page model
           filePath: "client/public/content/home.json",
+          urlPath: "/",                       // <- constant URL for the homepage
           fields: [
             { name: "title", type: "string", required: true },
             { name: "subtitle", type: "string" },
@@ -53,28 +57,5 @@ export default defineStackbitConfig({
         publicPath: "/"
       }
     })
-  ],
-
-  // Keep it dead simple: if we see the Home document, map it to "/".
-  siteMap: ({ documents }) => {
-    const entries: SiteMapEntry[] = [];
-
-    for (const doc of documents) {
-      const isHome =
-        doc.modelName === "Home" ||
-        (typeof (doc as any).filePath === "string" &&
-          (doc as any).filePath.endsWith("/client/public/content/home.json"));
-
-      if (isHome) {
-        entries.push({
-          stableId: doc.id,
-          urlPath: "/",
-          document: doc,
-          isHomePage: true
-        });
-      }
-    }
-
-    return entries;
-  }
+  ]
 });
