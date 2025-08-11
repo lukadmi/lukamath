@@ -1,28 +1,13 @@
 {
+  "type": "CertificatesData",
   "certificates": [
     {
-      "title": "Math for Data Science",
-      "institution": "Duke University",
-      "type": "Certificate",
-      "description": "Statistical foundations and mathematical modeling",
-      "logo": "/logos/duke.png",
-      "logoAlt": "Duke University"
-    },
-    {
-      "title": "Master of Data Science",
-      "institution": "Illinois Institute of Technology",
-      "type": "Degree",
-      "description": "Advanced analytics and machine learning",
-      "logo": "/logos/iit_seal.gif",
-      "logoAlt": "Illinois Institute of Technology"
-    },
-    {
-      "title": "Virtual Teaching Specialization",
-      "institution": "University of California, Irvine",
-      "type": "Specialization",
-      "description": "Online pedagogy and instructional design",
-      "logo": "/logos/UCI.png",
-      "logoAlt": "University of California, Irvine"
+      "title": "Sample Certificate",
+      "institution": "Your Institution",
+      "type": "Example",
+      "description": "Replace this with your real certificate data.",
+      "logo": "/uploads/example.png",
+      "logoAlt": "Example logo"
     }
   ]
 }
