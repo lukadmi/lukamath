@@ -3,6 +3,12 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
+// Detect if running on Netlify
+const isNetlify = process.env.NETLIFY === "true";
+const previewHost =
+  process.env.DEPLOY_URL?.replace("https://", "") ||
+  "devserver-main--lukamath.netlify.app";
+
 export default defineConfig({
   plugins: [
     react(),
@@ -33,5 +39,15 @@ export default defineConfig({
       strict: true,
       deny: ["**/.*"],
     },
+    port: 5173,
+    host: true,
+    allowedHosts: isNetlify ? "any" : undefined, // allow any host in Netlify preview
+    hmr: isNetlify
+      ? {
+          host: previewHost,
+          clientPort: 443,
+          protocol: "wss",
+        }
+      : undefined,
   },
 });
