@@ -8,11 +8,9 @@ export default defineStackbitConfig({
   contentSources: [
     new GitContentSource({
       rootPath: __dirname,
-      // This matches your repo layout
       contentDirs: ["client/public/content"],
 
       models: [
-        // Editable data used by your site (not a standalone page)
         {
           name: "CertificatesData",
           type: "data",
@@ -35,12 +33,10 @@ export default defineStackbitConfig({
             }
           ]
         },
-
-        // Home page model (maps to "/")
         {
           name: "Home",
           type: "page",
-          urlPath: "/", // static homepage URL
+          urlPath: "/",
           filePath: "client/public/content/home.json",
           fields: [
             { name: "title", type: "string", required: true },
@@ -50,7 +46,6 @@ export default defineStackbitConfig({
         }
       ],
 
-      // Make uploads go under client/public/uploads and be served as /uploads/*
       assetsConfig: {
         referenceType: "static",
         staticDir: "client/public",
@@ -60,21 +55,26 @@ export default defineStackbitConfig({
     })
   ],
 
-  // No slug usage here; map Home → "/" and anything else → "/{id}" as a fallback
-  siteMap: ({ documents, models }) => {
-    const pageModels = models.filter((m) => m.type === "page");
+  // Keep it dead simple: if we see the Home document, map it to "/".
+  siteMap: ({ documents }) => {
+    const entries: SiteMapEntry[] = [];
 
-    return documents
-      .filter((d) => pageModels.some((m) => m.name === d.modelName))
-      .map((document) => {
-        const isHome = document.modelName === "Home";
-        return {
-          stableId: document.id,
-          urlPath: isHome ? "/" : `/${document.id}`,
-          document,
-          isHomePage: isHome
-        } as SiteMapEntry;
-      });
+    for (const doc of documents) {
+      const isHome =
+        doc.modelName === "Home" ||
+        (typeof (doc as any).filePath === "string" &&
+          (doc as any).filePath.endsWith("/client/public/content/home.json"));
+
+      if (isHome) {
+        entries.push({
+          stableId: doc.id,
+          urlPath: "/",
+          document: doc,
+          isHomePage: true
+        });
+      }
+    }
+
+    return entries;
   }
 });
-
