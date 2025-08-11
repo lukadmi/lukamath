@@ -5,10 +5,12 @@
 [build.environment]
   NODE_VERSION = "20"
 
+# Tell Netlify how to run and proxy the DEV server during the Visual Editor preview
 [dev]
-  command = "npm run dev:vite"
-  targetPort = 5173
-  port = 8888
+  framework = "vite"       # let Netlify manage a Vite dev server
+  command = "vite"         # long-running dev command (NOT a build)
+  targetPort = 5173        # Vite's port
+  port = 8888              # Netlify will expose the preview on this port
 
 [[redirects]]
   from = "/*"
