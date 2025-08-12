@@ -1,13 +1,29 @@
 {
-    "type":  "CertificatesData",
-    "certificates":  [
-                         {
-                             "title":  "Sample Certificate",
-                             "institution":  "Your Institution",
-                             "type":  "Example",
-                             "description":  "Replace this with your real certificate data.",
-                             "logo":  "/uploads/example.png",
-                             "logoAlt":  "Example logo"
-                         }
-                     ]
+    "type": "CertificatesData",
+    "certificates": [
+        {
+            "title": "Master of Data Science",
+            "institution": "University of California, Irvine",
+            "type": "Master's Degree",
+            "description": "Advanced analytics, machine learning, and statistical modeling with applications in education technology.",
+            "logo": "/logos/UCI-D37mQrxm.png",
+            "logoAlt": "UC Irvine logo"
+        },
+        {
+            "title": "Data Science Math Skills",
+            "institution": "Duke University",
+            "type": "Professional Certificate",
+            "description": "Mathematical foundations for data science including calculus, linear algebra, and probability theory.",
+            "logo": "/logos/duke-zXR6vf8z.png",
+            "logoAlt": "Duke University logo"
+        },
+        {
+            "title": "Virtual Teaching Specialization",
+            "institution": "Illinois Institute of Technology",
+            "type": "Teaching Certification",
+            "description": "Online pedagogy and instructional design for effective virtual mathematics education.",
+            "logo": "/logos/iit_seal-sw9r3Cr1.gif",
+            "logoAlt": "IIT logo"
+        }
+    ]
 }
