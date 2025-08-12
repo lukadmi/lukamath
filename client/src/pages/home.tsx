@@ -488,6 +488,22 @@ function HomeContent() {
   const { language, setLanguage, t } = useLanguage();
   const homeDoc = useHomeDoc();
 
+  // Handle logout when redirected from /api/logout
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('logout') === 'true') {
+      // Clear the JWT token
+      localStorage.removeItem('lukamath_auth_token');
+      // Remove the logout parameter from URL
+      window.history.replaceState(null, '', window.location.pathname);
+      // Show logout success message
+      toast({
+        title: language === 'en' ? 'Logged out successfully' : 'Uspješno ste se odjavili',
+        description: language === 'en' ? 'You have been logged out.' : 'Odjavili ste se.',
+      });
+    }
+  }, [language, toast]);
+
   const form = useForm<InsertContact>({
     resolver: zodResolver(insertContactSchema),
     defaultValues: {
