@@ -41,9 +41,11 @@ app.get('*', (req, res) => {
     res.status(404).json({ error: 'API endpoint not found' });
   } else {
     const indexPath = path.join(clientPath, 'index.html');
+    console.log(`Serving index.html from: ${indexPath}`);
     res.sendFile(indexPath, (err) => {
       if (err) {
-        res.status(500).json({ error: 'Failed to serve client' });
+        console.error(`Error serving index.html:`, err);
+        res.status(500).json({ error: 'Failed to serve client', details: err.message });
       }
     });
   }
