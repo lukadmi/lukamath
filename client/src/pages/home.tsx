@@ -716,7 +716,21 @@ function HomeContent() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight" data-sb-field-path="title">
-                {homeDoc?.title ?? "Ace Your Math Tests — One Problem at a Time"}
+                {homeDoc?.title ? (
+                  <div dangerouslySetInnerHTML={{ __html: homeDoc.title }} />
+                ) : (
+                  <>
+                    <h1>
+                      <strong>Ace Your Math Tests —&nbsp;</strong>
+                      <strong style={{ color: 'rgb(250, 204, 21)' }}>
+                        One Problem at a Time
+                      </strong>
+                    </h1>
+                    <p>
+                      <br />
+                    </p>
+                  </>
+                )}
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed" data-sb-field-path="subtitle">
                 {homeDoc?.subtitle ?? "Personalized, online one-on-one sessions that turn confusion into confidence."}
