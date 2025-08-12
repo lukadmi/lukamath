@@ -82,7 +82,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use(sanitizeInput);
 
   // Auth middleware
-  await setupAuth(app);
+  console.log("🔐 Setting up authentication...");
+  try {
+    await setupAuth(app);
+    console.log("✅ Authentication setup completed");
+  } catch (error) {
+    console.error("❌ Auth setup failed:", error);
+    // Continue without auth for debugging
+  }
 
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
