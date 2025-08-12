@@ -286,7 +286,7 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                 onClick={() => setSelectedLevel(level.id)}
               >
                 <CardContent className="p-6 text-center">
-                  <div className={`text-4xl mb-3 ${level.color}`}>{level.icon}</div>
+                  <div className={`text-4xl font-bold mb-4 ${level.color}`}>{level.icon}</div>
                   <h4 className="text-lg font-bold mb-2">
                     {language === 'en' ? level.title : 
                      level.id === 'university' ? 'Sveučilišna matematika' :
