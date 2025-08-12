@@ -11,7 +11,8 @@
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "check": "tsc",
     "db:push": "drizzle-kit push",
-    "create-admin": "tsx server/create-admin.mjs"
+    "create-admin": "tsx server/create-admin.mjs",
+    "create-test-data": "tsx server/create-test-student.mjs"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.16.0",
