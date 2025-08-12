@@ -726,9 +726,9 @@ function HomeContent() {
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight" data-sb-field-path="title">
                 {language === 'hr' ? (
                   <>
-                    <strong>{t('hero.title')}</strong>
+                    <strong>{t('hero.title')}&nbsp;</strong>
                     <strong style={{ color: 'rgb(250, 204, 21)' }}>
-                      <p>{t('hero.title_highlight')}</p>
+                      {t('hero.title_highlight')}
                     </strong>
                   </>
                 ) : (
