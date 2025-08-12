@@ -5,11 +5,11 @@ import express, { type Request, Response, NextFunction } from "express";
 console.log("✅ Express imported");
 
 console.log("2. Importing registerRoutes...");
-import { registerRoutes } from "./routes.js";
+import { registerRoutes } from "./routes.ts";
 console.log("✅ registerRoutes imported");
 
 console.log("3. Importing vite utilities...");
-import { setupVite, serveStatic, log } from "./vite.js";
+import { setupVite, serveStatic, log } from "./vite.ts";
 console.log("✅ Vite utilities imported");
 
 console.log("4. Creating express app...");
