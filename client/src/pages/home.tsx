@@ -672,16 +672,16 @@ function HomeContent() {
                       Register
                     </Button>
                   </Link>
-                  <a href="/api/login">
-                    <Button 
-                      variant="outline" 
+                  <Link href="/login">
+                    <Button
+                      variant="outline"
                       className="hidden md:flex hover:scale-105 transition-transform"
                       onClick={() => trackEvent('navigation_click', 'engagement', 'login_button', 1)}
                     >
                       <LogIn className="w-4 h-4 mr-2" />
                       {language === 'en' ? 'Login' : t("nav.login")}
                     </Button>
-                  </a>
+                  </Link>
                   <Button onClick={() => {
                     trackEvent('cta_click', 'engagement', 'nav_book_trial', 1);
                     scrollToSection('contact');
