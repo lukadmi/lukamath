@@ -1,11 +1,6 @@
-console.log("🎯 Server script starting...");
-console.log("1. Importing express...");
 import express, { type Request, Response, NextFunction } from "express";
-console.log("2. Importing routes...");
 import { registerRoutes } from "./routes";
-console.log("3. Importing vite...");
 import { setupVite, serveStatic, log } from "./vite";
-console.log("📦 All imports completed");
 
 const app = express();
 app.use(express.json());
