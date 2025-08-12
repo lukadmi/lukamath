@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -809,7 +810,7 @@ function HomeContent() {
                   <div className={`text-2xl font-bold mb-2 ${service.color}`}>
                     {language === 'en' ? `$${service.price}/hr` : 
                       service.id === 'middle' ? '15€/h' :
-                      service.id === 'high' ? '20€/h' :
+                      service.id === 'high' ? '20���/h' :
                       service.id === 'university' ? '25€/h' :
                       '20€/h'
                     }
