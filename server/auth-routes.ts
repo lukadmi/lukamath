@@ -151,6 +151,43 @@ router.post('/logout', authenticateToken, async (req, res) => {
 });
 
 /**
+ * GET /api/auth/user
+ * Get current user information (alias for /me endpoint for compatibility)
+ */
+router.get('/user', authenticateToken, async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Not authenticated',
+        messageKey: 'auth.not_authenticated'
+      });
+    }
+
+    const user = await AuthService.getUserById(req.user.userId);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+        messageKey: 'auth.user_not_found'
+      });
+    }
+
+    // Return user directly for compatibility with useAuth hook
+    res.json(user);
+
+  } catch (error) {
+    console.error('Get user endpoint error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      messageKey: 'auth.server_error'
+    });
+  }
+});
+
+/**
  * POST /api/auth/verify-token
  * Verify if a token is valid (useful for client-side token validation)
  */
