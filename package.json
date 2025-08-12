@@ -12,7 +12,8 @@
     "check": "tsc",
     "db:push": "drizzle-kit push",
     "create-admin": "tsx server/create-admin.mjs",
-    "create-test-data": "tsx server/create-test-student.mjs"
+    "create-test-data": "tsx server/create-test-student.mjs",
+    "update-admin-password": "tsx server/update-admin-password.mjs"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.16.0",
