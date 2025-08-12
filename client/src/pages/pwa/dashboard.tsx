@@ -82,32 +82,32 @@ export default function PWADashboard() {
   }, [isAuthenticated, setLocation]);
 
   const { data: homework = [] } = useQuery({
-    queryKey: ['/api/homework', user?.id],
-    enabled: !!user?.id
+    queryKey: ['/api/homework', (user as any)?.id],
+    enabled: !!(user as any)?.id
   });
 
   const { data: messages = [] } = useQuery({
-    queryKey: ['/api/messages', user?.id],
-    enabled: !!user?.id
+    queryKey: ['/api/messages', (user as any)?.id],
+    enabled: !!(user as any)?.id
   });
 
   const { data: sessions = [] } = useQuery({
-    queryKey: ['/api/tutoring-sessions', user?.id],
-    enabled: !!user?.id
+    queryKey: ['/api/tutoring-sessions', (user as any)?.id],
+    enabled: !!(user as any)?.id
   });
 
   const t = translations[language];
 
-  const pendingHomework = homework.filter((hw: any) => hw.status === 'pending');
-  const completedHomework = homework.filter((hw: any) => hw.status === 'completed');
-  const todayHomework = homework.filter((hw: any) => {
+  const pendingHomework = (homework as any[]).filter((hw: any) => hw.status === 'pending');
+  const completedHomework = (homework as any[]).filter((hw: any) => hw.status === 'completed');
+  const todayHomework = (homework as any[]).filter((hw: any) => {
     const dueDate = new Date(hw.dueDate);
     const today = new Date();
     return dueDate.toDateString() === today.toDateString();
   });
 
-  const unreadMessages = messages.filter((msg: any) => !msg.read);
-  const nextSession = sessions.find((session: any) => new Date(session.date) > new Date());
+  const unreadMessages = (messages as any[]).filter((msg: any) => !msg.read);
+  const nextSession = (sessions as any[]).find((session: any) => new Date(session.date) > new Date());
 
   const handleLogout = () => {
     localStorage.removeItem('pwa-language');
@@ -156,7 +156,7 @@ export default function PWADashboard() {
         {/* Welcome Section */}
         <div className="text-center">
           <h2 className="text-2xl font-bold text-slate-800 mb-1">
-            {t.welcome}, {user?.name?.split(' ')[0] || 'Student'}!
+            {t.welcome}, {(user as any)?.name?.split(' ')[0] || 'Student'}!
           </h2>
           <p className="text-slate-600">
             {t.readyForMath}

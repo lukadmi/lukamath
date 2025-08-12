@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { LanguageProvider } from "@/contexts/LanguageProvider";
+import { AuthProvider } from "@/hooks/useAuthNew";
 import { useEffect, lazy, Suspense } from "react";
 import { initGA } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
@@ -18,6 +19,8 @@ const StudentApp = lazy(() => import("@/pages/app"));
 const AdminDashboard = lazy(() => import("@/pages/admin"));
 const AdminExport = lazy(() => import("@/pages/admin-export"));
 const Register = lazy(() => import("@/pages/register"));
+const RegisterNew = lazy(() => import("@/pages/register-new"));
+const LoginNew = lazy(() => import("@/pages/login-new"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 const PWAIndex = lazy(() => import("@/pages/pwa/index"));
 const PWAAuth = lazy(() => import("@/pages/pwa/auth"));
@@ -49,6 +52,8 @@ function Router() {
           <Route path="/admin" component={AdminDashboard}/>
           <Route path="/admin/export" component={AdminExport}/>
           <Route path="/register" component={Register}/>
+          <Route path="/register-new" component={RegisterNew}/>
+          <Route path="/login" component={LoginNew}/>
           <Route path="/pwa" component={PWAIndex}/>
           <Route path="/pwa/auth" component={PWAAuth}/>
           <Route path="/pwa/dashboard" component={PWADashboard}/>
@@ -81,12 +86,14 @@ function App() {
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <LanguageProvider>
-          <TooltipProvider>
-            <Toaster />
-          <Router />
-          </TooltipProvider>
-        </LanguageProvider>
+        <AuthProvider>
+          <LanguageProvider>
+            <TooltipProvider>
+              <Toaster />
+            <Router />
+            </TooltipProvider>
+          </LanguageProvider>
+        </AuthProvider>
       </QueryClientProvider>
     </HelmetProvider>
   );

@@ -99,8 +99,8 @@ export default function PWAHomework() {
   }, [isAuthenticated, setLocation]);
 
   const { data: homework = [], isLoading } = useQuery({
-    queryKey: ['/api/homework', user?.id],
-    enabled: !!user?.id
+    queryKey: ['/api/homework', (user as any)?.id],
+    enabled: !!(user as any)?.id
   });
 
   const submitMutation = useMutation({
@@ -127,9 +127,9 @@ export default function PWAHomework() {
 
   const t = translations[language];
 
-  const pendingHomework = homework.filter((hw: any) => hw.status === 'pending');
-  const completedHomework = homework.filter((hw: any) => hw.status === 'completed');
-  const overdueHomework = homework.filter((hw: any) => {
+  const pendingHomework = (homework as any[]).filter((hw: any) => hw.status === 'pending');
+  const completedHomework = (homework as any[]).filter((hw: any) => hw.status === 'completed');
+  const overdueHomework = (homework as any[]).filter((hw: any) => {
     const dueDate = new Date(hw.dueDate);
     const today = new Date();
     return dueDate < today && hw.status === 'pending';

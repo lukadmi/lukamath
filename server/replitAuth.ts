@@ -9,15 +9,24 @@ import connectPg from "connect-pg-simple";
 import { storage } from "./storage";
 
 if (!process.env.REPLIT_DOMAINS) {
-  throw new Error("Environment variable REPLIT_DOMAINS not provided");
+  console.warn("⚠️ REPLIT_DOMAINS not set, using development defaults");
+  process.env.REPLIT_DOMAINS = "localhost:5000,127.0.0.1:5000";
 }
 
 const getOidcConfig = memoize(
   async () => {
-    return await client.discovery(
-      new URL(process.env.ISSUER_URL ?? "https://replit.com/oidc"),
-      process.env.REPL_ID!
-    );
+    try {
+      return await client.discovery(
+        new URL(process.env.ISSUER_URL ?? "https://replit.com/oidc"),
+        process.env.REPL_ID!
+      );
+    } catch (error) {
+      console.warn("⚠️ OIDC discovery failed, using development mock:", error?.message);
+      // Return a mock config for development
+      return {
+        issuer: { metadata: { issuer: "dev", authorization_endpoint: "/dev", token_endpoint: "/dev" } }
+      };
+    }
   },
   { maxAge: 3600 * 1000 }
 );

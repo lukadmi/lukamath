@@ -111,10 +111,8 @@ function AdminDashboard() {
   const createHomeworkMutation = useMutation({
     mutationFn: async (data: any) => {
       // First create the homework
-      const homework = await apiRequest("/api/homework", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
+      const response = await apiRequest("POST", "/api/homework", data);
+      const homework = await response.json();
 
       // Then upload any attached files
       if (attachedFiles.length > 0) {
@@ -125,9 +123,10 @@ function AdminDashboard() {
         formData.append('homeworkId', (homework as any).id);
         formData.append('purpose', 'assignment');
 
-        await apiRequest("/api/homework/files", {
+        await fetch("/api/homework/files", {
           method: "POST",
           body: formData,
+          credentials: "include"
         });
       }
 
@@ -142,10 +141,10 @@ function AdminDashboard() {
   });
 
   const createAvailabilityMutation = useMutation({
-    mutationFn: (data: any) => apiRequest("/api/availability", {
-      method: "POST",
-      body: JSON.stringify(data),
-    }),
+    mutationFn: async (data: any) => {
+      const response = await apiRequest("POST", "/api/availability", data);
+      return response.json();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/availability"] });
       setAvailabilityDialogOpen(false);
@@ -155,10 +154,7 @@ function AdminDashboard() {
 
   const answerQuestionMutation = useMutation({
     mutationFn: ({ questionId, answer }: { questionId: string; answer: string }) =>
-      apiRequest(`/api/questions/${questionId}/answer`, {
-        method: "PUT",
-        body: JSON.stringify({ answer }),
-      }),
+      apiRequest("PATCH", `/api/questions/${questionId}/answer`, { answer }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/questions"] });
     },
@@ -877,7 +873,6 @@ function AdminDashboard() {
     );
   }
 
-  return dashboardContent;
 }
 
 export default AdminDashboard;

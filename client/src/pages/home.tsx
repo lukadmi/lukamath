@@ -20,6 +20,7 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { insertContactSchema, type InsertContact } from "@shared/schema";
 import { Helmet } from 'react-helmet-async';
+import { AuthTestNav } from "@/components/AuthTestNav";
 
 import anoushka_puri_f1YfrZ1o2r8_unsplash from "@assets/anoushka-puri-f1YfrZ1o2r8-unsplash.jpg";
 
@@ -486,6 +487,22 @@ function HomeContent() {
   const { user, isAuthenticated } = useAuth();
   const { language, setLanguage, t } = useLanguage();
   const homeDoc = useHomeDoc();
+
+  // Handle logout when redirected from /api/logout
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('logout') === 'true') {
+      // Clear the JWT token
+      localStorage.removeItem('lukamath_auth_token');
+      // Remove the logout parameter from URL
+      window.history.replaceState(null, '', window.location.pathname);
+      // Show logout success message
+      toast({
+        title: language === 'en' ? 'Logged out successfully' : 'Uspješno ste se odjavili',
+        description: language === 'en' ? 'You have been logged out.' : 'Odjavili ste se.',
+      });
+    }
+  }, [language, toast]);
 
   const form = useForm<InsertContact>({
     resolver: zodResolver(insertContactSchema),
@@ -1359,6 +1376,7 @@ function HomeContent() {
           </DialogHeader>
         </DialogContent>
       </Dialog>
+      <AuthTestNav />
     </div>
   );
 }
