@@ -717,18 +717,13 @@ function HomeContent() {
             <div className="text-center lg:text-left">
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight" data-sb-field-path="title">
                 {homeDoc?.title ? (
-                  <div dangerouslySetInnerHTML={{ __html: homeDoc.title }} />
+                  <span dangerouslySetInnerHTML={{ __html: homeDoc.title }} />
                 ) : (
                   <>
-                    <h1>
-                      <strong>Ace Your Math Tests —&nbsp;</strong>
-                      <strong style={{ color: 'rgb(250, 204, 21)' }}>
-                        One Problem at a Time
-                      </strong>
-                    </h1>
-                    <p>
-                      <br />
-                    </p>
+                    <strong>Ace Your Math Tests —&nbsp;</strong>
+                    <strong style={{ color: 'rgb(250, 204, 21)' }}>
+                      One Problem at a Time
+                    </strong>
                   </>
                 )}
               </h1>
