@@ -21,6 +21,12 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
 
+// Legacy logout route - redirect to home after client-side token cleanup
+app.get('/api/logout', (req, res) => {
+  // For JWT-based auth, we just redirect to home and let client handle token removal
+  res.redirect('/?logout=true');
+});
+
 // Serve static files from client build
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
