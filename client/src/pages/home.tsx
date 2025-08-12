@@ -743,11 +743,6 @@ function HomeContent() {
               <p className="text-xl mb-8 text-blue-100 leading-relaxed" data-sb-field-path="subtitle">
                 {t('hero.subtitle')}
               </p>
-              {homeDoc?.body && language === 'en' && (
-                <p className="text-lg text-blue-200 mb-8" data-sb-field-path="body">
-                  {homeDoc.body}
-                </p>
-              )}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button 
                   onClick={() => {
