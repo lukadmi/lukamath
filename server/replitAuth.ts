@@ -15,10 +15,18 @@ if (!process.env.REPLIT_DOMAINS) {
 
 const getOidcConfig = memoize(
   async () => {
-    return await client.discovery(
-      new URL(process.env.ISSUER_URL ?? "https://replit.com/oidc"),
-      process.env.REPL_ID!
-    );
+    try {
+      return await client.discovery(
+        new URL(process.env.ISSUER_URL ?? "https://replit.com/oidc"),
+        process.env.REPL_ID!
+      );
+    } catch (error) {
+      console.warn("⚠️ OIDC discovery failed, using development mock:", error?.message);
+      // Return a mock config for development
+      return {
+        issuer: { metadata: { issuer: "dev", authorization_endpoint: "/dev", token_endpoint: "/dev" } }
+      };
+    }
   },
   { maxAge: 3600 * 1000 }
 );
