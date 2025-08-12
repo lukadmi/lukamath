@@ -86,12 +86,14 @@ function App() {
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <LanguageProvider>
-          <TooltipProvider>
-            <Toaster />
-          <Router />
-          </TooltipProvider>
-        </LanguageProvider>
+        <AuthProvider>
+          <LanguageProvider>
+            <TooltipProvider>
+              <Toaster />
+            <Router />
+            </TooltipProvider>
+          </LanguageProvider>
+        </AuthProvider>
       </QueryClientProvider>
     </HelmetProvider>
   );
