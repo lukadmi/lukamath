@@ -533,6 +533,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  console.log("🌐 Creating HTTP server...");
   const httpServer = createServer(app);
+  console.log("✅ Route registration completed successfully");
   return httpServer;
 }
