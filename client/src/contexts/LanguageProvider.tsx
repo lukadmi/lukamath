@@ -18,7 +18,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   }, [language]);
 
   const t = (key: string): string => {
-    const translation = translations[language][key as keyof typeof translations.en];
+    const translation = translations[language][key as keyof typeof translations.en] as string;
     return translation || key;
   };
 
