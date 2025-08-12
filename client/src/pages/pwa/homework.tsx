@@ -99,8 +99,8 @@ export default function PWAHomework() {
   }, [isAuthenticated, setLocation]);
 
   const { data: homework = [], isLoading } = useQuery({
-    queryKey: ['/api/homework', user?.id],
-    enabled: !!user?.id
+    queryKey: ['/api/homework', (user as any)?.id],
+    enabled: !!(user as any)?.id
   });
 
   const submitMutation = useMutation({
