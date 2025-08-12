@@ -1360,6 +1360,7 @@ function HomeContent() {
           </DialogHeader>
         </DialogContent>
       </Dialog>
+      <AuthTestNav />
     </div>
   );
 }
