@@ -82,18 +82,18 @@ export default function PWADashboard() {
   }, [isAuthenticated, setLocation]);
 
   const { data: homework = [] } = useQuery({
-    queryKey: ['/api/homework', user?.id],
-    enabled: !!user?.id
+    queryKey: ['/api/homework', (user as any)?.id],
+    enabled: !!(user as any)?.id
   });
 
   const { data: messages = [] } = useQuery({
-    queryKey: ['/api/messages', user?.id],
-    enabled: !!user?.id
+    queryKey: ['/api/messages', (user as any)?.id],
+    enabled: !!(user as any)?.id
   });
 
   const { data: sessions = [] } = useQuery({
-    queryKey: ['/api/tutoring-sessions', user?.id],
-    enabled: !!user?.id
+    queryKey: ['/api/tutoring-sessions', (user as any)?.id],
+    enabled: !!(user as any)?.id
   });
 
   const t = translations[language];
