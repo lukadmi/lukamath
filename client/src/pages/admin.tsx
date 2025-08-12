@@ -873,7 +873,6 @@ function AdminDashboard() {
     );
   }
 
-  return dashboardContent;
 }
 
 export default AdminDashboard;
