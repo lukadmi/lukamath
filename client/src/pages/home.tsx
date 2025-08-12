@@ -741,7 +741,7 @@ function HomeContent() {
                 )}
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed" data-sb-field-path="subtitle">
-                {language === 'hr' ? <p>{t('hero.subtitle')}</p> : t('hero.subtitle')}
+                {t('hero.subtitle')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button 
