@@ -172,7 +172,7 @@ export const translations = {
     
     // Hero Section
     "hero.title": "Savladajte matematiku",
-    "hero.title_highlight": " — uz personalizirano podučavanje",
+    "hero.title_highlight": "uz personalizirano podučavanje",
     "hero.subtitle": "Stručno individualno podučavanje matematike od osnovne do sveučilišne razine. Izgradite samopouzdanje, poboljšajte ocjene i postignite svoje akademske ciljeve.",
     "hero.cta_primary": "Rezerviraj probni sat (15min)",
     "hero.cta_secondary": "Istraži našu aplikaciju",
