@@ -42,7 +42,7 @@ function useHomeDoc() {
 const mathLevels = [
   {
     id: "middle-school",
-    icon: "√",
+    icon: "���",
     title: "Middle School Math",
     description: "Grades 6-8",
     price: 20,
@@ -402,6 +402,12 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                           <Check className="w-5 h-5 text-emerald-400 mr-3" />
                           {language === 'en' ? 'Priority scheduling' : t('pricing.priority_scheduling')}
                         </li>
+                        {language === 'hr' && (
+                          <li className="flex items-center mt-3">
+                            <Check className="w-5 h-5 text-emerald-400 mr-3" />
+                            <span>Pristup LukaMath aplikaciji</span>
+                          </li>
+                        )}
                       </ul>
                       <Button 
                         className="w-full bg-yellow-400 text-slate-800 hover:bg-yellow-300 font-semibold"
