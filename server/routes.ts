@@ -80,13 +80,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use(generalLimiter);
   app.use(sanitizeInput);
 
-  // Auth middleware
-  try {
-    await setupAuth(app);
-  } catch (error) {
-    console.warn("⚠️ Auth setup failed, continuing without auth:", error?.message);
-    // Continue without auth for development
-  }
+  // Auth middleware - temporarily disabled for debugging
+  console.log("⚠️ Skipping auth setup for debugging");
 
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
