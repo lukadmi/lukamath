@@ -8,12 +8,13 @@ import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 export default defineConfig(async () => {
   const plugins = [react(), runtimeErrorOverlay()];
 
-  if (process.env.NODE_ENV !== "production" && process.env.REPL_ID !== undefined) {
-    const cartographer = await import("@replit/vite-plugin-cartographer").then((m) =>
-      m.cartographer()
-    );
-    plugins.push(cartographer);
-  }
+  // Temporarily disable cartographer plugin due to build issues
+  // if (process.env.NODE_ENV !== "production" && process.env.REPL_ID !== undefined) {
+  //   const cartographer = await import("@replit/vite-plugin-cartographer").then((m) =>
+  //     m.cartographer()
+  //   );
+  //   plugins.push(cartographer);
+  // }
 
   return {
     plugins,
