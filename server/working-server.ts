@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from 'url';
 import authRoutes from './auth-routes.js';
+import adminRoutes from './admin-routes.js';
 
 console.log("🚀 Starting LukaMath server...");
 
