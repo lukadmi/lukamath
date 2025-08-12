@@ -10,7 +10,7 @@ try {
 
 console.log("2. Testing database import...");
 try {
-  const db = await import('./server/db.js');
+  const db = await import('./server/db.ts');
   console.log("✅ Database import successful");
 } catch (err) {
   console.error("❌ Database import failed:", err.message);
@@ -18,7 +18,7 @@ try {
 
 console.log("3. Testing routes import...");
 try {
-  const routes = await import('./server/routes.js');
+  const routes = await import('./server/routes.ts');
   console.log("✅ Routes import successful");
 } catch (err) {
   console.error("❌ Routes import failed:", err.message);
@@ -26,7 +26,7 @@ try {
 
 console.log("4. Testing vite import...");
 try {
-  const vite = await import('./server/vite.js');
+  const vite = await import('./server/vite.ts');
   console.log("✅ Vite import successful");
 } catch (err) {
   console.error("❌ Vite import failed:", err.message);
