@@ -52,10 +52,13 @@ app.use((req, res, next) => {
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
+  console.log("🔧 Setting up Vite...");
   if (app.get("env") === "development") {
     await setupVite(app, server);
+    console.log("✅ Vite setup completed");
   } else {
     serveStatic(app);
+    console.log("✅ Static serving setup completed");
   }
 
   // ALWAYS serve the app on the port specified in the environment variable PORT
