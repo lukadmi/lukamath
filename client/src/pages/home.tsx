@@ -477,6 +477,7 @@ function HomeContent() {
   const { toast } = useToast();
   const { user, isAuthenticated } = useAuth();
   const { language, setLanguage, t } = useLanguage();
+  const homeDoc = useHomeDoc();
 
   const form = useForm<InsertContact>({
     resolver: zodResolver(insertContactSchema),
