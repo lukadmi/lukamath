@@ -129,11 +129,11 @@ router.get('/me', authenticateToken, async (req, res) => {
  * POST /api/auth/logout
  * Logout user (client-side token removal, but useful for logging)
  */
-router.post('/logout', authenticateToken, async (req, res) => {
+router.post('/logout', async (req, res) => {
   try {
     // Note: With JWT, logout is mainly handled client-side by removing the token
-    // This endpoint is mainly for logging purposes and future session management
-    
+    // This endpoint is mainly for logging purposes and doesn't require authentication
+
     res.json({
       success: true,
       message: 'Logged out successfully',
