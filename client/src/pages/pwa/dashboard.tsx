@@ -98,16 +98,16 @@ export default function PWADashboard() {
 
   const t = translations[language];
 
-  const pendingHomework = homework.filter((hw: any) => hw.status === 'pending');
-  const completedHomework = homework.filter((hw: any) => hw.status === 'completed');
-  const todayHomework = homework.filter((hw: any) => {
+  const pendingHomework = (homework as any[]).filter((hw: any) => hw.status === 'pending');
+  const completedHomework = (homework as any[]).filter((hw: any) => hw.status === 'completed');
+  const todayHomework = (homework as any[]).filter((hw: any) => {
     const dueDate = new Date(hw.dueDate);
     const today = new Date();
     return dueDate.toDateString() === today.toDateString();
   });
 
-  const unreadMessages = messages.filter((msg: any) => !msg.read);
-  const nextSession = sessions.find((session: any) => new Date(session.date) > new Date());
+  const unreadMessages = (messages as any[]).filter((msg: any) => !msg.read);
+  const nextSession = (sessions as any[]).find((session: any) => new Date(session.date) > new Date());
 
   const handleLogout = () => {
     localStorage.removeItem('pwa-language');
