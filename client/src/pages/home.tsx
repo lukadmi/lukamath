@@ -60,7 +60,7 @@ const mathLevels = [
   },
   {
     id: "university",
-    icon: "∞",
+    icon: "���",
     title: "University Math",
     description: "College Level", 
     price: 40,
@@ -716,8 +716,13 @@ function HomeContent() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight" data-sb-field-path="title">
-                {homeDoc?.title ? (
-                  <span dangerouslySetInnerHTML={{ __html: homeDoc.title }} />
+                {language === 'hr' ? (
+                  <>
+                    <strong>{t('hero.title')}</strong>
+                    <strong style={{ color: 'rgb(250, 204, 21)' }}>
+                      {t('hero.title_highlight')}
+                    </strong>
+                  </>
                 ) : (
                   <>
                     <strong>Ace Your Math Tests —&nbsp;</strong>
@@ -728,7 +733,7 @@ function HomeContent() {
                 )}
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed" data-sb-field-path="subtitle">
-                {homeDoc?.subtitle ?? "Personalized, online one-on-one sessions that turn confusion into confidence."}
+                {t('hero.subtitle')}
               </p>
               {homeDoc?.body && (
                 <p className="text-lg text-blue-200 mb-8" data-sb-field-path="body">
