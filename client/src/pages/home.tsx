@@ -728,7 +728,7 @@ function HomeContent() {
                   <>
                     <strong>{t('hero.title')}</strong>
                     <strong style={{ color: 'rgb(250, 204, 21)' }}>
-                      {t('hero.title_highlight')}
+                      <p>{t('hero.title_highlight')}</p>
                     </strong>
                   </>
                 ) : (
