@@ -1,0 +1,476 @@
+
+> rest-express@1.0.0 dev
+> cross-env NODE_ENV=development tsx server/index.ts
+
+Re-optimizing dependencies because vite config has changed
+12:28:37 PM [express] serving on port 5000
+12:30:13 PM [express] GET /api/auth/user 401 in 6ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 6,
+  timestamp: '2025-08-12T12:30:13.868Z'
+}
+12:32:00 PM [express] GET /api/auth/user 401 in 4ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 4,
+  timestamp: '2025-08-12T12:32:00.280Z'
+}
+12:33:09 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:33:09.806Z'
+}
+12:33:57 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:33:57.014Z'
+}
+12:34:33 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:34:33.822Z'
+}
+12:34:33 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:34:33.850Z'
+}
+12:34:56 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:34:56.589Z'
+}
+12:35:41 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:35:41.778Z'
+}
+12:36:56 PM [express] GET /api/auth/user 401 in 2ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 3,
+  timestamp: '2025-08-12T12:36:56.159Z'
+}
+12:37:43 PM [express] GET /api/auth/user 401 in 2ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:37:43.490Z'
+}
+12:38:28 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 5,
+  timestamp: '2025-08-12T12:38:28.858Z'
+}
+12:39:06 PM [express] GET /api/auth/user 401 in 2ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 3,
+  timestamp: '2025-08-12T12:39:06.456Z'
+}
+12:39:36 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:39:36.496Z'
+}
+12:40:10 PM [express] GET /api/auth/user 401 in 2ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:40:10.474Z'
+}
+12:40:57 PM [express] GET /api/auth/user 401 in 0ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:40:57.646Z'
+}
+12:41:32 PM [express] GET /api/auth/user 401 in 2ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:41:32.154Z'
+}
+12:41:59 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:41:59.945Z'
+}
+12:42:08 PM [express] GET /api/auth/user 401 in 0ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:42:08.641Z'
+}
+12:42:33 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:42:33.489Z'
+}
+12:42:40 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:42:40.899Z'
+}
+12:43:07 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:43:07.406Z'
+}
+12:43:17 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:43:17.021Z'
+}
+12:43:57 PM [express] GET /api/auth/user 401 in 0ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:43:57.545Z'
+}
+12:43:59 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:43:59.758Z'
+}
+12:44:04 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:44:04.048Z'
+}
+12:44:34 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:44:34.916Z'
+}
+12:45:15 PM [express] GET /api/auth/user 401 in 2ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:45:15.665Z'
+}
+12:45:52 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:45:52.510Z'
+}
+12:46:26 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:46:26.379Z'
+}
+12:46:28 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:46:28.373Z'
+}
+12:46:35 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:46:35.859Z'
+}
+12:47:06 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:47:06.157Z'
+}
+12:47:13 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:47:13.830Z'
+}
+12:47:45 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:47:45.251Z'
+}
+12:48:20 PM [express] GET /api/auth/user 401 in 0ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:48:20.676Z'
+}
+12:48:56 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:48:56.171Z'
+}
+12:49:33 PM [express] GET /api/auth/user 401 in 2ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:49:33.080Z'
+}
+12:49:43 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:49:43.981Z'
+}
+12:49:49 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:49:49.686Z'
+}
+12:50:16 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:50:16.106Z'
+}
+12:50:31 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:50:31.094Z'
+}
+12:51:07 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:51:07.835Z'
+}
+12:51:42 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:51:42.800Z'
+}
+12:52:30 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:52:30.166Z'
+}
+12:52:32 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '2a09:8280:1::8f:996:0',
+  userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:52:32.503Z'
+}
+12:52:39 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 1,
+  timestamp: '2025-08-12T12:52:39.319Z'
+}
+12:52:44 PM [express] GET /api/auth/user 401 in 2ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:52:44.946Z'
+}
