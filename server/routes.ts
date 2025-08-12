@@ -481,7 +481,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { type, dateRange, filters } = req.body;
       
-      let data: any[] = [];
+      let data: any = [];
       let filename = `lukamath-${type}`;
       
       switch (type) {
