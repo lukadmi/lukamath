@@ -13,6 +13,9 @@ app.use(express.urlencoded({ extended: false }));
 // Authentication routes
 app.use('/api/auth', authRoutes);
 
+// Admin routes
+app.use('/api', adminRoutes);
+
 // Basic API routes
 app.get('/api/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
