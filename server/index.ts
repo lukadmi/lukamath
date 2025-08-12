@@ -50,13 +50,25 @@ app.use((req, res, next) => {
       throw err;
     });
 
-    // Temporarily skip Vite setup for debugging
-    console.log("⚠️ Skipping Vite setup for debugging");
-
-    // Simple SPA fallback for development
-    app.get('*', (req, res) => {
-      res.json({ message: 'LukaMath API Server is running!', path: req.path });
-    });
+    // Setup Vite with error handling
+    console.log("🔧 Environment:", app.get("env"));
+    if (app.get("env") === "development") {
+      console.log("⚡ Setting up Vite development server...");
+      try {
+        await setupVite(app, server);
+        console.log("✅ Vite setup completed");
+      } catch (error) {
+        console.error("❌ Vite setup failed:", error);
+        // Fallback to simple serving
+        app.get('*', (req, res) => {
+          res.json({ message: 'LukaMath API Server (Vite failed)', path: req.path });
+        });
+      }
+    } else {
+      console.log("📁 Setting up static file serving...");
+      serveStatic(app);
+      console.log("✅ Static serving setup completed");
+    }
 
     // ALWAYS serve the app on the port specified in the environment variable PORT
     // Other ports are firewalled. Default to 5000 if not specified.
