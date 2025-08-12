@@ -267,7 +267,7 @@ export default function AdminHomework() {
                     <Label>Subject *</Label>
                     <Select
                       value={form.watch('subject')}
-                      onValueChange={(value) => form.setValue('subject', value)}
+                      onValueChange={(value) => form.setValue('subject', value as 'middle' | 'high-school' | 'university' | 'sat-act')}
                     >
                       <SelectTrigger>
                         <SelectValue />
