@@ -121,8 +121,8 @@ export default function PWAProgress() {
   }, [isAuthenticated, setLocation]);
 
   const { data: progressData } = useQuery({
-    queryKey: ['/api/progress', user?.id],
-    enabled: !!user?.id
+    queryKey: ['/api/progress', (user as any)?.id],
+    enabled: !!(user as any)?.id
   });
 
   const t = translations[language];
