@@ -1,6 +1,6 @@
 console.log("🧪 Minimal test server starting...");
 
-const express = require('express');
+import express from 'express';
 const app = express();
 
 app.get('/', (req, res) => {
