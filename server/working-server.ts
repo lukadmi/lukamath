@@ -9,18 +9,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Authentication routes
+app.use('/api/auth', authRoutes);
+
 // Basic API routes
 app.get('/api/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
-});
-
-app.get('/api/auth/user', (req, res) => {
-  res.json({ 
-    id: 'demo-user', 
-    name: 'Demo User', 
-    email: 'demo@lukamath.com', 
-    role: 'student' 
-  });
 });
 
 // Serve static files from client build
