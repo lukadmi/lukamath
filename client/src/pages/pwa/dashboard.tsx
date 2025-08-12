@@ -156,7 +156,7 @@ export default function PWADashboard() {
         {/* Welcome Section */}
         <div className="text-center">
           <h2 className="text-2xl font-bold text-slate-800 mb-1">
-            {t.welcome}, {user?.name?.split(' ')[0] || 'Student'}!
+            {t.welcome}, {(user as any)?.name?.split(' ')[0] || 'Student'}!
           </h2>
           <p className="text-slate-600">
             {t.readyForMath}
