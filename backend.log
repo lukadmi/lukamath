@@ -194,3 +194,13 @@ Security alert: {
   duration: 2,
   timestamp: '2025-08-12T12:42:33.489Z'
 }
+12:42:40 PM [express] GET /api/auth/user 401 in 1ms :: {"message":"Unauthorized"}
+Security alert: {
+  method: 'GET',
+  url: '/api/auth/user',
+  ip: '66.241.125.21',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36',
+  statusCode: 401,
+  duration: 2,
+  timestamp: '2025-08-12T12:42:40.899Z'
+}
