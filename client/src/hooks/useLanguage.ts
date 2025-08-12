@@ -260,7 +260,7 @@ export const translations = {
     // Certificates  
     "cert.math_data_science": "Matematika za znanost o podacima",
     "cert.math_data_science_desc": "Statističke osnove i matematičko modeliranje",
-    "cert.master_data_science": "Magistar znanosti o podacima", 
+    "cert.master_data_science": "Znanost o podacima", 
     "cert.master_data_science_desc": "Napredna analitika i strojno učenje",
     "cert.virtual_teaching": "Specijalizacija virtualnog poučavanja",
     "cert.virtual_teaching_desc": "Online pedagogija i dizajn nastave",
