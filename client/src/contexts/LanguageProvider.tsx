@@ -18,8 +18,8 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   }, [language]);
 
   const t = (key: string): string => {
-    const translation = translations[language][key as keyof typeof translations.en] as string;
-    return translation || key;
+    const langTranslations = translations[language] as Record<string, string>;
+    return langTranslations[key] || key;
   };
 
   return (
