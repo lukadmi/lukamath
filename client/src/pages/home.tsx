@@ -402,12 +402,10 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                           <Check className="w-5 h-5 text-emerald-400 mr-3" />
                           {language === 'en' ? 'Priority scheduling' : t('pricing.priority_scheduling')}
                         </li>
-                        {language === 'hr' && (
-                          <li className="flex items-center mt-3">
-                            <Check className="w-5 h-5 text-emerald-400 mr-3" />
-                            <span>Pristup LukaMath aplikaciji</span>
-                          </li>
-                        )}
+                        <li className="flex items-center mt-3">
+                          <Check className="w-5 h-5 text-emerald-400 mr-3" />
+                          <span>{language === 'en' ? 'Access to the LukaMath app' : 'Pristup LukaMath aplikaciji'}</span>
+                        </li>
                       </ul>
                       <Button 
                         className="w-full bg-yellow-400 text-slate-800 hover:bg-yellow-300 font-semibold"
