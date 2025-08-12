@@ -478,6 +478,7 @@ function HomeContent() {
   const { toast } = useToast();
   const { user, isAuthenticated } = useAuth();
   const { language, setLanguage, t } = useLanguage();
+  const homeDoc = useHomeDoc();
 
   const form = useForm<InsertContact>({
     resolver: zodResolver(insertContactSchema),
@@ -809,8 +810,8 @@ function HomeContent() {
                   </p>
                   <div className={`text-2xl font-bold mb-2 ${service.color}`}>
                     {language === 'en' ? `$${service.price}/hr` : 
-                      service.id === 'middle' ? '15€/h' :
-                      service.id === 'high' ? '20���/h' :
+                      service.id === 'middle' ? '15��/h' :
+                      service.id === 'high' ? '20€/h' :
                       service.id === 'university' ? '25€/h' :
                       '20€/h'
                     }
