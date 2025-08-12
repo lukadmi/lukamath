@@ -60,9 +60,9 @@ const mathLevels = [
   },
   {
     id: "university",
-    icon: "���",
+    icon: "∞",
     title: "University Math",
-    description: "College Level", 
+    description: "College Level",
     price: 40,
     priceEur: 25,
     color: "text-purple-600"
