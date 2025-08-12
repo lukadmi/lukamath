@@ -25,7 +25,7 @@ app.get('/api/auth/user', (req, res) => {
 // Serve static files from client build
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const clientPath = path.join(__dirname, '..', 'client', 'dist');
+const clientPath = path.join(__dirname, '..', 'dist', 'public');
 
 app.use(express.static(clientPath));
 
