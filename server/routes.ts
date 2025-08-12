@@ -77,9 +77,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     setSecurityHeaders(req, res, next);
   });
   
+  console.log("🔒 Setting up security middleware...");
   app.use(securityLogger);
   app.use(generalLimiter);
   app.use(sanitizeInput);
+  console.log("✅ Security middleware setup complete");
 
   // Auth middleware - temporarily disabled for debugging
   console.log("⚠️ Skipping auth setup for debugging");
