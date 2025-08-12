@@ -171,9 +171,9 @@ export const translations = {
     "nav.home": "Početna",
     
     // Hero Section
-    "hero.title": "Savladajte matematiku",
-    "hero.title_highlight": " — uz personalizirano podučavanje",
-    "hero.subtitle": "Stručno individualno podučavanje matematike od osnovne do sveučilišne razine. Izgradite samopouzdanje, poboljšajte ocjene i postignite svoje akademske ciljeve.",
+    "hero.title": "Savladajte matematiku —",
+    "hero.title_highlight": "uz personalizirano podučavanje",
+    "hero.subtitle": "Stručno individualno podučavanje matematike od osnovne do sveučilišne razine. Izgradite samopouzdanje, poboljšajte ocjene i postignite svoje ciljeve.",
     "hero.cta_primary": "Rezerviraj probni sat (15min)",
     "hero.cta_secondary": "Istraži našu aplikaciju",
     "hero.trial_duration": "15-minutni besplatni probni sat",
@@ -260,7 +260,7 @@ export const translations = {
     // Certificates  
     "cert.math_data_science": "Matematika za znanost o podacima",
     "cert.math_data_science_desc": "Statističke osnove i matematičko modeliranje",
-    "cert.master_data_science": "Magistar znanosti o podacima", 
+    "cert.master_data_science": "Znanost o podacima", 
     "cert.master_data_science_desc": "Napredna analitika i strojno učenje",
     "cert.virtual_teaching": "Specijalizacija virtualnog poučavanja",
     "cert.virtual_teaching_desc": "Online pedagogija i dizajn nastave",

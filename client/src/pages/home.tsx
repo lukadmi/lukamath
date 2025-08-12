@@ -62,7 +62,7 @@ const mathLevels = [
     id: "university",
     icon: "∞",
     title: "University Math",
-    description: "College Level", 
+    description: "College Level",
     price: 40,
     priceEur: 25,
     color: "text-purple-600"
@@ -286,7 +286,7 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                 onClick={() => setSelectedLevel(level.id)}
               >
                 <CardContent className="p-6 text-center">
-                  <div className={`text-4xl mb-3 ${level.color}`}>{level.icon}</div>
+                  <div className={`text-4xl font-bold mb-4 ${level.color}`}>{level.icon}</div>
                   <h4 className="text-lg font-bold mb-2">
                     {language === 'en' ? level.title : 
                      level.id === 'university' ? 'Sveučilišna matematika' :
@@ -402,6 +402,10 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                           <Check className="w-5 h-5 text-emerald-400 mr-3" />
                           {language === 'en' ? 'Priority scheduling' : t('pricing.priority_scheduling')}
                         </li>
+                        <li className="flex items-center mt-3">
+                          <Check className="w-5 h-5 text-emerald-400 mr-3" />
+                          <span>{language === 'en' ? 'Access to the LukaMath app' : 'Pristup LukaMath aplikaciji'}</span>
+                        </li>
                       </ul>
                       <Button 
                         className="w-full bg-yellow-400 text-slate-800 hover:bg-yellow-300 font-semibold"
@@ -444,6 +448,10 @@ function PricingSection({ scrollToSection }: { scrollToSection: (sectionId: stri
                         <li className="flex items-center">
                           <Check className="w-5 h-5 text-emerald-600 mr-3" />
                           {language === 'en' ? 'Flexible scheduling' : t('pricing.flexible_scheduling')}
+                        </li>
+                        <li className="flex items-center mt-3">
+                          <Check className="w-5 h-5 text-emerald-600 mr-3" />
+                          <span>{language === 'en' ? 'Access to the LukaMath app' : 'Pristup LukaMath aplikaciji'}</span>
                         </li>
                       </ul>
                       <Button 
@@ -716,16 +724,25 @@ function HomeContent() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
               <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight" data-sb-field-path="title">
-                {homeDoc?.title ?? "Ace Your Math Tests — One Problem at a Time"}
+                {language === 'hr' ? (
+                  <>
+                    <strong>{t('hero.title')}&nbsp;</strong>
+                    <strong style={{ color: 'rgb(250, 204, 21)' }}>
+                      {t('hero.title_highlight')}
+                    </strong>
+                  </>
+                ) : (
+                  <>
+                    <strong>Ace Your Math Tests —&nbsp;</strong>
+                    <strong style={{ color: 'rgb(250, 204, 21)' }}>
+                      One Problem at a Time
+                    </strong>
+                  </>
+                )}
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed" data-sb-field-path="subtitle">
-                {homeDoc?.subtitle ?? "Personalized, online one-on-one sessions that turn confusion into confidence."}
+                {t('hero.subtitle')}
               </p>
-              {homeDoc?.body && (
-                <p className="text-lg text-blue-200 mb-8" data-sb-field-path="body">
-                  {homeDoc.body}
-                </p>
-              )}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button 
                   onClick={() => {
@@ -809,7 +826,7 @@ function HomeContent() {
                   </p>
                   <div className={`text-2xl font-bold mb-2 ${service.color}`}>
                     {language === 'en' ? `$${service.price}/hr` : 
-                      service.id === 'middle' ? '15€/h' :
+                      service.id === 'middle' ? '15��/h' :
                       service.id === 'high' ? '20€/h' :
                       service.id === 'university' ? '25€/h' :
                       '20€/h'
