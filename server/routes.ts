@@ -81,13 +81,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use(sanitizeInput);
 
   // Auth middleware
-  console.log("🔐 Setting up authentication...");
   try {
     await setupAuth(app);
-    console.log("✅ Authentication setup completed");
   } catch (error) {
-    console.error("❌ Auth setup failed:", error);
-    // Continue without auth for debugging
+    console.warn("⚠️ Auth setup failed, continuing without auth:", error?.message);
+    // Continue without auth for development
   }
 
   // Auth routes
