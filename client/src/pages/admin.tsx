@@ -717,7 +717,7 @@ function AdminDashboard() {
               <Dialog open={editHomeworkDialogOpen} onOpenChange={setEditHomeworkDialogOpen}>
                 <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
-                    <DialogTitle>Edit Homework Assignment</DialogTitle>
+                    <DialogTitle>Edit Homework Assignment - TEST CHANGE</DialogTitle>
                   </DialogHeader>
                   <Form {...editHomeworkForm}>
                     <form
