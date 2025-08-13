@@ -41,35 +41,14 @@ function Router() {
 }
 
 function App() {
-  // Initialize Google Analytics and performance optimizations
-  useEffect(() => {
-    // Verify required environment variable is present
-    if (!import.meta.env.VITE_GA_MEASUREMENT_ID) {
-      console.warn('Missing required Google Analytics key: VITE_GA_MEASUREMENT_ID');
-    } else {
-      initGA();
-    }
-
-    // Preload critical resources
-    import('@/lib/preload').then(({ preloadCriticalResources, registerServiceWorker }) => {
-      preloadCriticalResources();
-      registerServiceWorker();
-    });
-  }, []);
+  console.log("App component rendering...");
 
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <LanguageProvider>
-            <TooltipProvider>
-              <Toaster />
-              <Router />
-            </TooltipProvider>
-          </LanguageProvider>
-        </AuthProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Router />
+      </TooltipProvider>
+    </QueryClientProvider>
   );
 }
 
