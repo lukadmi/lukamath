@@ -380,7 +380,7 @@ function StudentAppContent() {
           {/* Questions Tab */}
           <TabsContent value="questions" className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-slate-900">Questions & Answers</h2>
+              <h2 className="text-xl font-semibold text-slate-900">{t('app.questions_answers')}</h2>
               <Dialog open={questionDialogOpen} onOpenChange={setQuestionDialogOpen}>
                 <DialogTrigger asChild>
                   <Button className="bg-blue-600 text-white hover:bg-blue-700">
@@ -475,13 +475,13 @@ function StudentAppContent() {
               <Card>
                 <CardContent className="flex flex-col items-center justify-center py-12">
                   <MessageSquare className="w-12 h-12 text-slate-400 mb-4" />
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2">No questions yet</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">{t('app.no_questions_yet')}</h3>
                   <p className="text-slate-600 text-center mb-6">
-                    Start by asking your first question to get personalized help.
+                    {t('app.ask_first_question_desc')}
                   </p>
                   <Button onClick={() => setQuestionDialogOpen(true)} className="bg-blue-600 text-white hover:bg-blue-700">
                     <Plus className="w-4 h-4 mr-2" />
-                    Ask Your First Question
+                    {t('app.ask_first_question')}
                   </Button>
                 </CardContent>
               </Card>
@@ -493,7 +493,7 @@ function StudentAppContent() {
                       <div className="flex justify-between items-start">
                         <CardTitle className="text-lg">{question.subject}</CardTitle>
                         <Badge variant={question.isAnswered ? "default" : "secondary"}>
-                          {question.isAnswered ? "Answered" : "Pending"}
+                          {question.isAnswered ? t('app.answered') : t('app.pending')}
                         </Badge>
                       </div>
                       <p className="text-sm text-slate-500">
