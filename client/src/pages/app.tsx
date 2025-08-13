@@ -656,13 +656,13 @@ function StudentAppContent() {
 
           {/* Scheduling Tab */}
           <TabsContent value="scheduling" className="space-y-6">
-            <h2 className="text-xl font-semibold text-slate-900">Schedule a Session</h2>
+            <h2 className="text-xl font-semibold text-slate-900">{t('app.schedule_session')}</h2>
             
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Calendar className="w-5 h-5" />
-                  <span>Luka's Availability</span>
+                  <span>{t('app.terms')}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -672,8 +672,8 @@ function StudentAppContent() {
                   <div className="h-64 flex items-center justify-center text-slate-500">
                     <div className="text-center">
                       <Calendar className="w-12 h-12 mx-auto mb-4 text-slate-400" />
-                      <p>No availability scheduled yet</p>
-                      <p className="text-sm">Check back later for available time slots</p>
+                      <p>{t('app.no_availability')}</p>
+                      <p className="text-sm">{t('app.schedule_session_desc')}</p>
                     </div>
                   </div>
                 ) : (
