@@ -11,22 +11,9 @@ import { initGA } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 import { HelmetProvider } from 'react-helmet-async';
 
-// Lazy load components for better performance
-const Home = lazy(() => import("@/pages/home"));
-const Blog = lazy(() => import("@/pages/blog"));
-const AppFeatures = lazy(() => import("@/pages/app-features"));
-const StudentApp = lazy(() => import("@/pages/app"));
-const AdminDashboard = lazy(() => import("@/pages/admin"));
-const AdminExport = lazy(() => import("@/pages/admin-export"));
-const Register = lazy(() => import("@/pages/register"));
-const RegisterNew = lazy(() => import("@/pages/register-new"));
-const LoginNew = lazy(() => import("@/pages/login-new"));
+// Simple components for debugging
+const Home = lazy(() => import("@/pages/home-simple"));
 const NotFound = lazy(() => import("@/pages/not-found"));
-const PWAIndex = lazy(() => import("@/pages/pwa/index"));
-const PWAAuth = lazy(() => import("@/pages/pwa/auth"));
-const PWADashboard = lazy(() => import("@/pages/pwa/dashboard"));
-const PWAHomework = lazy(() => import("@/pages/pwa/homework"));
-const PWAProgress = lazy(() => import("@/pages/pwa/progress"));
 
 // Loading component
 function PageLoader() {
