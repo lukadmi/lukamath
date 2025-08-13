@@ -340,23 +340,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Send email notification to admin
       try {
-        const bookingDetails = {
+        await EmailNotificationService.notifySlotBooked({
           studentEmail: studentEmail,
           slotDate: new Date(slot.date).toLocaleDateString(),
           slotTime: `${slot.startTime} - ${slot.endTime}`,
-          notes: notes || 'No additional notes'
-        };
-
-        // Create a contact entry for email notification
-        await storage.createContact({
-          name: `Session Booking from ${studentEmail}`,
-          email: studentEmail,
-          phone: '',
-          subject: 'New Session Booking',
-          message: `New tutoring session booked!\n\nDate: ${bookingDetails.slotDate}\nTime: ${bookingDetails.slotTime}\nStudent: ${studentEmail}\n\nNotes: ${bookingDetails.notes}`
+          notes: notes
         });
-
-        console.log(`📧 Session booking notification sent for ${studentEmail} - ${bookingDetails.slotDate} ${bookingDetails.slotTime}`);
       } catch (emailError) {
         console.error("Failed to send booking notification:", emailError);
         // Don't fail the booking if email fails
