@@ -248,7 +248,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin routes
-  app.get('/api/admin/students', isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
+  app.get('/api/admin/students', authenticateToken, requireJWTRole(["admin", "tutor"]), async (req: any, res) => {
     try {
       const students = await storage.getAllStudents();
       res.json(students);
