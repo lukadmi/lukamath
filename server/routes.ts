@@ -107,11 +107,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Test route
   app.get('/api/test', (req, res) => {
-    res.json({ 
-      message: 'LukaMath API is working', 
+    res.json({
+      message: 'LukaMath API is working',
       timestamp: new Date().toISOString(),
       database: 'connected'
     });
+  });
+
+  // Legacy logout route for compatibility - redirect to home after client-side token cleanup
+  app.get('/api/logout', (req, res) => {
+    // For JWT-based auth, we just redirect to home and let client handle token removal
+    res.redirect('/');
   });
 
   // Contact routes
