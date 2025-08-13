@@ -545,7 +545,7 @@ function StudentAppContent() {
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600">In Progress:</span>
+                      <span className="text-slate-600">{t('app.in_progress')}:</span>
                       <span className="font-semibold text-yellow-600">
                         {homework?.filter((hw: Homework) => hw.status === "in_progress")?.length || 0}
                       </span>
