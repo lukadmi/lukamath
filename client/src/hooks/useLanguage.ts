@@ -213,6 +213,7 @@ export const translations = {
     "app.completed_count": "Completed",
     "app.in_progress": "In Progress",
     "app.pending_count": "Pending",
+    "app.due_date": "Due Date",
     "app.qa_activity": "Q&A Activity",
     "app.total_questions": "Total Questions",
     "app.answered_count": "Answered",
