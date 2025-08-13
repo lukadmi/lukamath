@@ -64,7 +64,16 @@ function convertArrayToCSV(array: any[]): string {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   console.log("🔧 Starting route registration...");
-  
+
+  // Handle CORS preflight requests for Builder.io
+  app.options('*', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    res.setHeader('X-Frame-Options', 'ALLOWALL');
+    res.sendStatus(200);
+  });
+
   // Security middleware (skip for development assets)
   app.use((req, res, next) => {
     // Skip security middleware for Vite dev assets
