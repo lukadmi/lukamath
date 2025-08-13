@@ -703,10 +703,4 @@ function StudentAppContent() {
   );
 }
 
-export default function StudentApp() {
-  return (
-    <LanguageProvider>
-      <StudentAppContent />
-    </LanguageProvider>
-  );
-}
+export default StudentAppContent;
