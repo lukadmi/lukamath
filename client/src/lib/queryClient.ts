@@ -91,8 +91,33 @@ export const getQueryFn: <T>(options: {
       return null;
     }
 
-    await throwIfResNotOk(res);
-    return await res.json();
+    // Check content type before any body consumption
+    const contentType = res.headers.get('content-type');
+    const hasJsonContent = contentType && contentType.includes('application/json');
+
+    // If there's an error, handle it with proper cloning
+    if (!res.ok) {
+      let errorMessage;
+      try {
+        if (hasJsonContent) {
+          const errorData = await res.clone().json();
+          errorMessage = errorData?.message || res.statusText;
+        } else {
+          const errorText = await res.clone().text();
+          errorMessage = errorText || res.statusText;
+        }
+      } catch (parseError) {
+        errorMessage = res.statusText;
+      }
+      throw new Error(`${res.status}: ${errorMessage}`);
+    }
+
+    // Parse successful JSON response
+    if (hasJsonContent) {
+      return await res.json();
+    }
+
+    return null;
   };
 
 export const queryClient = new QueryClient({
