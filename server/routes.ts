@@ -297,7 +297,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      const homework = await storage.getHomeworkByStudentId(studentId);
+      const homework = await storage.getHomeworkForStudent(studentId);
       res.json(homework);
     } catch (error) {
       console.error("Error fetching student homework:", error);
@@ -323,7 +323,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Get homework for progress calculation
-      const homework = await storage.getHomeworkByStudentId(studentId);
+      const homework = await storage.getHomeworkForStudent(studentId);
       const totalHomework = homework.length;
       const completedHomework = homework.filter(hw => hw.isCompleted).length;
       const pendingHomework = homework.filter(hw => hw.status === 'pending').length;
