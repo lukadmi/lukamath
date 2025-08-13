@@ -220,6 +220,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
         studentId: studentId
       });
 
+      // Send email notification
+      try {
+        const user = await storage.getUserById(studentId);
+        if (user) {
+          await EmailNotificationService.notifyNewQuestion({
+            studentEmail: user.email,
+            subject: validatedData.subject,
+            title: validatedData.title,
+            content: validatedData.content,
+          });
+        }
+      } catch (emailError) {
+        console.error("Failed to send question notification:", emailError);
+        // Don't fail the request if email notification fails
+      }
+
       res.status(201).json({
         success: true,
         message: "Question submitted successfully",
