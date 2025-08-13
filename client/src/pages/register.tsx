@@ -59,9 +59,17 @@ export default function Register() {
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' },
       });
+
+      // Clone response to avoid "body stream already read" error
+      const clonedResponse = response.clone();
+
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Registration failed');
+        try {
+          const error = await clonedResponse.json();
+          throw new Error(error.message || 'Registration failed');
+        } catch (parseError) {
+          throw new Error(`Registration failed with status ${response.status}`);
+        }
       }
       return response.json();
     },
