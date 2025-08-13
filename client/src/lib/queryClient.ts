@@ -100,7 +100,7 @@ export const getQueryFn: <T>(options: {
 
     let res: Response;
     try {
-      res = await fetch(queryKey.join("/") as string, {
+      res = await safeFetch(queryKey.join("/") as string, {
         headers,
         credentials: "include",
       });
