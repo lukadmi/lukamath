@@ -589,7 +589,7 @@ function AdminDashboard() {
                       <div key={i} className="h-20 bg-slate-200 animate-pulse rounded"></div>
                     ))}
                   </div>
-                ) : allHomework.length === 0 ? (
+                ) : (allHomework?.length || 0) === 0 ? (
                   <div className="p-6">
                     <p className="text-slate-500">No assignments created yet.</p>
                   </div>
