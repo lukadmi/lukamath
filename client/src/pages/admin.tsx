@@ -146,7 +146,7 @@ function AdminDashboard() {
 
   const createAvailabilityMutation = useMutation({
     mutationFn: async (data: any) => {
-      return await apiRequest("POST", "/api/availability", data);
+      return await apiRequest("POST", "/api/admin/availability", data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-availability"] });
