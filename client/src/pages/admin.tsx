@@ -1027,21 +1027,25 @@ function AdminDashboard() {
                               variant="outline"
                               size="sm"
                               onClick={() => {
-                                alert('Edit button clicked for: ' + hw.title);
-                                console.log('Opening edit dialog for homework:', hw);
-                                setEditingHomework(hw);
-                                editHomeworkForm.reset({
-                                  studentId: hw.studentId,
-                                  title: hw.title,
-                                  subject: hw.subject,
-                                  difficulty: hw.difficulty,
-                                  description: hw.description,
-                                  dueDate: hw.dueDate ? new Date(hw.dueDate).toISOString().slice(0, 16) : "",
-                                });
-                                setAttachedFiles([]); // Clear new attached files for edit
-                                setExistingFiles([]); // Will be loaded by query
-                                setFilesToRemove([]); // Clear files to remove
-                                setEditHomeworkDialogOpen(true);
+                                try {
+                                  console.log('Edit button clicked for homework:', hw);
+                                  setEditingHomework(hw);
+                                  editHomeworkForm.reset({
+                                    studentId: hw?.studentId || "",
+                                    title: hw?.title || "",
+                                    subject: hw?.subject || "",
+                                    difficulty: hw?.difficulty || "medium",
+                                    description: hw?.description || "",
+                                    dueDate: hw?.dueDate ? new Date(hw.dueDate).toISOString().slice(0, 16) : "",
+                                  });
+                                  setAttachedFiles([]);
+                                  setExistingFiles([]);
+                                  setFilesToRemove([]);
+                                  setEditHomeworkDialogOpen(true);
+                                  console.log('Edit dialog should be open now');
+                                } catch (error) {
+                                  console.error('Error opening edit dialog:', error);
+                                }
                               }}
                               className="text-blue-600 border-blue-200 hover:bg-blue-50"
                             >
