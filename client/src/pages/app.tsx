@@ -125,8 +125,8 @@ function StudentAppContent() {
     onError: (error) => {
       if (isUnauthorizedError(error)) {
         toast({
-          title: "Unauthorized",
-          description: "You are logged out. Logging in again...",
+          title: t('app.unauthorized'),
+          description: t('app.unauthorized_logout'),
           variant: "destructive",
         });
         setTimeout(() => {
@@ -135,8 +135,8 @@ function StudentAppContent() {
         return;
       }
       toast({
-        title: "Error",
-        description: "Failed to submit question. Please try again.",
+        title: t('app.error'),
+        description: t('app.submit_error'),
         variant: "destructive",
       });
     },
@@ -150,8 +150,8 @@ function StudentAppContent() {
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       toast({
-        title: "Unauthorized",
-        description: "You are logged out. Logging in again...",
+        title: t('app.unauthorized'),
+        description: t('app.unauthorized_logout'),
         variant: "destructive",
       });
       setTimeout(() => {
@@ -447,7 +447,7 @@ function StudentAppContent() {
                           {questionMutation.isPending ? (
                             <>
                               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                              Submitting...
+                              {t('app.submitting')}
                             </>
                           ) : (
                             <>
