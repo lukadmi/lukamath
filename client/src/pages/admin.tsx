@@ -647,7 +647,7 @@ function AdminDashboard() {
                   </Card>
                 ))}
               </div>
-            ) : allQuestions.length === 0 ? (
+            ) : (allQuestions?.length || 0) === 0 ? (
               <Card>
                 <CardContent className="flex flex-col items-center justify-center py-12">
                   <MessageSquare className="w-12 h-12 text-slate-400 mb-4" />
