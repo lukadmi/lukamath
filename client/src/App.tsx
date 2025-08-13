@@ -1,4 +1,15 @@
-import { useEffect } from "react";
+import { Switch, Route } from "wouter";
+import { queryClient } from "./lib/queryClient";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { LanguageProvider } from "@/contexts/LanguageProvider";
+import { AuthProvider } from "@/hooks/useAuthNew";
+import { useEffect, lazy, Suspense } from "react";
+import { initGA } from "./lib/analytics";
+import { useAnalytics } from "./hooks/use-analytics";
+import { HelmetProvider } from 'react-helmet-async';
 
 // Lazy load components for better performance
 const Home = lazy(() => import("@/pages/home"));
@@ -56,39 +67,35 @@ function Router() {
 }
 
 function App() {
-  console.log("App component rendering...");
-
+  // Initialize Google Analytics and performance optimizations
   useEffect(() => {
-    console.log("App mounted successfully!");
+    // Verify required environment variable is present
+    if (!import.meta.env.VITE_GA_MEASUREMENT_ID) {
+      console.warn('Missing required Google Analytics key: VITE_GA_MEASUREMENT_ID');
+    } else {
+      initGA();
+    }
+
+    // Preload critical resources
+    import('@/lib/preload').then(({ preloadCriticalResources, registerServiceWorker }) => {
+      preloadCriticalResources();
+      registerServiceWorker();
+    });
   }, []);
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: 'white',
-      padding: '20px'
-    }}>
-      <h1 style={{
-        fontSize: '2rem',
-        color: '#2563eb',
-        marginBottom: '1rem'
-      }}>
-        LukaMath - Testing
-      </h1>
-      <p style={{ color: '#374151', fontSize: '1.1rem' }}>
-        Basic React test without any dependencies...
-      </p>
-      <div style={{
-        marginTop: '2rem',
-        padding: '1rem',
-        backgroundColor: '#dbeafe',
-        borderRadius: '8px'
-      }}>
-        <p style={{ color: '#1e40af' }}>
-          If you can see this message, basic React is working!
-        </p>
-      </div>
-    </div>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <LanguageProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Router />
+            </TooltipProvider>
+          </LanguageProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 }
 
