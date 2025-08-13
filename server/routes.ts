@@ -96,6 +96,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware and routes setup
   console.log("🔐 Setting up authentication system...");
 
+  // Setup passport authentication middleware
+  await setupAuth(app);
+
   // Import auth routes from auth-routes.ts
   const authRoutes = await import('./auth-routes');
   app.use('/api/auth', authRoutes.default);
