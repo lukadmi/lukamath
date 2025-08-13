@@ -830,62 +830,68 @@ function AdminDashboard() {
                       />
 
                       {/* Existing Files */}
-                      {existingFiles.length > 0 && (
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium text-slate-700">Current Attachments</label>
-                          <div className="space-y-1">
-                            {existingFiles.map((file) => (
-                              <div
-                                key={file.id}
-                                className={`flex items-center justify-between text-sm p-2 rounded border ${
-                                  filesToRemove.includes(file.id)
-                                    ? 'bg-red-50 border-red-200 opacity-60'
-                                    : 'bg-blue-50 border-blue-200'
-                                }`}
-                              >
-                                <span className={`truncate ${filesToRemove.includes(file.id) ? 'text-red-600 line-through' : 'text-slate-700'}`}>
-                                  {file.fileName}
-                                  {filesToRemove.includes(file.id) && (
-                                    <span className="ml-2 text-xs text-red-500">(marked for deletion)</span>
-                                  )}
-                                </span>
-                                <div className="flex items-center space-x-1">
-                                  {filesToRemove.includes(file.id) ? (
-                                    <Button
-                                      type="button"
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => setFilesToRemove(prev => prev.filter(id => id !== file.id))}
-                                      className="text-blue-500 hover:text-blue-700 h-6 w-6 p-0"
-                                      title="Undo delete"
-                                    >
-                                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
-                                      </svg>
-                                    </Button>
-                                  ) : (
-                                    <Button
-                                      type="button"
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => setFilesToRemove(prev => [...prev, file.id])}
-                                      className="text-red-500 hover:text-red-700 h-6 w-6 p-0"
-                                      title="Delete file"
-                                    >
-                                      <X className="w-3 h-3" />
-                                    </Button>
-                                  )}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Current Attachments</label>
+                        {existingFiles.length > 0 ? (
+                          <>
+                            <div className="space-y-1">
+                              {existingFiles.map((file) => (
+                                <div
+                                  key={file.id}
+                                  className={`flex items-center justify-between text-sm p-2 rounded border ${
+                                    filesToRemove.includes(file.id)
+                                      ? 'bg-red-50 border-red-200 opacity-60'
+                                      : 'bg-blue-50 border-blue-200'
+                                  }`}
+                                >
+                                  <span className={`truncate ${filesToRemove.includes(file.id) ? 'text-red-600 line-through' : 'text-slate-700'}`}>
+                                    {file.fileName}
+                                    {filesToRemove.includes(file.id) && (
+                                      <span className="ml-2 text-xs text-red-500">(marked for deletion)</span>
+                                    )}
+                                  </span>
+                                  <div className="flex items-center space-x-1">
+                                    {filesToRemove.includes(file.id) ? (
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => setFilesToRemove(prev => prev.filter(id => id !== file.id))}
+                                        className="text-blue-500 hover:text-blue-700 h-6 w-6 p-0"
+                                        title="Undo delete"
+                                      >
+                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                                        </svg>
+                                      </Button>
+                                    ) : (
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => setFilesToRemove(prev => [...prev, file.id])}
+                                        className="text-red-500 hover:text-red-700 h-6 w-6 p-0"
+                                        title="Delete file"
+                                      >
+                                        <X className="w-3 h-3" />
+                                      </Button>
+                                    )}
+                                  </div>
                                 </div>
-                              </div>
-                            ))}
-                          </div>
-                          {filesToRemove.length > 0 && (
-                            <div className="text-sm text-orange-600 bg-orange-50 p-2 rounded border border-orange-200">
-                              ⚠️ {filesToRemove.length} file(s) will be permanently deleted when you update the assignment
+                              ))}
                             </div>
-                          )}
-                        </div>
-                      )}
+                            {filesToRemove.length > 0 && (
+                              <div className="text-sm text-orange-600 bg-orange-50 p-2 rounded border border-orange-200">
+                                ⚠️ {filesToRemove.length} file(s) will be permanently deleted when you update the assignment
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          <div className="text-sm text-slate-500 bg-slate-50 p-3 rounded border border-slate-200">
+                            No files currently attached to this assignment
+                          </div>
+                        )}
+                      </div>
 
                       {/* File Attachments */}
                       <div className="space-y-2">
