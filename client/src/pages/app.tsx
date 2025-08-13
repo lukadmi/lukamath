@@ -49,7 +49,7 @@ import { Link } from "wouter";
 
 function StudentAppContent() {
   const { user, isAuthenticated, isLoading } = useAuth();
-  const { t, language, setLanguage } = useContext(LanguageContext)!;
+  const { t, language, setLanguage } = useLanguage();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("homework");
   const [questionDialogOpen, setQuestionDialogOpen] = useState(false);
