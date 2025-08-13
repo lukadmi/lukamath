@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated, requireRole } from "./replitAuth";
+import { authenticateToken } from "./auth-middleware";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 import { 
   insertContactSchema, 
