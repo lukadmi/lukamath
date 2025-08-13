@@ -185,6 +185,13 @@ export const translations = {
     "auth.insufficient_permissions": "You don't have permission to access this feature",
     "auth.password_requirements": "Password must contain uppercase, lowercase, number and special character",
 
+    // Student App Basic
+    "app.homework": "Homework",
+    "app.questions": "Questions",
+    "app.progress": "Progress",
+    "app.calendar": "Schedule",
+    "app.welcome": "Welcome",
+
     // Student App Extended
     "app.questions_answers": "Questions & Answers",
     "app.no_questions_yet": "No questions yet",
@@ -474,7 +481,7 @@ export const translations = {
     "app.progress": "Napredak",
     "app.calendar": "Kalendar",
     "app.welcome": "Dobrodošli,",
-    "app.homework_empty": "Trenutno nemate dodijeljene domaće zadaće",
+    "app.homework_empty": "Trenutno nemate dodijeljene doma��e zadaće",
     "app.questions_empty": "Nemate postavljenih pitanja",
     "app.ask_question": "Postavi pitanje",
     "app.question_title": "Naslov pitanja",
