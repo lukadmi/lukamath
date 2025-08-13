@@ -336,7 +336,7 @@ function StudentAppContent() {
               </Card>
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {homework.map((hw: Homework) => (
+                {homework?.map((hw: Homework) => (
                   <Card key={hw.id} className="hover:shadow-lg transition-shadow">
                     <CardHeader>
                       <div className="flex justify-between items-start">
