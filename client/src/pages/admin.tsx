@@ -818,7 +818,7 @@ function AdminDashboard() {
                   <p className="text-slate-500">No availability slots created yet.</p>
                 ) : (
                   <div className="space-y-4">
-                    {availability.map((slot: any) => (
+                    {availability?.map((slot: any) => (
                       <div key={slot.id} className="flex items-center justify-between p-4 bg-blue-50 rounded-lg border border-blue-200">
                         <div className="flex items-center space-x-3">
                           <Calendar className="w-5 h-5 text-blue-600" />
