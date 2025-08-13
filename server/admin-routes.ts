@@ -329,6 +329,27 @@ router.post('/homework/files', async (req, res) => {
 });
 
 /**
+ * GET /api/admin/homework/:id/files
+ * Get files for homework assignment
+ */
+router.get('/homework/:id/files', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const files = await db
+      .select()
+      .from(homeworkFiles)
+      .where(eq(homeworkFiles.homeworkId, id))
+      .orderBy(desc(homeworkFiles.createdAt));
+
+    res.json(files);
+  } catch (error) {
+    console.error('Get homework files error:', error);
+    res.status(500).json({ error: 'Failed to fetch homework files' });
+  }
+});
+
+/**
  * PUT /api/admin/homework/:id
  * Update homework assignment
  */
