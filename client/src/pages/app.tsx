@@ -128,6 +128,38 @@ function StudentAppContent() {
     },
   });
 
+  // Booking mutation
+  const bookSlotMutation = useMutation({
+    mutationFn: async ({ slotId, notes }: { slotId: string; notes?: string }) => {
+      return await apiRequest("POST", "/api/availability/book", { slotId, notes });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/availability"] });
+      toast({
+        title: "Session Booked!",
+        description: "Your tutoring session has been booked successfully. You'll receive a confirmation email.",
+      });
+    },
+    onError: (error: any) => {
+      if (isUnauthorizedError(error)) {
+        toast({
+          title: t('app.unauthorized'),
+          description: t('app.unauthorized_logout'),
+          variant: "destructive",
+        });
+        setTimeout(() => {
+          window.location.href = "/api/login";
+        }, 500);
+        return;
+      }
+      toast({
+        title: "Booking Failed",
+        description: error?.response?.data?.message || "Failed to book session. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
   const onQuestionSubmit = (data: InsertQuestion) => {
     questionMutation.mutate(data);
   };
