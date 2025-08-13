@@ -138,7 +138,7 @@ function AdminDashboard() {
       return homework;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/homework"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-homework"] });
       setHomeworkDialogOpen(false);
       homeworkForm.reset();
       setAttachedFiles([]);
@@ -150,7 +150,7 @@ function AdminDashboard() {
       return await apiRequest("POST", "/api/availability", data);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/availability"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-availability"] });
       setAvailabilityDialogOpen(false);
       availabilityForm.reset();
     },
@@ -160,7 +160,7 @@ function AdminDashboard() {
     mutationFn: ({ questionId, answer }: { questionId: string; answer: string }) =>
       apiRequest("PATCH", `/api/questions/${questionId}/answer`, { answer }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/questions"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-questions"] });
     },
   });
 
