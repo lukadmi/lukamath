@@ -283,6 +283,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get homework for a student
+  app.get("/api/homework/student/:id", authenticateToken, async (req, res) => {
+    try {
+      const studentId = req.params.id;
+      const requestingUserId = (req as any).user?.id;
+
+      // Students can only see their own homework, admins can see any
+      if (requestingUserId !== studentId && (req as any).user?.role !== 'admin') {
+        return res.status(403).json({
+          success: false,
+          message: "Access denied"
+        });
+      }
+
+      const homework = await storage.getHomeworkByStudentId(studentId);
+      res.json(homework);
+    } catch (error) {
+      console.error("Error fetching student homework:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error"
+      });
+    }
+  });
+
+  // Get progress for a student
+  app.get("/api/progress/student/:id", authenticateToken, async (req, res) => {
+    try {
+      const studentId = req.params.id;
+      const requestingUserId = (req as any).user?.id;
+
+      // Students can only see their own progress, admins can see any
+      if (requestingUserId !== studentId && (req as any).user?.role !== 'admin') {
+        return res.status(403).json({
+          success: false,
+          message: "Access denied"
+        });
+      }
+
+      // Get homework for progress calculation
+      const homework = await storage.getHomeworkByStudentId(studentId);
+      const totalHomework = homework.length;
+      const completedHomework = homework.filter(hw => hw.isCompleted).length;
+      const pendingHomework = homework.filter(hw => hw.status === 'pending').length;
+      const inProgressHomework = homework.filter(hw => hw.status === 'in_progress').length;
+
+      // Calculate average grade from completed homework
+      const gradedHomework = homework.filter(hw => hw.grade !== null);
+      const averageGrade = gradedHomework.length > 0
+        ? gradedHomework.reduce((sum, hw) => sum + (hw.grade || 0), 0) / gradedHomework.length
+        : null;
+
+      const progress = {
+        totalHomework,
+        completedHomework,
+        pendingHomework,
+        inProgressHomework,
+        averageGrade: averageGrade ? Math.round(averageGrade) : null,
+        recentHomework: homework.slice(0, 5), // Latest 5 assignments
+      };
+
+      res.json(progress);
+    } catch (error) {
+      console.error("Error fetching student progress:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error"
+      });
+    }
+  });
+
   // Availability endpoint - public access for students to see tutor availability
   app.get("/api/availability", async (req, res) => {
     try {
