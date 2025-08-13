@@ -658,11 +658,18 @@ function HomeContent() {
                       {language === 'en' ? 'Student App' : t("nav.student_app")}
                     </Button>
                   </Link>
-                  <a href="/api/logout">
-                    <Button variant="ghost" size="sm">
-                      Logout
-                    </Button>
-                  </a>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      // Clear the JWT token from localStorage
+                      localStorage.removeItem('lukamath_auth_token');
+                      // Redirect to home page
+                      window.location.href = '/';
+                    }}
+                  >
+                    Logout
+                  </Button>
                 </div>
               ) : (
                 <div className="flex items-center space-x-2">
