@@ -25,18 +25,13 @@ function PageLoader() {
 }
 
 function Router() {
-  // Track page views when routes change
-  useAnalytics();
-  
   return (
-    <ErrorBoundary>
-      <Suspense fallback={<PageLoader />}>
-        <Switch>
-          <Route path="/" component={Home}/>
-          <Route component={NotFound} />
-        </Switch>
-      </Suspense>
-    </ErrorBoundary>
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        <Route path="/" component={Home}/>
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 
