@@ -198,6 +198,33 @@ function AdminDashboard() {
     },
   });
 
+  // Edit homework mutation
+  const editHomeworkMutation = useMutation({
+    mutationFn: async (data: any) => {
+      const homeworkData = { ...data, attachedFiles };
+      return await apiRequest("PUT", `/api/admin/homework/${editingHomework.id}`, homeworkData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-homework"] });
+      setEditHomeworkDialogOpen(false);
+      setEditingHomework(null);
+      editHomeworkForm.reset();
+      setAttachedFiles([]);
+      toast({
+        title: "Success",
+        description: "Homework assignment updated successfully",
+      });
+    },
+    onError: (error) => {
+      console.error("Edit homework error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update homework assignment",
+        variant: "destructive",
+      });
+    },
+  });
+
   // Delete homework mutation
   const deleteHomeworkMutation = useMutation({
     mutationFn: async (homeworkId: string) => {
