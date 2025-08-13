@@ -184,6 +184,51 @@ function AdminDashboard() {
     },
   });
 
+  // Delete homework mutation
+  const deleteHomeworkMutation = useMutation({
+    mutationFn: async (homeworkId: string) => {
+      return await apiRequest("DELETE", `/api/admin/homework/${homeworkId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-homework"] });
+      toast({
+        title: "Success",
+        description: "Homework assignment deleted successfully",
+      });
+    },
+    onError: (error) => {
+      console.error("Delete homework error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete homework assignment",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Delete availability slot mutation
+  const deleteAvailabilityMutation = useMutation({
+    mutationFn: async (slotId: string) => {
+      return await apiRequest("DELETE", `/api/admin/availability/${slotId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-availability"] });
+      queryClient.invalidateQueries({ queryKey: ["availability"] });
+      toast({
+        title: "Success",
+        description: "Availability slot deleted successfully",
+      });
+    },
+    onError: (error) => {
+      console.error("Delete availability error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete availability slot",
+        variant: "destructive",
+      });
+    },
+  });
+
   const stats = {
     totalStudents: students?.length || 0,
     pendingHomework: allHomework?.filter((hw: any) => hw.status === "pending")?.length || 0,
