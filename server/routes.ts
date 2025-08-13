@@ -262,7 +262,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/questions/student/:id", authenticateToken, async (req, res) => {
     try {
       const studentId = req.params.id;
-      const requestingUserId = (req as any).user?.id;
+      const requestingUserId = (req as any).user?.userId;
 
       // Students can only see their own questions, admins can see any
       if (requestingUserId !== studentId && (req as any).user?.role !== 'admin') {
@@ -287,7 +287,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/homework/student/:id", authenticateToken, async (req, res) => {
     try {
       const studentId = req.params.id;
-      const requestingUserId = (req as any).user?.id;
+      const requestingUserId = (req as any).user?.userId;
 
       // Students can only see their own homework, admins can see any
       if (requestingUserId !== studentId && (req as any).user?.role !== 'admin') {
@@ -312,7 +312,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/progress/student/:id", authenticateToken, async (req, res) => {
     try {
       const studentId = req.params.id;
-      const requestingUserId = (req as any).user?.id;
+      const requestingUserId = (req as any).user?.userId;
 
       // Students can only see their own progress, admins can see any
       if (requestingUserId !== studentId && (req as any).user?.role !== 'admin') {
