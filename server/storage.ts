@@ -271,6 +271,29 @@ export class DatabaseStorage implements IStorage {
     return slot;
   }
 
+  async getAvailabilitySlot(slotId: string): Promise<TutorAvailability | undefined> {
+    const [slot] = await db
+      .select()
+      .from(tutorAvailability)
+      .where(eq(tutorAvailability.id, slotId))
+      .limit(1);
+    return slot;
+  }
+
+  async bookAvailabilitySlot(slotId: string, studentId: string, notes?: string): Promise<TutorAvailability> {
+    const [bookedSlot] = await db
+      .update(tutorAvailability)
+      .set({
+        isAvailable: false,
+        bookedBy: studentId,
+        bookingNotes: notes || null,
+        updatedAt: new Date(),
+      })
+      .where(eq(tutorAvailability.id, slotId))
+      .returning();
+    return bookedSlot;
+  }
+
   // Progress operations
   async getStudentProgress(studentId: string): Promise<any[]> {
     // Get all completed homework with grades for progress tracking
