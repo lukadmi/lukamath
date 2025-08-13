@@ -71,9 +71,10 @@ async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<
       data = await clonedResponse.json();
     } catch (err) {
       console.error('Failed to parse response as JSON:', err);
-      // If JSON parsing fails, try to get text content for better error messages
+      // If JSON parsing fails, try to get text content from another clone
       try {
-        const textContent = await response.text();
+        const textClone = response.clone();
+        const textContent = await textClone.text();
         console.error('Response text content:', textContent);
         throw new Error(`Request failed with status ${response.status}. Response: ${textContent}`);
       } catch (textErr) {
