@@ -229,6 +229,11 @@ export const translations = {
     "app.answered_on_date": "Answered on",
     "app.question_title_label": "Question Title",
     "app.question_details_label": "Question Details",
+    "app.submitting": "Submitting...",
+    "app.unauthorized_logout": "You are logged out. Logging in again...",
+    "app.unauthorized": "Unauthorized",
+    "app.error": "Error",
+    "app.submit_error": "Failed to submit question. Please try again.",
 
     // Common
     "common.sending": "Sending...",
