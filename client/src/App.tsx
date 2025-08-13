@@ -58,22 +58,37 @@ function Router() {
 function App() {
   console.log("App component rendering...");
 
+  useEffect(() => {
+    console.log("App mounted successfully!");
+  }, []);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-white">
-        <div className="container mx-auto px-4 py-8">
-          <h1 className="text-4xl font-bold text-blue-600 mb-4">LukaMath</h1>
-          <p className="text-gray-700 text-lg">
-            Testing with QueryClient only...
-          </p>
-          <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-            <p className="text-blue-800">
-              If you can see this message, React + QueryClient is working!
-            </p>
-          </div>
-        </div>
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: 'white',
+      padding: '20px'
+    }}>
+      <h1 style={{
+        fontSize: '2rem',
+        color: '#2563eb',
+        marginBottom: '1rem'
+      }}>
+        LukaMath - Testing
+      </h1>
+      <p style={{ color: '#374151', fontSize: '1.1rem' }}>
+        Basic React test without any dependencies...
+      </p>
+      <div style={{
+        marginTop: '2rem',
+        padding: '1rem',
+        backgroundColor: '#dbeafe',
+        borderRadius: '8px'
+      }}>
+        <p style={{ color: '#1e40af' }}>
+          If you can see this message, basic React is working!
+        </p>
       </div>
-    </QueryClientProvider>
+    </div>
   );
 }
 
