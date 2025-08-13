@@ -699,7 +699,7 @@ function StudentAppContent() {
                             </div>
                           </div>
                           <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white hover:scale-105 transition-transform">
-                            Book Session
+                            {t('app.book_session_btn')}
                           </Button>
                         </div>
                       ))}
