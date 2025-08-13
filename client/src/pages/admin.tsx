@@ -993,7 +993,7 @@ function AdminDashboard() {
                   </div>
                 ) : (
                   <div className="divide-y">
-                    {Array.isArray(allHomework) && allHomework.map((hw: any) => hw && (
+                    {(allHomework || []).map((hw: any) => (
                       <div key={hw.id} className="p-6">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
