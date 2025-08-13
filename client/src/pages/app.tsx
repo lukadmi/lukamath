@@ -281,7 +281,7 @@ function StudentAppContent() {
               </div>
               <Link href="/pwa">
                 <Button size="sm" variant="outline" className="text-xs border-blue-200 text-blue-600 hover:bg-blue-50">
-                  {language === 'en' ? 'Open' : 'Otvori'}
+                  {t('app.open')}
                 </Button>
               </Link>
             </div>
