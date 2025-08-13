@@ -123,9 +123,9 @@ function AdminDashboard() {
 
   // Update existing files when homework files are loaded
   useEffect(() => {
-    if (homeworkFiles && homeworkFiles.length > 0) {
-      setExistingFiles(homeworkFiles);
-    }
+    console.log('homeworkFiles changed:', homeworkFiles);
+    setExistingFiles(homeworkFiles || []);
+    setFilesToRemove([]); // Reset files to remove when homework changes
   }, [homeworkFiles]);
 
   const availabilityForm = useForm({
