@@ -32,7 +32,7 @@ export const authLimiter = rateLimit({
 
 export const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300, // Higher limit for API endpoints
+  max: 600, // Much higher limit for API endpoints during development
   message: {
     error: 'API rate limit exceeded, please try again later.',
   },
