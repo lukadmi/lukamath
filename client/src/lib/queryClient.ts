@@ -80,10 +80,20 @@ export const getQueryFn: <T>(options: {
       headers.Authorization = `Bearer ${token}`;
     }
 
-    const res = await fetch(queryKey.join("/") as string, {
-      headers,
-      credentials: "include",
-    });
+    let res: Response;
+    try {
+      res = await fetch(queryKey.join("/") as string, {
+        headers,
+        credentials: "include",
+      });
+    } catch (fetchError: any) {
+      // Handle network errors and FullStory interference
+      console.error('Fetch error in getQueryFn:', fetchError);
+      if (fetchError.message === 'Failed to fetch' || fetchError.name === 'TypeError') {
+        throw new Error('Network error: Unable to connect to server');
+      }
+      throw fetchError;
+    }
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {
       return null;
