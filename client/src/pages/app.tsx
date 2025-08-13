@@ -292,19 +292,19 @@ function StudentAppContent() {
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="homework" className="flex items-center space-x-2">
               <BookOpen className="w-4 h-4" />
-              <span>{language === 'en' ? 'Homework' : t('app.homework')}</span>
+              <span>{t('app.homework')}</span>
             </TabsTrigger>
             <TabsTrigger value="questions" className="flex items-center space-x-2">
               <MessageSquare className="w-4 h-4" />
-              <span>{language === 'en' ? 'Q&A' : t('app.questions')}</span>
+              <span>{t('app.questions')}</span>
             </TabsTrigger>
             <TabsTrigger value="progress" className="flex items-center space-x-2">
               <BarChart3 className="w-4 h-4" />
-              <span>{language === 'en' ? 'Progress' : t('app.progress')}</span>
+              <span>{t('app.progress')}</span>
             </TabsTrigger>
             <TabsTrigger value="scheduling" className="flex items-center space-x-2">
               <Calendar className="w-4 h-4" />
-              <span>{language === 'en' ? 'Scheduling' : 'Termini'}</span>
+              <span>{t('app.terms')}</span>
             </TabsTrigger>
           </TabsList>
 
