@@ -218,7 +218,7 @@ router.get('/availability', async (req, res) => {
     const availability = await db
       .select()
       .from(tutorAvailability)
-      .where(eq(tutorAvailability.tutorId, req.user!.userId))
+      .where(eq(tutorAvailability.tutorId, req.user!.id))
       .orderBy(desc(tutorAvailability.date));
 
     res.json(availability);
