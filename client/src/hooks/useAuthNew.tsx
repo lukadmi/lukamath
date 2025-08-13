@@ -104,14 +104,18 @@ async function logoutUser(): Promise<void> {
     });
 
     if (!response.ok) {
-      // Try to get error message but don't fail if we can't parse it
+      // Clone response to avoid "body stream already read" error
+      const clonedResponse = response.clone();
       try {
-        const data = await response.json();
+        const data = await clonedResponse.json();
         throw new Error(data.message || 'Logout failed');
       } catch (parseError) {
         throw new Error(`Logout failed with status ${response.status}`);
       }
     }
+
+    // Success - we can optionally read the response but don't need to
+    // Just return without consuming the body
   } catch (error) {
     // Log the error but don't prevent logout from completing
     console.warn('Logout API call failed:', error);
