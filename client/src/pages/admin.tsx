@@ -329,7 +329,7 @@ function AdminDashboard() {
                       <div key={i} className="h-16 bg-slate-200 animate-pulse rounded"></div>
                     ))}
                   </div>
-                ) : contacts.length === 0 ? (
+                ) : (contacts?.length || 0) === 0 ? (
                   <p className="text-slate-500">No contact submissions yet.</p>
                 ) : (
                   <div className="space-y-4">
