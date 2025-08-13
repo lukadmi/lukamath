@@ -428,7 +428,7 @@ function StudentAppContent() {
                             <FormLabel>Question Details</FormLabel>
                             <FormControl>
                               <Textarea 
-                                placeholder="Describe your question in detail..."
+                                placeholder={t('app.content_placeholder')}
                                 className="min-h-[100px]"
                                 {...field} 
                               />
