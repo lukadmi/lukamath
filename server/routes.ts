@@ -83,13 +83,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use(sanitizeInput);
   console.log("✅ Security middleware setup complete");
 
-  // Auth middleware - temporarily disabled for debugging
-  console.log("⚠️ Skipping auth setup for debugging");
+  // Auth middleware and routes setup
+  console.log("🔐 Setting up authentication system...");
 
-  // Auth routes - simplified for debugging
-  app.get('/api/auth/user', async (req: any, res) => {
-    res.json({ id: 'test-user', name: 'Test User', email: 'test@example.com', role: 'student' });
-  });
+  // Import auth routes from auth-routes.ts
+  const authRoutes = await import('./auth-routes.js');
+  app.use('/api/auth', authRoutes.default);
+
+  console.log("✅ Authentication routes setup complete");
 
   // Object storage service
   const objectStorageService = new ObjectStorageService();

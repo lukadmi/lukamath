@@ -153,8 +153,31 @@ export default function PWAAuth() {
         body: JSON.stringify(data),
         credentials: 'include'
       });
-      if (!response.ok) throw new Error('Login failed');
-      return response.json();
+
+      // Store response status before consuming body
+      const status = response.status;
+      const ok = response.ok;
+      const contentType = response.headers.get('content-type');
+      const hasJsonContent = contentType && contentType.includes('application/json');
+
+      if (!ok) {
+        let errorMessage = 'Login failed';
+        if (hasJsonContent) {
+          try {
+            const error = await response.json();
+            errorMessage = error.message || errorMessage;
+          } catch (parseError) {
+            // If JSON parsing fails, use default message
+          }
+        }
+        throw new Error(`${errorMessage} (status ${status})`);
+      }
+
+      // Parse successful JSON response
+      if (hasJsonContent) {
+        return await response.json();
+      }
+      return null;
     },
     onSuccess: () => {
       toast({
@@ -182,7 +205,7 @@ export default function PWAAuth() {
         mathLevel: data.mathLevel,
         language: language
       });
-      return response.json();
+      return response;
     },
     onSuccess: () => {
       toast({

@@ -45,9 +45,9 @@ function removeStoredToken(): void {
 // API functions
 async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<any> {
   const token = getStoredToken();
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...options.headers,
+    ...(options.headers as Record<string, string>),
   };
 
   if (token) {
@@ -59,13 +59,40 @@ async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<
     headers,
   });
 
-  const data = await response.json();
-  
+  // Check content type before any body consumption
+  const contentType = response.headers.get('content-type');
+  const hasJsonContent = contentType && contentType.includes('application/json');
+
+  // Always handle the response body only once
   if (!response.ok) {
-    throw new Error(data.message || 'Request failed');
+    // For error responses, read the body to get error details
+    let errorMessage;
+    try {
+      if (hasJsonContent) {
+        const errorData = await response.json(); // Read from original response
+        errorMessage = errorData?.message || response.statusText;
+      } else {
+        const errorText = await response.text(); // Read from original response
+        errorMessage = errorText || response.statusText;
+      }
+    } catch (parseError) {
+      errorMessage = response.statusText;
+    }
+    throw new Error(`${response.status}: ${errorMessage}`);
   }
 
-  return data;
+  // For successful responses, read the body
+  if (hasJsonContent) {
+    try {
+      return await response.json();
+    } catch (err) {
+      console.error('Failed to parse response as JSON (useAuthNew):', err);
+      throw new Error(`Request failed with status ${response.status} - Invalid JSON response`);
+    }
+  }
+
+  // For non-JSON responses, return null
+  return null;
 }
 
 async function loginUser(credentials: LoginUser): Promise<AuthResult> {
@@ -87,7 +114,44 @@ async function getCurrentUser(): Promise<{ user: User }> {
 }
 
 async function logoutUser(): Promise<void> {
-  await apiRequest('/logout', { method: 'POST' });
+  // Don't use apiRequest for logout as it sends auth headers
+  // Logout should work even with expired/invalid tokens
+  try {
+    const response = await fetch('/api/auth/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    // Check content type before any body consumption
+    const contentType = response.headers.get('content-type');
+    const hasJsonContent = contentType && contentType.includes('application/json');
+
+    if (!response.ok) {
+      // For error responses, read the body to get error details
+      let errorMessage;
+      try {
+        if (hasJsonContent) {
+          const errorData = await response.json(); // Read from original response
+          errorMessage = errorData?.message || response.statusText;
+        } else {
+          const errorText = await response.text(); // Read from original response
+          errorMessage = errorText || response.statusText;
+        }
+      } catch (parseError) {
+        errorMessage = response.statusText;
+      }
+      throw new Error(`${response.status}: ${errorMessage}`);
+    }
+
+    // Success - for logout, we don't need to read the response body
+    // Just return without consuming it
+  } catch (error) {
+    // Log the error but don't prevent logout from completing
+    console.warn('Logout API call failed:', error);
+    throw error;
+  }
 }
 
 // Auth Provider Component
@@ -143,9 +207,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.warn('Logout API call failed:', error);
     } finally {
+      // Clear all authentication state
       removeStoredToken();
+
+      // Clear all React Query cache
       queryClient.clear();
+
+      // Clear any session storage
+      if (typeof window !== 'undefined') {
+        sessionStorage.clear();
+        // Clear any other potential auth-related localStorage items
+        const keysToRemove = Object.keys(localStorage).filter(key =>
+          key.includes('auth') || key.includes('token') || key.includes('user')
+        );
+        keysToRemove.forEach(key => localStorage.removeItem(key));
+      }
+
+      // Reset error state
       setError(null);
+
+      // Force a hard redirect to ensure complete state reset
+      if (typeof window !== 'undefined') {
+        window.location.href = '/';
+      }
     }
   };
 

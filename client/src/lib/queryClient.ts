@@ -6,18 +6,12 @@ function getStoredToken(): string | null {
   return localStorage.getItem('lukamath_auth_token');
 }
 
-async function throwIfResNotOk(res: Response) {
-  if (!res.ok) {
-    const text = (await res.text()) || res.statusText;
-    throw new Error(`${res.status}: ${text}`);
-  }
-}
 
 export async function apiRequest(
   method: string,
   url: string,
   data?: unknown | undefined,
-): Promise<Response> {
+): Promise<any> {
   const token = getStoredToken();
   const headers: HeadersInit = data ? { "Content-Type": "application/json" } : {};
 
@@ -32,8 +26,35 @@ export async function apiRequest(
     credentials: "include",
   });
 
-  await throwIfResNotOk(res);
-  return res;
+  // Check content type before any body consumption
+  const contentType = res.headers.get('content-type');
+  const hasJsonContent = contentType && contentType.includes('application/json');
+
+  // Always handle the response body only once
+  if (!res.ok) {
+    // For error responses, read the body to get error details
+    let errorMessage;
+    try {
+      if (hasJsonContent) {
+        const errorData = await res.json(); // Read from original response
+        errorMessage = errorData?.message || res.statusText;
+      } else {
+        const errorText = await res.text(); // Read from original response
+        errorMessage = errorText || res.statusText;
+      }
+    } catch (parseError) {
+      errorMessage = res.statusText;
+    }
+    throw new Error(`${res.status}: ${errorMessage}`);
+  }
+
+  // For successful responses, read the body
+  if (hasJsonContent) {
+    return await res.json();
+  }
+
+  // For non-JSON responses, return null
+  return null;
 }
 
 type UnauthorizedBehavior = "returnNull" | "throw";
@@ -58,8 +79,34 @@ export const getQueryFn: <T>(options: {
       return null;
     }
 
-    await throwIfResNotOk(res);
-    return await res.json();
+    // Check content type before any body consumption
+    const contentType = res.headers.get('content-type');
+    const hasJsonContent = contentType && contentType.includes('application/json');
+
+    // Always handle the response body only once
+    if (!res.ok) {
+      // For error responses, read the body to get error details
+      let errorMessage;
+      try {
+        if (hasJsonContent) {
+          const errorData = await res.json(); // Read from original response
+          errorMessage = errorData?.message || res.statusText;
+        } else {
+          const errorText = await res.text(); // Read from original response
+          errorMessage = errorText || res.statusText;
+        }
+      } catch (parseError) {
+        errorMessage = res.statusText;
+      }
+      throw new Error(`${res.status}: ${errorMessage}`);
+    }
+
+    // For successful responses, read the body
+    if (hasJsonContent) {
+      return await res.json();
+    }
+
+    return null;
   };
 
 export const queryClient = new QueryClient({

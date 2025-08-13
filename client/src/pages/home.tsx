@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Calculator, Play, Video, Star, TrendingUp, CheckCircle, Send, Clock, Mail, Phone, Check, Download, ExternalLink, Edit3, Target, FileText, BookOpen, Compass, Menu, X, Shield, ArrowRight, ChevronLeft, ChevronRight, Award, Globe, LogIn, User, Smartphone } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuthNew";
 import { useLanguage } from "@/hooks/useLanguage";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { trackEvent } from "@/lib/analytics";
@@ -32,7 +32,12 @@ function useHomeDoc() {
   useEffect(() => {
     // cache-bust + no-store so preview always pulls latest JSON
     fetch(`/content/home.json?v=${Date.now()}`, { cache: "no-store" })
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) {
+          throw new Error(`HTTP ${r.status}`);
+        }
+        return r.json();
+      })
       .then(setDoc)
       .catch(() => setDoc(null));
   }, []);
@@ -517,8 +522,7 @@ function HomeContent() {
 
   const contactMutation = useMutation({
     mutationFn: async (data: InsertContact) => {
-      const response = await apiRequest("POST", "/api/contacts", data);
-      return response.json();
+      return await apiRequest("POST", "/api/contacts", data);
     },
     onSuccess: () => {
       trackEvent("contact_form_submit", "engagement", "home_page", 1);
@@ -672,16 +676,16 @@ function HomeContent() {
                       Register
                     </Button>
                   </Link>
-                  <a href="/api/login">
-                    <Button 
-                      variant="outline" 
+                  <Link href="/login">
+                    <Button
+                      variant="outline"
                       className="hidden md:flex hover:scale-105 transition-transform"
                       onClick={() => trackEvent('navigation_click', 'engagement', 'login_button', 1)}
                     >
                       <LogIn className="w-4 h-4 mr-2" />
                       {language === 'en' ? 'Login' : t("nav.login")}
                     </Button>
-                  </a>
+                  </Link>
                   <Button onClick={() => {
                     trackEvent('cta_click', 'engagement', 'nav_book_trial', 1);
                     scrollToSection('contact');

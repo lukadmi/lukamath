@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuthNew";
 import { LanguageContext, type Language, translations } from "@/hooks/useLanguage";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -111,8 +111,7 @@ function StudentAppContent() {
   // Question mutation
   const questionMutation = useMutation({
     mutationFn: async (data: InsertQuestion) => {
-      const response = await apiRequest("POST", "/api/questions", data);
-      return response.json();
+      return await apiRequest("POST", "/api/questions", data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/questions/student", (user as any)?.id] });

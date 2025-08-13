@@ -125,7 +125,15 @@ export class AuthService {
       const user = userResult[0];
 
       // Verify password
+      console.log('🔐 Password verification:', {
+        email: credentials.email,
+        providedPassword: credentials.password,
+        storedHashPrefix: user.password.substring(0, 10) + '...'
+      });
+
       const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
+
+      console.log('🔐 Password verification result:', isPasswordValid);
 
       if (!isPasswordValid) {
         return {
