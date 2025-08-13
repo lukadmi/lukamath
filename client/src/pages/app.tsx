@@ -618,16 +618,16 @@ function StudentAppContent() {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis 
                           dataKey="assignment" 
-                          label={{ value: 'Assignment #', position: 'insideBottom', offset: -10 }}
+                          label={{ value: t('app.assignment_number'), position: 'insideBottom', offset: -10 }}
                         />
                         <YAxis 
                           domain={[0, 100]}
-                          label={{ value: 'Grade', angle: -90, position: 'insideLeft' }}
+                          label={{ value: t('app.grade_label'), angle: -90, position: 'insideLeft' }}
                         />
                         <Tooltip 
                           formatter={(value: any, name: any, props: any) => [
                             `${value}%`, 
-                            'Grade'
+                            t('app.grade_label')
                           ]}
                           labelFormatter={(label: any, payload: any) => {
                             if (payload && payload[0]) {
