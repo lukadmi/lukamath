@@ -471,7 +471,7 @@ function StudentAppContent() {
                   </div>
                 ))}
               </div>
-            ) : questions.length === 0 ? (
+            ) : (questions?.length || 0) === 0 ? (
               <Card>
                 <CardContent className="flex flex-col items-center justify-center py-12">
                   <MessageSquare className="w-12 h-12 text-slate-400 mb-4" />
@@ -487,7 +487,7 @@ function StudentAppContent() {
               </Card>
             ) : (
               <div className="space-y-4">
-                {questions.map((question: Question) => (
+                {questions?.map((question: Question) => (
                   <Card key={question.id}>
                     <CardHeader>
                       <div className="flex justify-between items-start">
@@ -568,18 +568,18 @@ function StudentAppContent() {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="text-slate-600">Total Questions:</span>
-                      <span className="font-semibold">{questions.length}</span>
+                      <span className="font-semibold">{questions?.length || 0}</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-slate-600">Answered:</span>
                       <span className="font-semibold text-green-600">
-                        {questions.filter((q: Question) => q.isAnswered).length}
+                        {questions?.filter((q: Question) => q.isAnswered)?.length || 0}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-slate-600">Pending:</span>
                       <span className="font-semibold text-yellow-600">
-                        {questions.filter((q: Question) => !q.isAnswered).length}
+                        {questions?.filter((q: Question) => !q.isAnswered)?.length || 0}
                       </span>
                     </div>
                   </div>
