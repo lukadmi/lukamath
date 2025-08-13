@@ -96,15 +96,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Object storage service
   const objectStorageService = new ObjectStorageService();
 
-  // Admin routes
+  // Admin routes (temporarily disabled)
   app.get('/api/admin/students', isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
-    try {
-      const students = await storage.getAllStudents();
-      res.json(students);
-    } catch (error) {
-      console.error("Error fetching students:", error);
-      res.status(500).json({ message: "Failed to fetch students" });
-    }
+    res.json({ message: "Database temporarily disabled" });
   });
 
   app.get('/api/admin/homework', isAuthenticated, requireRole(["admin", "tutor"]), async (req: any, res) => {
