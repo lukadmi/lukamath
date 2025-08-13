@@ -70,19 +70,21 @@ function App() {
   console.log("App component rendering...");
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-blue-600 mb-4">LukaMath</h1>
-        <p className="text-gray-700 text-lg">
-          Testing basic React rendering...
-        </p>
-        <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-          <p className="text-blue-800">
-            If you can see this message, React is working!
+    <QueryClientProvider client={queryClient}>
+      <div className="min-h-screen bg-white">
+        <div className="container mx-auto px-4 py-8">
+          <h1 className="text-4xl font-bold text-blue-600 mb-4">LukaMath</h1>
+          <p className="text-gray-700 text-lg">
+            Testing with QueryClient only...
           </p>
+          <div className="mt-8 p-4 bg-blue-50 rounded-lg">
+            <p className="text-blue-800">
+              If you can see this message, React + QueryClient is working!
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </QueryClientProvider>
   );
 }
 
