@@ -266,6 +266,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Availability endpoint - public access for students to see tutor availability
+  app.get("/api/availability", async (req, res) => {
+    try {
+      const date = req.query.date as string;
+      const availability = await storage.getTutorAvailability(date);
+      res.json(availability);
+    } catch (error) {
+      console.error("Error fetching availability:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error"
+      });
+    }
+  });
+
   // Student registration endpoint (public)
   const registerSchema = z.object({
     firstName: z.string().min(1),
