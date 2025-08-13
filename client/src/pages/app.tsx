@@ -414,7 +414,7 @@ function StudentAppContent() {
                           <FormItem>
                             <FormLabel>Question Title</FormLabel>
                             <FormControl>
-                              <Input placeholder="Brief description of your question" {...field} />
+                              <Input placeholder={t('app.question_placeholder')} {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
