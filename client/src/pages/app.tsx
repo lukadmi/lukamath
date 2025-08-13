@@ -718,8 +718,13 @@ function StudentAppContent() {
                               </p>
                             </div>
                           </div>
-                          <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white hover:scale-105 transition-transform">
-                            {t('app.book_session_btn')}
+                          <Button
+                            size="sm"
+                            className="bg-blue-600 hover:bg-blue-700 text-white hover:scale-105 transition-transform"
+                            onClick={() => bookSlotMutation.mutate({ slotId: slot.id })}
+                            disabled={bookSlotMutation.isPending}
+                          >
+                            {bookSlotMutation.isPending ? 'Booking...' : t('app.book_session_btn')}
                           </Button>
                         </div>
                       ))}
