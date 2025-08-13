@@ -397,16 +397,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         language: validatedData.language,
       });
 
-      // Create a contact record with registration details
-      await storage.createContact({
-        name: `${validatedData.firstName} ${validatedData.lastName}`,
-        email: validatedData.email,
-        phone: validatedData.parentEmail || '',
-        subject: validatedData.mathLevel,
-        message: `New student registration - Math Level: ${validatedData.mathLevel}\n\nGoals: ${validatedData.goals}${validatedData.parentEmail ? `\n\nParent/Guardian Email: ${validatedData.parentEmail}` : ''}`,
-      });
+      // Send email notification about new registration
+      try {
+        await EmailNotificationService.notifyNewRegistration({
+          studentEmail: validatedData.email,
+          studentName: `${validatedData.firstName} ${validatedData.lastName}`,
+          mathLevel: validatedData.mathLevel,
+          goals: validatedData.goals,
+        });
+      } catch (emailError) {
+        console.error("Failed to send registration notification:", emailError);
+      }
 
-      res.status(201).json({ 
+      res.status(201).json({
         message: "Registration successful! Welcome to LukaMath.",
         userId: newUser.id
       });
