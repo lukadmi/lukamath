@@ -568,6 +568,8 @@ export const translations = {
     "app.your_question": "Vaše pitanje",
     "app.answer": "Odgovor",
     "app.answered_on_date": "Odgovoreno",
+    "app.question_title_label": "Naslov pitanja",
+    "app.question_details_label": "Detalji pitanja",
 
     // Common
     "common.sending": "Šalje se...",
