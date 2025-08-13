@@ -200,6 +200,72 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Questions endpoint - students can submit questions
+  app.post("/api/questions", authenticateToken, async (req, res) => {
+    try {
+      const validatedData = insertQuestionSchema.parse(req.body);
+
+      // Ensure the student is submitting for themselves
+      const studentId = (req as any).user?.id;
+      if (!studentId) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+
+      const question = await storage.createQuestion({
+        ...validatedData,
+        studentId: studentId
+      });
+
+      res.status(201).json({
+        success: true,
+        message: "Question submitted successfully",
+        question: { id: question.id }
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({
+          success: false,
+          message: "Validation error",
+          errors: error.errors
+        });
+      } else {
+        console.error("Question creation error:", error);
+        res.status(500).json({
+          success: false,
+          message: "Internal server error"
+        });
+      }
+    }
+  });
+
+  // Get questions for a student
+  app.get("/api/questions/student/:id", authenticateToken, async (req, res) => {
+    try {
+      const studentId = req.params.id;
+      const requestingUserId = (req as any).user?.id;
+
+      // Students can only see their own questions, admins can see any
+      if (requestingUserId !== studentId && (req as any).user?.role !== 'admin') {
+        return res.status(403).json({
+          success: false,
+          message: "Access denied"
+        });
+      }
+
+      const questions = await storage.getQuestionsByStudentId(studentId);
+      res.json(questions);
+    } catch (error) {
+      console.error("Error fetching student questions:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error"
+      });
+    }
+  });
+
   // Student registration endpoint (public)
   const registerSchema = z.object({
     firstName: z.string().min(1),
