@@ -243,7 +243,7 @@ router.post('/availability', async (req, res) => {
     const newAvailability = await db
       .insert(tutorAvailability)
       .values({
-        tutorId: req.user!.id,
+        tutorId: req.user!.userId,
         date: new Date(date),
         startTime,
         endTime,
