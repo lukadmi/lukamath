@@ -562,22 +562,22 @@ function StudentAppContent() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Q&A Activity</CardTitle>
+                  <CardTitle>{t('app.qa_activity')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600">Total Questions:</span>
+                      <span className="text-slate-600">{t('app.total_questions')}:</span>
                       <span className="font-semibold">{questions?.length || 0}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600">Answered:</span>
+                      <span className="text-slate-600">{t('app.answered_count')}:</span>
                       <span className="font-semibold text-green-600">
                         {questions?.filter((q: Question) => q.isAnswered)?.length || 0}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600">Pending:</span>
+                      <span className="text-slate-600">{t('app.unanswered')}:</span>
                       <span className="font-semibold text-yellow-600">
                         {questions?.filter((q: Question) => !q.isAnswered)?.length || 0}
                       </span>
