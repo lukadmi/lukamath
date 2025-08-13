@@ -90,6 +90,13 @@ function AdminDashboard() {
     queryFn: () => apiRequest("GET", "/api/availability"),
   }) as { data: any[]; isLoading: boolean };
 
+  // Fetch homework files for editing
+  const { data: homeworkFiles = [] } = useQuery({
+    queryKey: ["homework-files", editingHomework?.id],
+    queryFn: () => editingHomework?.id ? apiRequest("GET", `/api/admin/homework/${editingHomework.id}/files`) : Promise.resolve([]),
+    enabled: !!editingHomework?.id,
+  }) as { data: any[] };
+
   // Forms
   const homeworkForm = useForm({
     resolver: zodResolver(homeworkSchema),
