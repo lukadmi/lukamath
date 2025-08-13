@@ -235,6 +235,27 @@ router.patch('/questions/:id/answer', async (req, res) => {
       return res.status(404).json({ error: 'Question not found' });
     }
 
+    // Send email notification to student
+    try {
+      const student = await db
+        .select()
+        .from(users)
+        .where(eq(users.id, updatedQuestion[0].studentId))
+        .limit(1);
+
+      if (student.length > 0) {
+        await EmailNotificationService.notifyStudentQuestionAnswered({
+          studentEmail: student[0].email,
+          questionTitle: updatedQuestion[0].title,
+          questionContent: updatedQuestion[0].content,
+          answer: answer.trim(),
+          subject: updatedQuestion[0].subject,
+        });
+      }
+    } catch (emailError) {
+      console.error("Failed to send question answer notification:", emailError);
+    }
+
     res.json(updatedQuestion[0]);
   } catch (error) {
     console.error('Answer question error:', error);
