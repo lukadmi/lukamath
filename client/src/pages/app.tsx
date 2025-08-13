@@ -324,7 +324,7 @@ function StudentAppContent() {
                   </div>
                 ))}
               </div>
-            ) : homework.length === 0 ? (
+            ) : (homework?.length || 0) === 0 ? (
               <Card>
                 <CardContent className="flex flex-col items-center justify-center py-12">
                   <BookOpen className="w-12 h-12 text-slate-400 mb-4" />
