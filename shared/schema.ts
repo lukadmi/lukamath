@@ -108,7 +108,10 @@ export const tutorAvailability = pgTable("tutor_availability", {
   endTime: varchar("end_time").notNull(), // '17:00'
   isAvailable: boolean("is_available").notNull().default(true),
   notes: text("notes"),
+  bookedBy: varchar("booked_by").references(() => users.id),
+  bookingNotes: text("booking_notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 // Relations
