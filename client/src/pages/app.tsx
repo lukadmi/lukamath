@@ -535,7 +535,7 @@ function StudentAppContent() {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600">Total Assignments:</span>
+                      <span className="text-slate-600">{t('app.total_assignments')}:</span>
                       <span className="font-semibold">{homework?.length || 0}</span>
                     </div>
                     <div className="flex justify-between items-center">
