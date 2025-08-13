@@ -124,25 +124,29 @@ async function logoutUser(): Promise<void> {
       }
     });
 
-    if (!response.ok) {
-      // Check if response has JSON content before trying to parse
-      const contentType = response.headers.get('content-type');
-      const hasJsonContent = contentType && contentType.includes('application/json');
+    // Check content type before any body consumption
+    const contentType = response.headers.get('content-type');
+    const hasJsonContent = contentType && contentType.includes('application/json');
 
-      if (hasJsonContent && response.body) {
-        try {
-          const data = await response.json();
-          throw new Error(data.message || 'Logout failed');
-        } catch (parseError) {
-          // If JSON parsing fails, just use the status
-          throw new Error(`Logout failed with status ${response.status}`);
+    if (!response.ok) {
+      // For error responses, read the body to get error details
+      let errorMessage;
+      try {
+        if (hasJsonContent) {
+          const errorData = await response.json(); // Read from original response
+          errorMessage = errorData?.message || response.statusText;
+        } else {
+          const errorText = await response.text(); // Read from original response
+          errorMessage = errorText || response.statusText;
         }
-      } else {
-        throw new Error(`Logout failed with status ${response.status}`);
+      } catch (parseError) {
+        errorMessage = response.statusText;
       }
+      throw new Error(`${response.status}: ${errorMessage}`);
     }
 
-    // Success - no need to read response body for logout
+    // Success - for logout, we don't need to read the response body
+    // Just return without consuming it
   } catch (error) {
     // Log the error but don't prevent logout from completing
     console.warn('Logout API call failed:', error);
