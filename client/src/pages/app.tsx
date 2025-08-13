@@ -328,9 +328,9 @@ function StudentAppContent() {
               <Card>
                 <CardContent className="flex flex-col items-center justify-center py-12">
                   <BookOpen className="w-12 h-12 text-slate-400 mb-4" />
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2">No homework yet</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">{language === 'en' ? 'No homework yet' : 'Nemate domaću zadaću'}</h3>
                   <p className="text-slate-600 text-center">
-                    Your tutor will assign homework that will appear here.
+                    {language === 'en' ? 'Your tutor will assign homework that will appear here.' : 'Ovdje će se prikazati zadaća čim bude dostupna'}
                   </p>
                 </CardContent>
               </Card>
