@@ -64,34 +64,13 @@ function convertArrayToCSV(array: any[]): string {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   console.log("🔧 Starting route registration...");
-  // Security middleware (skip for development assets)
-  app.use((req, res, next) => {
-    // Skip security middleware for Vite dev assets
-    if (req.url.includes('/@fs/') || 
-        req.url.includes('/@vite/') || 
-        req.url.includes('/src/') ||
-        req.url.includes('/node_modules/') ||
-        req.url.startsWith('/attached_assets/')) {
-      return next();
-    }
-    setSecurityHeaders(req, res, next);
+
+  // Simple test route to verify basic functionality
+  app.get('/api/test', (req, res) => {
+    res.json({ message: 'Server is working', timestamp: new Date().toISOString() });
   });
-  
-  console.log("🔒 Setting up security middleware...");
-  app.use(securityLogger);
-  app.use(generalLimiter);
-  app.use(sanitizeInput);
-  console.log("✅ Security middleware setup complete");
 
-  // Auth middleware and routes setup
-  console.log("🔐 Setting up authentication system...");
-
-  // Import auth routes from auth-routes.ts
-  // Temporarily disabled to isolate the hanging issue
-  // const authRoutes = await import('./auth-routes');
-  // app.use('/api/auth', authRoutes.default);
-
-  console.log("✅ Authentication routes setup complete");
+  console.log("🔧 Basic routes setup...");
 
   // Object storage service
   const objectStorageService = new ObjectStorageService();
