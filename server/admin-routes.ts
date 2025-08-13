@@ -274,4 +274,100 @@ router.post('/homework/files', async (req, res) => {
   }
 });
 
+/**
+ * DELETE /api/admin/homework/:id
+ * Delete homework assignment
+ */
+router.delete('/homework/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // First check if homework exists and belongs to this admin/tutor
+    const existingHomework = await db
+      .select()
+      .from(homework)
+      .where(eq(homework.id, id))
+      .limit(1);
+
+    if (existingHomework.length === 0) {
+      return res.status(404).json({ error: 'Homework assignment not found' });
+    }
+
+    // Delete associated homework files first
+    await db
+      .delete(homeworkFiles)
+      .where(eq(homeworkFiles.homeworkId, id));
+
+    // Delete the homework assignment
+    const deletedHomework = await db
+      .delete(homework)
+      .where(eq(homework.id, id))
+      .returning();
+
+    if (deletedHomework.length === 0) {
+      return res.status(404).json({ error: 'Failed to delete homework assignment' });
+    }
+
+    res.json({
+      success: true,
+      message: 'Homework assignment deleted successfully',
+      deletedId: id
+    });
+  } catch (error) {
+    console.error('Delete homework error:', error);
+    res.status(500).json({ error: 'Failed to delete homework assignment' });
+  }
+});
+
+/**
+ * DELETE /api/admin/availability/:id
+ * Delete availability slot
+ */
+router.delete('/availability/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // First check if the slot exists and belongs to this tutor
+    const existingSlot = await db
+      .select()
+      .from(tutorAvailability)
+      .where(and(
+        eq(tutorAvailability.id, id),
+        eq(tutorAvailability.tutorId, req.user!.userId)
+      ))
+      .limit(1);
+
+    if (existingSlot.length === 0) {
+      return res.status(404).json({ error: 'Availability slot not found or access denied' });
+    }
+
+    // Check if the slot is booked
+    const slot = existingSlot[0];
+    if (!slot.isAvailable && slot.bookedBy) {
+      return res.status(400).json({
+        error: 'Cannot delete a booked time slot. Please contact the student to reschedule first.'
+      });
+    }
+
+    // Delete the availability slot
+    const deletedSlot = await db
+      .delete(tutorAvailability)
+      .where(eq(tutorAvailability.id, id))
+      .returning();
+
+    if (deletedSlot.length === 0) {
+      return res.status(404).json({ error: 'Failed to delete availability slot' });
+    }
+
+    res.json({
+      success: true,
+      message: 'Availability slot deleted successfully',
+      deletedId: id
+    });
+  } catch (error) {
+    console.error('Delete availability error:', error);
+    res.status(500).json({ error: 'Failed to delete availability slot' });
+  }
+});
+
 export default router;
