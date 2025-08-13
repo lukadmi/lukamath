@@ -111,8 +111,7 @@ function AdminDashboard() {
   const createHomeworkMutation = useMutation({
     mutationFn: async (data: any) => {
       // First create the homework
-      const response = await apiRequest("POST", "/api/homework", data);
-      const homework = await response.json();
+      const homework = await apiRequest("POST", "/api/homework", data);
 
       // Then upload any attached files
       if (attachedFiles.length > 0) {
