@@ -251,26 +251,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin routes
-  app.get('/api/admin/students', authenticateToken, requireJWTRole(["admin", "tutor"]), async (req: any, res) => {
-    try {
-      const students = await storage.getAllStudents();
-      res.json(students);
-    } catch (error) {
-      console.error("Error fetching students:", error);
-      res.status(500).json({ message: "Failed to fetch students" });
-    }
-  });
-
-  app.get('/api/admin/contacts', authenticateToken, requireJWTRole(["admin", "tutor"]), async (req: any, res) => {
-    try {
-      const contacts = await storage.getAllContacts();
-      res.json(contacts);
-    } catch (error) {
-      console.error("Error fetching contacts:", error);
-      res.status(500).json({ message: "Failed to fetch contacts" });
-    }
-  });
+  // Admin routes are now handled by admin-routes.ts
 
   console.log("🌐 Creating HTTP server...");
   const httpServer = createServer(app);
