@@ -832,6 +832,7 @@ function AdminDashboard() {
                       {/* Existing Files */}
                       <div className="space-y-2">
                         <label className="text-sm font-medium text-slate-700">Current Attachments</label>
+                        <div className="text-xs text-red-500 bg-red-50 p-1 rounded">DEBUG: existingFiles.length = {existingFiles.length}, homeworkFiles.length = {homeworkFiles?.length || 0}</div>
                         {existingFiles.length > 0 ? (
                           <>
                             <div className="space-y-1">
