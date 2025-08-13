@@ -59,12 +59,30 @@ async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<
     headers,
   });
 
+  // Check if response has content before trying to parse JSON
+  const contentType = response.headers.get('content-type');
+  const hasJsonContent = contentType && contentType.includes('application/json');
+
   let data;
-  try {
-    data = await response.json();
-  } catch (err) {
-    console.error('Failed to parse response as JSON:', err);
-    throw new Error(`Request failed with status ${response.status}`);
+  if (hasJsonContent && response.body) {
+    try {
+      // Clone the response to avoid "body stream already read" error
+      const clonedResponse = response.clone();
+      data = await clonedResponse.json();
+    } catch (err) {
+      console.error('Failed to parse response as JSON:', err);
+      // If JSON parsing fails, try to get text content for better error messages
+      try {
+        const textContent = await response.text();
+        console.error('Response text content:', textContent);
+        throw new Error(`Request failed with status ${response.status}. Response: ${textContent}`);
+      } catch (textErr) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+    }
+  } else {
+    // No JSON content or empty body - just use status information
+    data = null;
   }
 
   if (!response.ok) {
