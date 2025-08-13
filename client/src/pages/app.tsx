@@ -260,7 +260,7 @@ function StudentAppContent() {
             {language === 'en' ? `Welcome back, ${(user as any)?.firstName || "Student"}!` : `${t('app.welcome')} ${(user as any)?.firstName || "učenik"}!`}
           </h1>
           <p className="text-slate-600 mb-4">
-            {language === 'en' ? 'Track your progress, submit homework, and ask questions.' : 'Pratite svoj napredak, predajte domaću zadaću i postavite pitanja.'}
+            {t('app.track_manage')}
           </p>
           
           {/* Mobile App Promotion */}
