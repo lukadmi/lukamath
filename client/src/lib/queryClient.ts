@@ -39,7 +39,7 @@ export async function apiRequest(
 
   let res: Response;
   try {
-    res = await fetch(url, {
+    res = await safeFetch(url, {
       method,
       headers,
       body: data ? JSON.stringify(data) : undefined,
