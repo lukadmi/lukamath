@@ -136,10 +136,24 @@ export const queryClient = new QueryClient({
       refetchInterval: false,
       refetchOnWindowFocus: false,
       staleTime: Infinity,
-      retry: false,
+      retry: (failureCount, error: any) => {
+        // Retry up to 2 times for network errors
+        if (error?.message?.includes('Network error') && failureCount < 2) {
+          return true;
+        }
+        // Don't retry for other errors (like 401, 404, etc.)
+        return false;
+      },
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 3000),
     },
     mutations: {
-      retry: false,
+      retry: (failureCount, error: any) => {
+        // Only retry network errors for mutations, not auth or validation errors
+        if (error?.message?.includes('Network error') && failureCount < 1) {
+          return true;
+        }
+        return false;
+      },
     },
   },
 });
