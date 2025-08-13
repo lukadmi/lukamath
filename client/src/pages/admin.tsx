@@ -807,6 +807,52 @@ function AdminDashboard() {
                         )}
                       />
 
+                      {/* File Attachments */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Attachments (Optional)</label>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => document.getElementById('edit-file-input')?.click()}
+                            className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                          >
+                            <Paperclip className="w-4 h-4 mr-2" />
+                            Attach Files
+                          </Button>
+                          <input
+                            id="edit-file-input"
+                            type="file"
+                            multiple
+                            accept=".pdf,.doc,.docx,.txt"
+                            className="hidden"
+                            onChange={(e) => {
+                              const files = Array.from(e.target.files || []);
+                              setAttachedFiles(prev => [...prev, ...files]);
+                            }}
+                          />
+                        </div>
+                        {(attachedFiles?.length || 0) > 0 && (
+                          <div className="space-y-1">
+                            {attachedFiles?.map((file, index) => (
+                              <div key={index} className="flex items-center justify-between text-sm bg-slate-50 p-2 rounded">
+                                <span className="text-slate-700 truncate">{file.name}</span>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => setAttachedFiles(prev => prev?.filter((_, i) => i !== index) || [])}
+                                  className="text-red-500 hover:text-red-700 h-6 w-6 p-0"
+                                >
+                                  <X className="w-3 h-3" />
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
                       <div className="flex justify-end space-x-2">
                         <Button type="button" variant="outline" onClick={() => setEditHomeworkDialogOpen(false)}>
                           Cancel
