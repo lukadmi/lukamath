@@ -949,7 +949,9 @@ function AdminDashboard() {
                                   description: hw.description,
                                   dueDate: hw.dueDate ? new Date(hw.dueDate).toISOString().slice(0, 16) : "",
                                 });
-                                setAttachedFiles([]); // Clear attached files for edit
+                                setAttachedFiles([]); // Clear new attached files for edit
+                                setExistingFiles([]); // Will be loaded by query
+                                setFilesToRemove([]); // Clear files to remove
                                 setEditHomeworkDialogOpen(true);
                               }}
                               className="text-blue-600 border-blue-200 hover:bg-blue-50"
