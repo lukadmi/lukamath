@@ -741,6 +741,25 @@ function AdminDashboard() {
                               variant="outline"
                               size="sm"
                               onClick={() => {
+                                setEditingHomework(hw);
+                                editHomeworkForm.reset({
+                                  studentId: hw.studentId,
+                                  title: hw.title,
+                                  subject: hw.subject,
+                                  difficulty: hw.difficulty,
+                                  description: hw.description,
+                                  dueDate: hw.dueDate ? new Date(hw.dueDate).toISOString().slice(0, 16) : "",
+                                });
+                                setEditHomeworkDialogOpen(true);
+                              }}
+                              className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
                                 if (confirm("Are you sure you want to delete this homework assignment?")) {
                                   deleteHomeworkMutation.mutate(hw.id);
                                 }
