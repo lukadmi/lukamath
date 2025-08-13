@@ -6,6 +6,24 @@ function getStoredToken(): string | null {
   return localStorage.getItem('lukamath_auth_token');
 }
 
+// Store reference to native fetch in case FullStory or other scripts override it
+const nativeFetch = typeof window !== 'undefined' && window.fetch ? window.fetch.bind(window) : fetch;
+
+// Helper function to make fetch requests with fallback
+async function safeFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  try {
+    // Try the current fetch first (might be wrapped by FullStory)
+    return await fetch(input, init);
+  } catch (error: any) {
+    if (error.message === 'Failed to fetch' && nativeFetch !== fetch) {
+      console.warn('Fetch failed, trying with native fetch as fallback');
+      // Fallback to native fetch if available
+      return await nativeFetch(input, init);
+    }
+    throw error;
+  }
+}
+
 
 export async function apiRequest(
   method: string,
