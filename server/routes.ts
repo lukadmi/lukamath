@@ -207,7 +207,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertQuestionSchema.parse(req.body);
 
       // Ensure the student is submitting for themselves
-      const studentId = (req as any).user?.id;
+      const studentId = (req as any).user?.userId;
       if (!studentId) {
         return res.status(401).json({
           success: false,
@@ -373,7 +373,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/availability/book", authenticateToken, async (req, res) => {
     try {
       const { slotId, notes } = req.body;
-      const studentId = (req as any).user?.id;
+      const studentId = (req as any).user?.userId;
       const studentEmail = (req as any).user?.email;
 
       if (!studentId) {
