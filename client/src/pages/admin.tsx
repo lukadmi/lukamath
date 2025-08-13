@@ -1027,6 +1027,7 @@ function AdminDashboard() {
                               variant="outline"
                               size="sm"
                               onClick={() => {
+                                alert('Edit button clicked for: ' + hw.title);
                                 console.log('Opening edit dialog for homework:', hw);
                                 setEditingHomework(hw);
                                 editHomeworkForm.reset({
