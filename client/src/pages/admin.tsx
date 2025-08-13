@@ -1026,26 +1026,12 @@ function AdminDashboard() {
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() => {
-                                try {
-                                  console.log('Edit button clicked for homework:', hw);
-                                  setEditingHomework(hw);
-                                  editHomeworkForm.reset({
-                                    studentId: hw?.studentId || "",
-                                    title: hw?.title || "",
-                                    subject: hw?.subject || "",
-                                    difficulty: hw?.difficulty || "medium",
-                                    description: hw?.description || "",
-                                    dueDate: hw?.dueDate ? new Date(hw.dueDate).toISOString().slice(0, 16) : "",
-                                  });
-                                  setAttachedFiles([]);
-                                  setExistingFiles([]);
-                                  setFilesToRemove([]);
-                                  setEditHomeworkDialogOpen(true);
-                                  console.log('Edit dialog should be open now');
-                                } catch (error) {
-                                  console.error('Error opening edit dialog:', error);
-                                }
+                              onClick={(e) => {
+                                console.log('CLICK DETECTED!', hw.title);
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setEditHomeworkDialogOpen(true);
+                                console.log('Dialog state set to true');
                               }}
                               className="text-blue-600 border-blue-200 hover:bg-blue-50"
                             >
