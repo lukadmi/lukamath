@@ -393,6 +393,16 @@ router.put('/homework/:id', async (req, res) => {
       return res.status(404).json({ error: 'Failed to update homework assignment' });
     }
 
+    // Remove files that were marked for deletion
+    if (filesToRemove && filesToRemove.length > 0) {
+      await db
+        .delete(homeworkFiles)
+        .where(and(
+          eq(homeworkFiles.homeworkId, id),
+          filesToRemove.includes(homeworkFiles.id)
+        ));
+    }
+
     // Send email notification
     try {
       const student = await db
