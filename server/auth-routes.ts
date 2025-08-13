@@ -51,6 +51,8 @@ router.post('/register', async (req, res) => {
  */
 router.post('/login', async (req, res) => {
   try {
+    console.log('🔐 Login attempt received:', { email: req.body.email, hasPassword: !!req.body.password });
+
     // Validate request data
     const validationResult = loginSchema.safeParse(req.body);
     
@@ -70,8 +72,10 @@ router.post('/login', async (req, res) => {
     // Login user
     const result = await AuthService.login(validationResult.data);
 
+    console.log('🔐 Login result:', { success: result.success, email: validationResult.data.email });
+
     const statusCode = result.success ? 200 : 401;
-    
+
     res.status(statusCode).json(result);
 
   } catch (error) {
