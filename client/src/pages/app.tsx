@@ -304,7 +304,7 @@ function StudentAppContent() {
             </TabsTrigger>
             <TabsTrigger value="scheduling" className="flex items-center space-x-2">
               <Calendar className="w-4 h-4" />
-              <span>Scheduling</span>
+              <span>{language === 'en' ? 'Scheduling' : 'Termini'}</span>
             </TabsTrigger>
           </TabsList>
 
