@@ -592,7 +592,7 @@ function StudentAppContent() {
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <TrendingUp className="w-5 h-5" />
-                  <span>Grade Progress</span>
+                  <span>{t('app.progress_chart')}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -602,8 +602,8 @@ function StudentAppContent() {
                   <div className="h-64 flex items-center justify-center text-slate-500">
                     <div className="text-center">
                       <BarChart3 className="w-12 h-12 mx-auto mb-4 text-slate-400" />
-                      <p>No completed assignments yet</p>
-                      <p className="text-sm">Complete homework to track your progress</p>
+                      <p>{t('app.no_progress_data')}</p>
+                      <p className="text-sm">{t('app.no_progress_data')}</p>
                     </div>
                   </div>
                 ) : (
