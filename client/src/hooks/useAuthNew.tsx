@@ -87,7 +87,19 @@ async function getCurrentUser(): Promise<{ user: User }> {
 }
 
 async function logoutUser(): Promise<void> {
-  await apiRequest('/logout', { method: 'POST' });
+  // Don't use apiRequest for logout as it sends auth headers
+  // Logout should work even with expired/invalid tokens
+  const response = await fetch('/api/auth/logout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.message || 'Logout failed');
+  }
 }
 
 // Auth Provider Component
