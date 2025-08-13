@@ -536,24 +536,24 @@ function StudentAppContent() {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="text-slate-600">Total Assignments:</span>
-                      <span className="font-semibold">{homework.length}</span>
+                      <span className="font-semibold">{homework?.length || 0}</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-slate-600">Completed:</span>
                       <span className="font-semibold text-green-600">
-                        {homework.filter((hw: Homework) => hw.status === "completed").length}
+                        {homework?.filter((hw: Homework) => hw.status === "completed")?.length || 0}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-slate-600">In Progress:</span>
                       <span className="font-semibold text-yellow-600">
-                        {homework.filter((hw: Homework) => hw.status === "in_progress").length}
+                        {homework?.filter((hw: Homework) => hw.status === "in_progress")?.length || 0}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-slate-600">Pending:</span>
                       <span className="font-semibold text-slate-600">
-                        {homework.filter((hw: Homework) => hw.status === "pending").length}
+                        {homework?.filter((hw: Homework) => hw.status === "pending")?.length || 0}
                       </span>
                     </div>
                   </div>
