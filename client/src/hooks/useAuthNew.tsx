@@ -158,6 +158,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       removeStoredToken();
       queryClient.clear();
       setError(null);
+      // Redirect to home page after logout
+      window.location.href = '/';
     }
   };
 
