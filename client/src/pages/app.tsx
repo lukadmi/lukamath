@@ -504,16 +504,16 @@ function StudentAppContent() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div>
-                        <h4 className="font-semibold text-slate-900 mb-2">Your Question:</h4>
+                        <h4 className="font-semibold text-slate-900 mb-2">{t('app.your_question')}:</h4>
                         <p className="text-slate-700">{question.content}</p>
                       </div>
                       {question.isAnswered && question.answer && (
                         <div className="bg-green-50 p-4 rounded-lg">
-                          <h4 className="font-semibold text-green-900 mb-2">Answer:</h4>
+                          <h4 className="font-semibold text-green-900 mb-2">{t('app.answer')}:</h4>
                           <p className="text-green-800">{question.answer}</p>
                           {question.answeredAt && (
                             <p className="text-sm text-green-600 mt-2">
-                              Answered on {new Date(question.answeredAt).toLocaleDateString()}
+                              {t('app.answered_on_date')} {new Date(question.answeredAt).toLocaleDateString()}
                             </p>
                           )}
                         </div>
