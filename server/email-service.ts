@@ -162,4 +162,144 @@ A new student has registered for tutoring. You may want to reach out to welcome 
       console.error('Failed to send registration notification:', error);
     }
   }
+
+  /**
+   * Send notification to student about homework assignment
+   */
+  static async notifyStudentHomeworkAssigned(homeworkData: {
+    studentEmail: string;
+    homeworkTitle: string;
+    subject: string;
+    description: string;
+    dueDate?: Date;
+    isUpdate: boolean;
+  }) {
+    try {
+      await storage.createContact({
+        name: `Homework ${homeworkData.isUpdate ? 'Updated' : 'Assigned'} - ${homeworkData.studentEmail}`,
+        email: 'olovka0987@gmail.com', // Admin will see this as contact
+        phone: homeworkData.studentEmail, // Store student email in phone field for reference
+        subject: `Student Notification: Homework ${homeworkData.isUpdate ? 'Updated' : 'Assigned'}`,
+        message: `📝 STUDENT NOTIFICATION: Homework ${homeworkData.isUpdate ? 'Updated' : 'Assigned'}
+
+TO: ${homeworkData.studentEmail}
+SUBJECT: New Homework Assignment - ${homeworkData.subject}
+
+Dear Student,
+
+You have been ${homeworkData.isUpdate ? 'updated with a revised' : 'assigned a new'} homework assignment:
+
+Assignment: ${homeworkData.homeworkTitle}
+Subject: ${homeworkData.subject}
+${homeworkData.dueDate ? `Due Date: ${homeworkData.dueDate.toLocaleDateString()}` : 'No due date set'}
+
+Description:
+${homeworkData.description}
+
+Please log into your student dashboard to view the full assignment details and any attached files.
+
+Good luck with your studies!
+Best regards,
+LukaMath Tutoring`
+      });
+
+      console.log(`📧 Student homework notification sent to ${homeworkData.studentEmail} - ${homeworkData.homeworkTitle}`);
+    } catch (error) {
+      console.error('Failed to send student homework notification:', error);
+    }
+  }
+
+  /**
+   * Send notification to student about question answer
+   */
+  static async notifyStudentQuestionAnswered(answerData: {
+    studentEmail: string;
+    questionTitle: string;
+    questionContent: string;
+    answer: string;
+    subject: string;
+  }) {
+    try {
+      await storage.createContact({
+        name: `Question Answered - ${answerData.studentEmail}`,
+        email: 'olovka0987@gmail.com', // Admin will see this as contact
+        phone: answerData.studentEmail, // Store student email in phone field for reference
+        subject: `Student Notification: Your Question Has Been Answered`,
+        message: `💡 STUDENT NOTIFICATION: Question Answered
+
+TO: ${answerData.studentEmail}
+SUBJECT: Your ${answerData.subject} Question Has Been Answered
+
+Dear Student,
+
+Your question has been answered by your tutor!
+
+Original Question: "${answerData.questionTitle}"
+Subject: ${answerData.subject}
+
+Your Question:
+${answerData.questionContent}
+
+Tutor's Answer:
+${answerData.answer}
+
+Please log into your student dashboard to view the complete answer and ask any follow-up questions if needed.
+
+Keep up the great work!
+Best regards,
+LukaMath Tutoring`
+      });
+
+      console.log(`📧 Student question answer notification sent to ${answerData.studentEmail} - ${answerData.questionTitle}`);
+    } catch (error) {
+      console.error('Failed to send student answer notification:', error);
+    }
+  }
+
+  /**
+   * Send notification to student about homework grading
+   */
+  static async notifyStudentHomeworkGraded(gradingData: {
+    studentEmail: string;
+    homeworkTitle: string;
+    subject: string;
+    grade?: string;
+    feedback?: string;
+    status: string;
+  }) {
+    try {
+      await storage.createContact({
+        name: `Homework Graded - ${gradingData.studentEmail}`,
+        email: 'olovka0987@gmail.com', // Admin will see this as contact
+        phone: gradingData.studentEmail, // Store student email in phone field for reference
+        subject: `Student Notification: Homework Graded`,
+        message: `✅ STUDENT NOTIFICATION: Homework Graded
+
+TO: ${gradingData.studentEmail}
+SUBJECT: Your ${gradingData.subject} Homework Has Been Graded
+
+Dear Student,
+
+Your homework assignment has been reviewed and graded!
+
+Assignment: ${gradingData.homeworkTitle}
+Subject: ${gradingData.subject}
+Status: ${gradingData.status}
+${gradingData.grade ? `Grade: ${gradingData.grade}` : ''}
+
+${gradingData.feedback ? `Feedback from your tutor:
+${gradingData.feedback}` : ''}
+
+Please log into your student dashboard to view the complete feedback and results.
+
+Great job on completing your assignment!
+Best regards,
+LukaMath Tutoring`
+      });
+
+      console.log(`📧 Student homework grading notification sent to ${gradingData.studentEmail} - ${gradingData.homeworkTitle}`);
+    } catch (error) {
+      console.error('Failed to send student grading notification:', error);
+    }
+  }
 }
