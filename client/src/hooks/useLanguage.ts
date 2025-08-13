@@ -488,7 +488,6 @@ export const translations = {
     "app.question_title": "Naslov pitanja",
     "app.question_content": "Vaše pitanje",
     "app.submit_question": "Pošalji pitanje",
-    "app.due_date": "Krajnji rok",
     "app.completed": "Završeno",
     "app.pending": "U tijeku",
     "app.overdue": "Prekršen rok",
