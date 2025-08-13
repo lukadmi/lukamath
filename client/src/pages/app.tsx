@@ -497,7 +497,7 @@ function StudentAppContent() {
                         </Badge>
                       </div>
                       <p className="text-sm text-slate-500">
-                        Asked on {new Date(question.createdAt).toLocaleDateString()}
+                        {t('app.asked_on')} {new Date(question.createdAt).toLocaleDateString()}
                       </p>
                     </CardHeader>
                     <CardContent className="space-y-4">
