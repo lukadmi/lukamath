@@ -8,8 +8,15 @@ function getStoredToken(): string | null {
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
-    const text = (await res.text()) || res.statusText;
-    throw new Error(`${res.status}: ${text}`);
+    // Clone the response before reading to avoid "body stream already read" error
+    const clonedRes = res.clone();
+    try {
+      const text = (await clonedRes.text()) || res.statusText;
+      throw new Error(`${res.status}: ${text}`);
+    } catch (parseError) {
+      // If we can't parse the response, just use status text
+      throw new Error(`${res.status}: ${res.statusText}`);
+    }
   }
 }
 
