@@ -311,7 +311,7 @@ function StudentAppContent() {
           {/* Homework Tab */}
           <TabsContent value="homework" className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-slate-900">Your Homework</h2>
+              <h2 className="text-xl font-semibold text-slate-900">{language === 'en' ? 'Your Homework' : 'Domaća zadaća'}</h2>
             </div>
 
             {homeworkLoading ? (
