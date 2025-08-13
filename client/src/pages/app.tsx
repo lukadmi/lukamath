@@ -231,7 +231,7 @@ function StudentAppContent() {
                 <Link href="/">
                   <Button variant="outline" size="sm">
                     <Home className="w-4 h-4 mr-1" />
-                    {language === 'en' ? 'Home' : 'Početna'}
+                    {t('app.home')}
                   </Button>
                 </Link>
                 <Button
