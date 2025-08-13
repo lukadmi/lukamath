@@ -153,7 +153,17 @@ export default function PWAAuth() {
         body: JSON.stringify(data),
         credentials: 'include'
       });
-      if (!response.ok) throw new Error('Login failed');
+
+      if (!response.ok) {
+        // Clone response to safely read error details if needed
+        const clonedResponse = response.clone();
+        try {
+          const error = await clonedResponse.json();
+          throw new Error(error.message || 'Login failed');
+        } catch (parseError) {
+          throw new Error(`Login failed with status ${response.status}`);
+        }
+      }
       return response.json();
     },
     onSuccess: () => {
