@@ -44,7 +44,7 @@ async function apiRequestWithAuth(url: string): Promise<any> {
     try {
       return await response.json();
     } catch (err) {
-      console.error('Failed to parse response as JSON:', err);
+      console.error('Failed to parse response as JSON (useAuth):', err);
       throw new Error(`Request failed - invalid JSON response`);
     }
   }

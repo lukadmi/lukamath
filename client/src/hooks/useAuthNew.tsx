@@ -86,7 +86,7 @@ async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<
     try {
       return await response.json();
     } catch (err) {
-      console.error('Failed to parse response as JSON:', err);
+      console.error('Failed to parse response as JSON (useAuthNew):', err);
       throw new Error(`Request failed with status ${response.status} - Invalid JSON response`);
     }
   }
