@@ -598,7 +598,7 @@ function StudentAppContent() {
               <CardContent>
                 {progressLoading ? (
                   <div className="h-64 bg-slate-200 animate-pulse rounded"></div>
-                ) : (progress as any[]).length === 0 ? (
+                ) : ((progress as any[])?.length || 0) === 0 ? (
                   <div className="h-64 flex items-center justify-center text-slate-500">
                     <div className="text-center">
                       <BarChart3 className="w-12 h-12 mx-auto mb-4 text-slate-400" />
@@ -609,7 +609,7 @@ function StudentAppContent() {
                 ) : (
                   <div className="h-64">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={(progress as any[]).map((item: any, index: number) => ({
+                      <LineChart data={(progress as any[])?.map((item: any, index: number) => ({
                         assignment: index + 1,
                         grade: item.grade || 0,
                         subject: item.subject,
@@ -668,7 +668,7 @@ function StudentAppContent() {
               <CardContent>
                 {availabilityLoading ? (
                   <div className="h-64 bg-slate-200 animate-pulse rounded"></div>
-                ) : (availability as any[]).length === 0 ? (
+                ) : ((availability as any[])?.length || 0) === 0 ? (
                   <div className="h-64 flex items-center justify-center text-slate-500">
                     <div className="text-center">
                       <Calendar className="w-12 h-12 mx-auto mb-4 text-slate-400" />
@@ -680,7 +680,7 @@ function StudentAppContent() {
                   <div className="space-y-4">
                     <p className="text-slate-600 mb-4">Available time slots for tutoring sessions:</p>
                     <div className="grid gap-3">
-                      {(availability as any[]).map((slot: any, index: number) => (
+                      {(availability as any[])?.map((slot: any, index: number) => (
                         <div key={index} className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-200">
                           <div className="flex items-center space-x-3">
                             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
