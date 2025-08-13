@@ -525,7 +525,7 @@ function StudentAppContent() {
 
           {/* Progress Tab */}
           <TabsContent value="progress" className="space-y-6">
-            <h2 className="text-xl font-semibold text-slate-900">Your Progress</h2>
+            <h2 className="text-xl font-semibold text-slate-900">{t('app.your_progress')}</h2>
             
             <div className="grid gap-6 md:grid-cols-2">
               <Card>
