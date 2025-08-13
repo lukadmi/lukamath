@@ -923,9 +923,24 @@ function AdminDashboard() {
                             </p>
                           </div>
                         </div>
-                        <Badge variant={slot.isAvailable ? "default" : "secondary"}>
-                          {slot.isAvailable ? "Available" : "Booked"}
-                        </Badge>
+                        <div className="flex items-center space-x-2">
+                          <Badge variant={slot.isAvailable ? "default" : "secondary"}>
+                            {slot.isAvailable ? "Available" : "Booked"}
+                          </Badge>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              if (confirm("Are you sure you want to delete this time slot?")) {
+                                deleteAvailabilityMutation.mutate(slot.id);
+                              }
+                            }}
+                            className="text-red-600 border-red-200 hover:bg-red-50"
+                            disabled={deleteAvailabilityMutation.isPending}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
                       </div>
                     ))}
                   </div>
