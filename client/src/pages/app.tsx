@@ -551,7 +551,7 @@ function StudentAppContent() {
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600">Pending:</span>
+                      <span className="text-slate-600">{t('app.pending_count')}:</span>
                       <span className="font-semibold text-slate-600">
                         {homework?.filter((hw: Homework) => hw.status === "pending")?.length || 0}
                       </span>
