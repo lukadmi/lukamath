@@ -90,7 +90,7 @@ function App() {
           <LanguageProvider>
             <TooltipProvider>
               <Toaster />
-            <Router />
+              <Router />
             </TooltipProvider>
           </LanguageProvider>
         </AuthProvider>
