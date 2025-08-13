@@ -116,7 +116,7 @@ export const translations = {
     // Math Levels
     "level.middle_school": "Middle School Math (Grades 6-8)",
     "level.high_school": "High School Math (Grades 9-12)", 
-    "level.university": "Sveu��ilišna matematika",
+    "level.university": "Sveučilišna matematika",
     "level.sat_act": "SAT/ACT Prep (Test Preparation)",
     
     // Why Choose
@@ -227,6 +227,8 @@ export const translations = {
     "app.your_question": "Your Question",
     "app.answer": "Answer",
     "app.answered_on_date": "Answered on",
+    "app.question_title_label": "Question Title",
+    "app.question_details_label": "Question Details",
 
     // Common
     "common.sending": "Sending...",
