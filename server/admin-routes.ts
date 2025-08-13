@@ -177,10 +177,21 @@ router.post('/homework', async (req, res) => {
         .limit(1);
 
       if (student.length > 0) {
+        // Notify admin about homework assignment
         await EmailNotificationService.notifyHomeworkAssigned({
           studentEmail: student[0].email,
           homeworkTitle: title,
           subject: subject,
+          dueDate: dueDate ? new Date(dueDate) : undefined,
+          isUpdate: false,
+        });
+
+        // Notify student about homework assignment
+        await EmailNotificationService.notifyStudentHomeworkAssigned({
+          studentEmail: student[0].email,
+          homeworkTitle: title,
+          subject: subject,
+          description: description,
           dueDate: dueDate ? new Date(dueDate) : undefined,
           isUpdate: false,
         });
