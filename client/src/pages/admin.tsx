@@ -115,6 +115,13 @@ function AdminDashboard() {
   const [existingFiles, setExistingFiles] = useState<any[]>([]);
   const [filesToRemove, setFilesToRemove] = useState<string[]>([]);
 
+  // Update existing files when homework files are loaded
+  useEffect(() => {
+    if (homeworkFiles && homeworkFiles.length > 0) {
+      setExistingFiles(homeworkFiles);
+    }
+  }, [homeworkFiles]);
+
   const availabilityForm = useForm({
     resolver: zodResolver(availabilitySchema),
     defaultValues: {
