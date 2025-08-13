@@ -111,7 +111,10 @@ export default function PWADashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem('pwa-language');
-    window.location.href = '/api/logout';
+    // Clear the JWT token from localStorage
+    localStorage.removeItem('lukamath_auth_token');
+    // Redirect to home page
+    window.location.href = '/';
   };
 
   if (!isAuthenticated) {
