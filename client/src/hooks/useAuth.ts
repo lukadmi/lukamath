@@ -15,7 +15,17 @@ async function apiRequestWithAuth(url: string): Promise<any> {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const response = await fetch(url, { headers });
+  let response: Response;
+  try {
+    response = await fetch(url, { headers, credentials: "include" });
+  } catch (fetchError: any) {
+    // Handle network errors and FullStory interference
+    console.error('Fetch error in apiRequestWithAuth:', fetchError);
+    if (fetchError.message === 'Failed to fetch' || fetchError.name === 'TypeError') {
+      throw new Error('Network error: Unable to connect to server');
+    }
+    throw fetchError;
+  }
 
   // Check content type before any body consumption
   const contentType = response.headers.get('content-type');
