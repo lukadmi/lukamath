@@ -595,7 +595,7 @@ function AdminDashboard() {
                   </div>
                 ) : (
                   <div className="divide-y">
-                    {allHomework.map((hw: any) => (
+                    {allHomework?.map((hw: any) => (
                       <div key={hw.id} className="p-6">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
