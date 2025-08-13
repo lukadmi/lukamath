@@ -119,7 +119,7 @@ function AdminDashboard() {
       const homework = await apiRequest("POST", "/api/homework", data);
 
       // Then upload any attached files
-      if (attachedFiles.length > 0) {
+      if (attachedFiles?.length > 0) {
         const formData = new FormData();
         attachedFiles.forEach(file => {
           formData.append('files', file);
@@ -551,16 +551,16 @@ function AdminDashboard() {
                             }}
                           />
                         </div>
-                        {attachedFiles.length > 0 && (
+                        {(attachedFiles?.length || 0) > 0 && (
                           <div className="space-y-1">
-                            {attachedFiles.map((file, index) => (
+                            {attachedFiles?.map((file, index) => (
                               <div key={index} className="flex items-center justify-between text-sm bg-slate-50 p-2 rounded">
                                 <span className="text-slate-700 truncate">{file.name}</span>
                                 <Button
                                   type="button"
                                   variant="ghost"
                                   size="sm"
-                                  onClick={() => setAttachedFiles(prev => prev.filter((_, i) => i !== index))}
+                                  onClick={() => setAttachedFiles(prev => prev?.filter((_, i) => i !== index) || [])}
                                   className="text-red-500 hover:text-red-700 h-6 w-6 p-0"
                                 >
                                   <X className="w-3 h-3" />
