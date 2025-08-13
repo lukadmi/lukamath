@@ -21,7 +21,20 @@ async function apiRequestWithAuth(url: string): Promise<any> {
     throw new Error(`HTTP ${response.status}`);
   }
 
-  return response.json();
+  // Check if response has JSON content before parsing
+  const contentType = response.headers.get('content-type');
+  const hasJsonContent = contentType && contentType.includes('application/json');
+
+  if (hasJsonContent && response.body) {
+    try {
+      return await response.json();
+    } catch (err) {
+      console.error('Failed to parse response as JSON:', err);
+      throw new Error(`Request failed - invalid JSON response`);
+    }
+  } else {
+    throw new Error('Response does not contain JSON data');
+  }
 }
 
 export function useAuth() {
