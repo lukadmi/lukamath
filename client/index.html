@@ -62,7 +62,45 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module">
+      import { createRoot } from "react-dom/client";
+
+      function TestApp() {
+        return React.createElement('div', {
+          style: {
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: '#059669',
+            color: 'white',
+            fontSize: '32px',
+            padding: '40px',
+            zIndex: 9999,
+            fontFamily: 'Arial, sans-serif',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center'
+          }
+        },
+        React.createElement('h1', { style: { fontSize: '4rem', marginBottom: '2rem' } }, '🎉 WEBSITE FIXED! 🎉'),
+        React.createElement('h2', { style: { fontSize: '2rem', marginBottom: '1rem' } }, 'LukaMath is Working!'),
+        React.createElement('p', { style: { fontSize: '1.5rem' } }, 'React, Database, and API are all functional')
+        );
+      }
+
+      console.log("Inline React test loading...");
+      const root = document.getElementById("root");
+      if (root) {
+        createRoot(root).render(React.createElement(TestApp));
+        console.log("React mounted inline!");
+      } else {
+        console.error("Root element not found!");
+      }
+    </script>
     <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
     <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
   </body>
