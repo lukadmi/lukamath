@@ -25,7 +25,7 @@ export function AuthTestNav() {
       clearError();
       const result = await login({
         email: 'olovka0987@gmail.com',
-        password: 'Admin123!'
+        password: '!LukaMath0987!'
       });
       
       if (result.success) {
@@ -241,7 +241,7 @@ export function AuthTestNav() {
         <div className="text-sm text-gray-600 space-y-2">
           <h4 className="font-medium">Testing Instructions:</h4>
           <ul className="list-disc list-inside space-y-1 ml-4">
-            <li>Use "Test Admin Login" to authenticate as admin (olovka0987@gmail.com)</li>
+            <li>Use "Test Admin Login" to authenticate as admin (olovka0987@gmail.com / !LukaMath0987!)</li>
             <li>Use "Test Student Login" to authenticate as test student</li>
             <li>Use "Test Registration" to create a new user account</li>
             <li>After admin login, navigate to Admin Dashboard to test admin features</li>
