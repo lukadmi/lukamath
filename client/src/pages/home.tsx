@@ -32,7 +32,12 @@ function useHomeDoc() {
   useEffect(() => {
     // cache-bust + no-store so preview always pulls latest JSON
     fetch(`/content/home.json?v=${Date.now()}`, { cache: "no-store" })
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) {
+          throw new Error(`HTTP ${r.status}`);
+        }
+        return r.json();
+      })
       .then(setDoc)
       .catch(() => setDoc(null));
   }, []);
