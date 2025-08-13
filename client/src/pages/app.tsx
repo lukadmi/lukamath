@@ -83,6 +83,29 @@ function StudentAppContent() {
     retry: false,
   });
 
+  // Homework files query - fetch files for all homework assignments
+  const { data: allHomeworkFiles = {} } = useQuery({
+    queryKey: ["/api/homework/files", homework],
+    queryFn: async () => {
+      if (!homework || homework.length === 0) return {};
+
+      const filesPromises = homework.map(async (hw: Homework) => {
+        try {
+          const files = await apiRequest("GET", `/api/admin/homework/${hw.id}/files`);
+          return { [hw.id]: files || [] };
+        } catch (error) {
+          console.warn(`Failed to fetch files for homework ${hw.id}:`, error);
+          return { [hw.id]: [] };
+        }
+      });
+
+      const filesResults = await Promise.all(filesPromises);
+      return filesResults.reduce((acc, fileMap) => ({ ...acc, ...fileMap }), {});
+    },
+    enabled: !!homework && homework.length > 0,
+    retry: false,
+  });
+
   // Question form
   const questionForm = useForm<InsertQuestion>({
     resolver: zodResolver(insertQuestionSchema),
