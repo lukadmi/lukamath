@@ -69,36 +69,20 @@ function Router() {
 function App() {
   console.log("App component rendering...");
 
-  // Initialize Google Analytics and performance optimizations
-  useEffect(() => {
-    console.log("App useEffect running...");
-    // Verify required environment variable is present
-    if (!import.meta.env.VITE_GA_MEASUREMENT_ID) {
-      console.warn('Missing required Google Analytics key: VITE_GA_MEASUREMENT_ID');
-    } else {
-      initGA();
-    }
-
-    // Preload critical resources
-    import('@/lib/preload').then(({ preloadCriticalResources, registerServiceWorker }) => {
-      preloadCriticalResources();
-      registerServiceWorker();
-    });
-  }, []);
-
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <LanguageProvider>
-            <TooltipProvider>
-              <Toaster />
-              <Router />
-            </TooltipProvider>
-          </LanguageProvider>
-        </AuthProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+    <div className="min-h-screen bg-white">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold text-blue-600 mb-4">LukaMath</h1>
+        <p className="text-gray-700 text-lg">
+          Testing basic React rendering...
+        </p>
+        <div className="mt-8 p-4 bg-blue-50 rounded-lg">
+          <p className="text-blue-800">
+            If you can see this message, React is working!
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
 
