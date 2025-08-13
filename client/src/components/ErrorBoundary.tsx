@@ -48,7 +48,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             </CardHeader>
             <CardContent className="text-center space-y-4">
               <p className="text-gray-600">
-                We're sorry, but an unexpected error occurred. Please try refreshing the page or contact support if the problem persists.
+                {this.state.error?.message?.includes('Network error')
+                  ? "There seems to be a network connection issue. Please check your internet connection and try again."
+                  : "We're sorry, but an unexpected error occurred. Please try refreshing the page or contact support if the problem persists."
+                }
               </p>
               {process.env.NODE_ENV === 'development' && this.state.error && (
                 <details className="text-left bg-gray-100 p-3 rounded text-sm">
