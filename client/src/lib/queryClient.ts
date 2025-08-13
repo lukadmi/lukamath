@@ -30,15 +30,16 @@ export async function apiRequest(
   const contentType = res.headers.get('content-type');
   const hasJsonContent = contentType && contentType.includes('application/json');
 
-  // If there's an error, handle it with proper cloning
+  // Always handle the response body only once
   if (!res.ok) {
+    // For error responses, read the body to get error details
     let errorMessage;
     try {
       if (hasJsonContent) {
-        const errorData = await res.clone().json();
+        const errorData = await res.json(); // Read from original response
         errorMessage = errorData?.message || res.statusText;
       } else {
-        const errorText = await res.clone().text();
+        const errorText = await res.text(); // Read from original response
         errorMessage = errorText || res.statusText;
       }
     } catch (parseError) {
@@ -47,7 +48,7 @@ export async function apiRequest(
     throw new Error(`${res.status}: ${errorMessage}`);
   }
 
-  // Parse successful JSON response
+  // For successful responses, read the body
   if (hasJsonContent) {
     return await res.json();
   }
