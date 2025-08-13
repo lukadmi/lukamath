@@ -411,14 +411,14 @@ function AdminDashboard() {
                     Create Assignment
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-md">
+                <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
                     <DialogTitle>Create Homework Assignment</DialogTitle>
                   </DialogHeader>
                   <Form {...homeworkForm}>
                     <form
-                      onSubmit={homeworkForm.handleSubmit((data) => 
-                        createHomeworkMutation.mutate(data)
+                      onSubmit={homeworkForm.handleSubmit((data) =>
+                        createHomeworkMutation.mutate({ ...data, attachedFiles })
                       )}
                       className="space-y-4"
                     >
