@@ -217,7 +217,7 @@ function AdminDashboard() {
   // Edit homework mutation
   const editHomeworkMutation = useMutation({
     mutationFn: async (data: any) => {
-      const homeworkData = { ...data, attachedFiles };
+      const homeworkData = { ...data, attachedFiles, filesToRemove };
       return await apiRequest("PUT", `/api/admin/homework/${editingHomework.id}`, homeworkData);
     },
     onSuccess: () => {
