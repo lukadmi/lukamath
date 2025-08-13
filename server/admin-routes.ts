@@ -416,6 +416,82 @@ router.put('/homework/:id', async (req, res) => {
 });
 
 /**
+ * PATCH /api/admin/homework/:id/grade
+ * Grade homework assignment
+ */
+router.patch('/homework/:id/grade', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status, grade, feedback } = req.body;
+
+    // Validate required fields
+    if (!status) {
+      return res.status(400).json({ error: 'Status is required' });
+    }
+
+    // Check if homework exists
+    const existingHomework = await db
+      .select()
+      .from(homework)
+      .where(eq(homework.id, id))
+      .limit(1);
+
+    if (existingHomework.length === 0) {
+      return res.status(404).json({ error: 'Homework assignment not found' });
+    }
+
+    // Update the homework with grading information
+    const updatedHomework = await db
+      .update(homework)
+      .set({
+        status,
+        grade: grade || null,
+        feedback: feedback || null,
+        isCompleted: status === 'completed',
+        completedAt: status === 'completed' ? new Date() : null,
+        updatedAt: new Date(),
+      })
+      .where(eq(homework.id, id))
+      .returning();
+
+    if (updatedHomework.length === 0) {
+      return res.status(404).json({ error: 'Failed to grade homework assignment' });
+    }
+
+    // Send email notification to student
+    try {
+      const student = await db
+        .select()
+        .from(users)
+        .where(eq(users.id, updatedHomework[0].studentId))
+        .limit(1);
+
+      if (student.length > 0) {
+        await EmailNotificationService.notifyStudentHomeworkGraded({
+          studentEmail: student[0].email,
+          homeworkTitle: updatedHomework[0].title,
+          subject: updatedHomework[0].subject,
+          grade: grade,
+          feedback: feedback,
+          status: status,
+        });
+      }
+    } catch (emailError) {
+      console.error("Failed to send homework grading notification:", emailError);
+    }
+
+    res.json({
+      success: true,
+      message: 'Homework graded successfully',
+      homework: updatedHomework[0]
+    });
+  } catch (error) {
+    console.error('Grade homework error:', error);
+    res.status(500).json({ error: 'Failed to grade homework assignment' });
+  }
+});
+
+/**
  * DELETE /api/admin/homework/:id
  * Delete homework assignment
  */
