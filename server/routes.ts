@@ -136,6 +136,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const authRoutes = await import('./auth-routes');
   app.use('/api/auth', authRoutes.default);
 
+  // Import admin routes from admin-routes.ts
+  const adminRoutes = await import('./admin-routes');
+  app.use('/api/admin', adminRoutes.default);
+
   console.log("✅ Authentication routes setup complete");
 
   // Object storage service
