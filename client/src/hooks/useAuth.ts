@@ -35,7 +35,7 @@ async function apiRequestWithAuth(url: string): Promise<any> {
 
   let response: Response;
   try {
-    response = await fetch(url, { headers, credentials: "include" });
+    response = await safeFetch(url, { headers, credentials: "include" });
   } catch (fetchError: any) {
     // Handle network errors and FullStory interference
     console.error('Fetch error in apiRequestWithAuth:', fetchError);
