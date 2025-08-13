@@ -6,19 +6,6 @@ function getStoredToken(): string | null {
   return localStorage.getItem('lukamath_auth_token');
 }
 
-async function throwIfResNotOk(res: Response) {
-  if (!res.ok) {
-    // Clone the response before reading to avoid "body stream already read" error
-    const clonedRes = res.clone();
-    try {
-      const text = (await clonedRes.text()) || res.statusText;
-      throw new Error(`${res.status}: ${text}`);
-    } catch (parseError) {
-      // If we can't parse the response, just use status text
-      throw new Error(`${res.status}: ${res.statusText}`);
-    }
-  }
-}
 
 export async function apiRequest(
   method: string,
