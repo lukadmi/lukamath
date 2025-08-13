@@ -19,12 +19,22 @@ export async function apiRequest(
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const res = await fetch(url, {
-    method,
-    headers,
-    body: data ? JSON.stringify(data) : undefined,
-    credentials: "include",
-  });
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      method,
+      headers,
+      body: data ? JSON.stringify(data) : undefined,
+      credentials: "include",
+    });
+  } catch (fetchError: any) {
+    // Handle network errors and FullStory interference
+    console.error('Fetch error in apiRequest:', fetchError);
+    if (fetchError.message === 'Failed to fetch' || fetchError.name === 'TypeError') {
+      throw new Error('Network error: Unable to connect to server');
+    }
+    throw fetchError;
+  }
 
   // Check content type before any body consumption
   const contentType = res.headers.get('content-type');
