@@ -154,17 +154,30 @@ export default function PWAAuth() {
         credentials: 'include'
       });
 
-      if (!response.ok) {
-        // Clone response to safely read error details if needed
-        const clonedResponse = response.clone();
-        try {
-          const error = await clonedResponse.json();
-          throw new Error(error.message || 'Login failed');
-        } catch (parseError) {
-          throw new Error(`Login failed with status ${response.status}`);
+      // Store response status before consuming body
+      const status = response.status;
+      const ok = response.ok;
+      const contentType = response.headers.get('content-type');
+      const hasJsonContent = contentType && contentType.includes('application/json');
+
+      if (!ok) {
+        let errorMessage = 'Login failed';
+        if (hasJsonContent) {
+          try {
+            const error = await response.json();
+            errorMessage = error.message || errorMessage;
+          } catch (parseError) {
+            // If JSON parsing fails, use default message
+          }
         }
+        throw new Error(`${errorMessage} (status ${status})`);
       }
-      return response.json();
+
+      // Parse successful JSON response
+      if (hasJsonContent) {
+        return await response.json();
+      }
+      return null;
     },
     onSuccess: () => {
       toast({

@@ -60,18 +60,30 @@ export default function Register() {
         headers: { 'Content-Type': 'application/json' },
       });
 
-      // Clone response to avoid "body stream already read" error
-      const clonedResponse = response.clone();
+      // Store response status before consuming body
+      const status = response.status;
+      const ok = response.ok;
+      const contentType = response.headers.get('content-type');
+      const hasJsonContent = contentType && contentType.includes('application/json');
 
-      if (!response.ok) {
-        try {
-          const error = await clonedResponse.json();
-          throw new Error(error.message || 'Registration failed');
-        } catch (parseError) {
-          throw new Error(`Registration failed with status ${response.status}`);
+      if (!ok) {
+        let errorMessage = 'Registration failed';
+        if (hasJsonContent) {
+          try {
+            const error = await response.json();
+            errorMessage = error.message || errorMessage;
+          } catch (parseError) {
+            // If JSON parsing fails, use default message
+          }
         }
+        throw new Error(`${errorMessage} (status ${status})`);
       }
-      return response.json();
+
+      // Parse successful JSON response
+      if (hasJsonContent) {
+        return await response.json();
+      }
+      return null;
     },
     onSuccess: () => {
       // Track registration conversion in Google Analytics
