@@ -96,12 +96,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware and routes setup
   console.log("🔐 Setting up authentication system...");
 
-  // Setup passport authentication middleware
-  try {
-    await setupAuth(app);
-  } catch (error) {
-    console.warn("⚠️ Auth setup failed, continuing without full auth:", error?.message);
-  }
+  // Setup basic passport middleware (without OIDC which might hang)
+  const passport = await import('passport');
+  const session = await import('express-session');
+
+  app.set("trust proxy", 1);
+
+  // Basic session setup for development
+  app.use(session.default({
+    secret: process.env.SESSION_SECRET || 'dev-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false, // Set to false for development
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week
+    }
+  }));
+
+  app.use(passport.default.initialize());
+  app.use(passport.default.session());
+
+  // Basic passport serialization
+  passport.default.serializeUser((user: any, cb) => cb(null, user));
+  passport.default.deserializeUser((user: any, cb) => cb(null, user));
 
   // Import auth routes from auth-routes.ts
   const authRoutes = await import('./auth-routes');
