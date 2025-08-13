@@ -695,6 +695,21 @@ function AdminDashboard() {
                               )}
                             </div>
                           </div>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                if (confirm("Are you sure you want to delete this homework assignment?")) {
+                                  deleteHomeworkMutation.mutate(hw.id);
+                                }
+                              }}
+                              className="text-red-600 border-red-200 hover:bg-red-50"
+                              disabled={deleteHomeworkMutation.isPending}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     ))}
