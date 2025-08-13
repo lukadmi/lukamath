@@ -67,8 +67,11 @@ function Router() {
 }
 
 function App() {
+  console.log("App component rendering...");
+
   // Initialize Google Analytics and performance optimizations
   useEffect(() => {
+    console.log("App useEffect running...");
     // Verify required environment variable is present
     if (!import.meta.env.VITE_GA_MEASUREMENT_ID) {
       console.warn('Missing required Google Analytics key: VITE_GA_MEASUREMENT_ID');
