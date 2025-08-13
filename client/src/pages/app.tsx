@@ -439,7 +439,7 @@ function StudentAppContent() {
                       />
                       <div className="flex justify-end space-x-2">
                         <Button type="button" variant="outline" onClick={() => setQuestionDialogOpen(false)}>
-                          Cancel
+                          {t('app.cancel')}
                         </Button>
                         <Button type="submit" disabled={questionMutation.isPending}>
                           {questionMutation.isPending ? (
