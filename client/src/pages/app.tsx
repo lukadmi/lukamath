@@ -225,7 +225,7 @@ function StudentAppContent() {
                 <Link href="/pwa">
                   <Button variant="outline" size="sm" className="bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100">
                     <Smartphone className="w-4 h-4 mr-1" />
-                    {language === 'en' ? 'Mobile App' : 'Mobilna aplikacija'}
+                    {t('app.pwa_app')}
                   </Button>
                 </Link>
                 <Link href="/">
