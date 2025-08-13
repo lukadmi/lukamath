@@ -224,6 +224,9 @@ export const translations = {
     "app.track_manage": "Track your progress, submit homework, and ask questions.",
     "app.in_progress_status": "in progress",
     "app.homework_status": "Homework Status",
+    "app.your_question": "Your Question",
+    "app.answer": "Answer",
+    "app.answered_on_date": "Answered on",
 
     // Common
     "common.sending": "Sending...",
