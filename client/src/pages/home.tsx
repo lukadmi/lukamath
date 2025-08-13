@@ -517,8 +517,7 @@ function HomeContent() {
 
   const contactMutation = useMutation({
     mutationFn: async (data: InsertContact) => {
-      const response = await apiRequest("POST", "/api/contacts", data);
-      return response.json();
+      return await apiRequest("POST", "/api/contacts", data);
     },
     onSuccess: () => {
       trackEvent("contact_form_submit", "engagement", "home_page", 1);

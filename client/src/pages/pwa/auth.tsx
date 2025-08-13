@@ -205,7 +205,7 @@ export default function PWAAuth() {
         mathLevel: data.mathLevel,
         language: language
       });
-      return response.json();
+      return response;
     },
     onSuccess: () => {
       toast({
