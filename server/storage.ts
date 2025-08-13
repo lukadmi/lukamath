@@ -212,12 +212,20 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(users.createdAt));
   }
 
-  async createQuestion(studentId: string, question: InsertQuestion): Promise<Question> {
+  async createQuestion(questionData: InsertQuestion & { studentId: string }): Promise<Question> {
     const [q] = await db
       .insert(questions)
-      .values({ ...question, studentId })
+      .values(questionData)
       .returning();
     return q;
+  }
+
+  async getQuestionsByStudentId(studentId: string): Promise<Question[]> {
+    return await db
+      .select()
+      .from(questions)
+      .where(eq(questions.studentId, studentId))
+      .orderBy(desc(questions.createdAt));
   }
 
   async answerQuestion(id: string, answer: string, tutorId: string): Promise<Question | undefined> {
