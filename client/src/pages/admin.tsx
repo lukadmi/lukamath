@@ -940,6 +940,7 @@ function AdminDashboard() {
                                   description: hw.description,
                                   dueDate: hw.dueDate ? new Date(hw.dueDate).toISOString().slice(0, 16) : "",
                                 });
+                                setAttachedFiles([]); // Clear attached files for edit
                                 setEditHomeworkDialogOpen(true);
                               }}
                               className="text-blue-600 border-blue-200 hover:bg-blue-50"
