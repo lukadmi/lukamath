@@ -430,7 +430,7 @@ function AdminDashboard() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                {students.map((student: any) => (
+                                {students?.map((student: any) => (
                                   <SelectItem key={student.id} value={student.id}>
                                     {student.firstName} {student.lastName}
                                   </SelectItem>
