@@ -234,12 +234,19 @@ function StudentAppContent() {
                     {language === 'en' ? 'Home' : 'Početna'}
                   </Button>
                 </Link>
-                <a href="/api/logout">
-                  <Button variant="ghost" size="sm">
-                    <LogOut className="w-4 h-4 mr-1" />
-                    {language === 'en' ? 'Logout' : t('app.logout')}
-                  </Button>
-                </a>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    // Clear the JWT token from localStorage
+                    localStorage.removeItem('lukamath_auth_token');
+                    // Redirect to home page
+                    window.location.href = '/';
+                  }}
+                >
+                  <LogOut className="w-4 h-4 mr-1" />
+                  {language === 'en' ? 'Logout' : t('app.logout')}
+                </Button>
               </div>
             </div>
           </div>
@@ -253,7 +260,7 @@ function StudentAppContent() {
             {language === 'en' ? `Welcome back, ${(user as any)?.firstName || "Student"}!` : `${t('app.welcome')} ${(user as any)?.firstName || "učenik"}!`}
           </h1>
           <p className="text-slate-600 mb-4">
-            {language === 'en' ? 'Track your progress, submit homework, and ask questions.' : 'Pratite svoj napredak, predajte domaće zadatke i postavite pitanja.'}
+            {language === 'en' ? 'Track your progress, submit homework, and ask questions.' : 'Pratite svoj napredak, predajte domaću zadaću i postavite pitanja.'}
           </p>
           
           {/* Mobile App Promotion */}
@@ -297,14 +304,14 @@ function StudentAppContent() {
             </TabsTrigger>
             <TabsTrigger value="scheduling" className="flex items-center space-x-2">
               <Calendar className="w-4 h-4" />
-              <span>Scheduling</span>
+              <span>{language === 'en' ? 'Scheduling' : 'Termini'}</span>
             </TabsTrigger>
           </TabsList>
 
           {/* Homework Tab */}
           <TabsContent value="homework" className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-slate-900">Your Homework</h2>
+              <h2 className="text-xl font-semibold text-slate-900">{language === 'en' ? 'Your Homework' : 'Domaća zadaća'}</h2>
             </div>
 
             {homeworkLoading ? (
@@ -321,9 +328,9 @@ function StudentAppContent() {
               <Card>
                 <CardContent className="flex flex-col items-center justify-center py-12">
                   <BookOpen className="w-12 h-12 text-slate-400 mb-4" />
-                  <h3 className="text-lg font-semibold text-slate-900 mb-2">No homework yet</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">{language === 'en' ? 'No homework yet' : 'Nemate domaću zadaću'}</h3>
                   <p className="text-slate-600 text-center">
-                    Your tutor will assign homework that will appear here.
+                    {language === 'en' ? 'Your tutor will assign homework that will appear here.' : 'Ovdje će se prikazati zadaća čim bude dostupna'}
                   </p>
                 </CardContent>
               </Card>

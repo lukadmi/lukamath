@@ -11,7 +11,7 @@ import { initGA } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 import { HelmetProvider } from 'react-helmet-async';
 
-// Lazy load components for better performance
+// Lazy load components for better performance - your original LukaMath pages
 const Home = lazy(() => import("@/pages/home"));
 const Blog = lazy(() => import("@/pages/blog"));
 const AppFeatures = lazy(() => import("@/pages/app-features"));
@@ -28,11 +28,15 @@ const PWADashboard = lazy(() => import("@/pages/pwa/dashboard"));
 const PWAHomework = lazy(() => import("@/pages/pwa/homework"));
 const PWAProgress = lazy(() => import("@/pages/pwa/progress"));
 
-// Loading component
+// Loading component for your LukaMath brand
 function PageLoader() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p className="text-gray-600 font-medium">Loading LukaMath...</p>
+        <p className="text-sm text-gray-500 mt-2">Professional Math Tutoring</p>
+      </div>
     </div>
   );
 }
@@ -45,6 +49,7 @@ function Router() {
     <ErrorBoundary>
       <Suspense fallback={<PageLoader />}>
         <Switch>
+          {/* Your original LukaMath routes */}
           <Route path="/" component={Home}/>
           <Route path="/blog" component={Blog}/>
           <Route path="/app-features" component={AppFeatures}/>
@@ -69,6 +74,8 @@ function Router() {
 function App() {
   // Initialize Google Analytics and performance optimizations
   useEffect(() => {
+    console.log("🎓 LukaMath App Initializing...");
+    
     // Verify required environment variable is present
     if (!import.meta.env.VITE_GA_MEASUREMENT_ID) {
       console.warn('Missing required Google Analytics key: VITE_GA_MEASUREMENT_ID');
@@ -80,7 +87,11 @@ function App() {
     import('@/lib/preload').then(({ preloadCriticalResources, registerServiceWorker }) => {
       preloadCriticalResources();
       registerServiceWorker();
+    }).catch(err => {
+      console.warn('Preload failed:', err);
     });
+    
+    console.log("✅ LukaMath App Ready");
   }, []);
 
   return (
@@ -90,7 +101,7 @@ function App() {
           <LanguageProvider>
             <TooltipProvider>
               <Toaster />
-            <Router />
+              <Router />
             </TooltipProvider>
           </LanguageProvider>
         </AuthProvider>

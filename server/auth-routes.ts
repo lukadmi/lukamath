@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { AuthService } from './auth-service.js';
-import { authenticateToken } from './auth-middleware.js';
+import { AuthService } from './auth-service';
+import { authenticateToken } from './auth-middleware';
 import { registerSchema, loginSchema } from '@shared/schema';
 import { z } from 'zod';
 
