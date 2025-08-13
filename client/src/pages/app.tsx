@@ -539,7 +539,7 @@ function StudentAppContent() {
                       <span className="font-semibold">{homework?.length || 0}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600">Completed:</span>
+                      <span className="text-slate-600">{t('app.completed_count')}:</span>
                       <span className="font-semibold text-green-600">
                         {homework?.filter((hw: Homework) => hw.status === "completed")?.length || 0}
                       </span>
