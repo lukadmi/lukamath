@@ -395,12 +395,14 @@ router.put('/homework/:id', async (req, res) => {
 
     // Remove files that were marked for deletion
     if (filesToRemove && filesToRemove.length > 0) {
-      await db
-        .delete(homeworkFiles)
-        .where(and(
-          eq(homeworkFiles.homeworkId, id),
-          filesToRemove.includes(homeworkFiles.id)
-        ));
+      for (const fileId of filesToRemove) {
+        await db
+          .delete(homeworkFiles)
+          .where(and(
+            eq(homeworkFiles.homeworkId, id),
+            eq(homeworkFiles.id, fileId)
+          ));
+      }
     }
 
     // Send email notification
