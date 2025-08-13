@@ -9,7 +9,7 @@ function getStoredToken(): string | null {
 // API request with JWT token
 async function apiRequestWithAuth(url: string): Promise<any> {
   const token = getStoredToken();
-  const headers: HeadersInit = {};
+  const headers: Record<string, string> = {};
 
   if (token) {
     headers.Authorization = `Bearer ${token}`;
