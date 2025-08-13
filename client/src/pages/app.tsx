@@ -45,21 +45,7 @@ import {
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Link } from "wouter";
 
-// Language Provider Component
-function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>("en");
-
-  const t = (key: string): string => {
-    const langTranslations = translations[language] as Record<string, string>;
-    return langTranslations[key] || key;
-  };
-
-  return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
-      {children}
-    </LanguageContext.Provider>
-  );
-}
+// Using global LanguageProvider - removed local one that was overriding global language settings
 
 function StudentAppContent() {
   const { user, isAuthenticated, isLoading } = useAuth();
