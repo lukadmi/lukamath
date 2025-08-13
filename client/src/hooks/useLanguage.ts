@@ -587,6 +587,13 @@ export const translations = {
     "app.unauthorized": "Neovlašteno",
     "app.error": "Greška",
     "app.submit_error": "Neuspjeh pri slanju pitanja. Molimo pokušajte ponovno.",
+    "app.student_portal": "Studentski portal",
+    "app.logout": "Odjava",
+    "app.welcome_back": "Dobrodošli natrag",
+    "app.student": "učenik",
+    "app.try_mobile_app": "Probajte našu mobilnu aplikaciju",
+    "app.mobile_experience": "Bolje mobilno iskustvo s offline pristupom",
+    "app.your_homework": "Domaća zadaća",
 
     // Common
     "common.sending": "Šalje se...",
