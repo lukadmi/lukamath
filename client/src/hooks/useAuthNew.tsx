@@ -59,10 +59,16 @@ async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<
     headers,
   });
 
-  const data = await response.json();
-  
+  let data;
+  try {
+    data = await response.json();
+  } catch (err) {
+    console.error('Failed to parse response as JSON:', err);
+    throw new Error(`Request failed with status ${response.status}`);
+  }
+
   if (!response.ok) {
-    throw new Error(data.message || 'Request failed');
+    throw new Error(data?.message || `Request failed with status ${response.status}`);
   }
 
   return data;
