@@ -352,7 +352,9 @@ function StudentAppContent() {
                           {hw.status === "completed" && <CheckCircle2 className="w-3 h-3 mr-1" />}
                           {hw.status === "in_progress" && <Clock className="w-3 h-3 mr-1" />}
                           {hw.status === "pending" && <AlertCircle className="w-3 h-3 mr-1" />}
-                          {hw.status.replace("_", " ")}
+                          {hw.status === "completed" ? t('app.completed') :
+                           hw.status === "in_progress" ? t('app.in_progress_status') :
+                           t('app.pending')}
                         </Badge>
                       </div>
                       <p className="text-sm text-slate-600">Subject: {hw.subject}</p>
