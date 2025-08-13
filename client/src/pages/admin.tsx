@@ -60,25 +60,30 @@ function AdminDashboard() {
   const [homeworkDialogOpen, setHomeworkDialogOpen] = useState(false);
   const [availabilityDialogOpen, setAvailabilityDialogOpen] = useState(false);
 
-  // Data queries with proper typing
+  // Data queries with proper typing and authentication
   const { data: students = [], isLoading: studentsLoading } = useQuery({
-    queryKey: ["/api/admin/students"],
+    queryKey: ["admin-students"],
+    queryFn: () => apiRequest("GET", "/api/admin/students"),
   }) as { data: any[]; isLoading: boolean };
 
   const { data: allHomework = [], isLoading: homeworkLoading } = useQuery({
-    queryKey: ["/api/admin/homework"],
+    queryKey: ["admin-homework"],
+    queryFn: () => apiRequest("GET", "/api/admin/homework"),
   }) as { data: any[]; isLoading: boolean };
 
   const { data: allQuestions = [], isLoading: questionsLoading } = useQuery({
-    queryKey: ["/api/admin/questions"],
+    queryKey: ["admin-questions"],
+    queryFn: () => apiRequest("GET", "/api/admin/questions"),
   }) as { data: any[]; isLoading: boolean };
 
   const { data: contacts = [], isLoading: contactsLoading } = useQuery({
-    queryKey: ["/api/admin/contacts"],
+    queryKey: ["admin-contacts"],
+    queryFn: () => apiRequest("GET", "/api/admin/contacts"),
   }) as { data: any[]; isLoading: boolean };
 
   const { data: availability = [], isLoading: availabilityLoading } = useQuery({
-    queryKey: ["/api/availability"],
+    queryKey: ["admin-availability"],
+    queryFn: () => apiRequest("GET", "/api/availability"),
   }) as { data: any[]; isLoading: boolean };
 
   // Forms
