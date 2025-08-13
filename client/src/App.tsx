@@ -11,104 +11,94 @@ import { initGA } from "./lib/analytics";
 import { useAnalytics } from "./hooks/use-analytics";
 import { HelmetProvider } from 'react-helmet-async';
 
-// Simple components for debugging
-const Home = lazy(() => import("@/pages/home-simple"));
+// Lazy load components for better performance
+const Home = lazy(() => import("@/pages/home"));
+const Blog = lazy(() => import("@/pages/blog"));
+const AppFeatures = lazy(() => import("@/pages/app-features"));
+const StudentApp = lazy(() => import("@/pages/app"));
+const AdminDashboard = lazy(() => import("@/pages/admin"));
+const AdminExport = lazy(() => import("@/pages/admin-export"));
+const Register = lazy(() => import("@/pages/register"));
+const RegisterNew = lazy(() => import("@/pages/register-new"));
+const LoginNew = lazy(() => import("@/pages/login-new"));
 const NotFound = lazy(() => import("@/pages/not-found"));
+const PWAIndex = lazy(() => import("@/pages/pwa/index"));
+const PWAAuth = lazy(() => import("@/pages/pwa/auth"));
+const PWADashboard = lazy(() => import("@/pages/pwa/dashboard"));
+const PWAHomework = lazy(() => import("@/pages/pwa/homework"));
+const PWAProgress = lazy(() => import("@/pages/pwa/progress"));
 
 // Loading component
 function PageLoader() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p className="text-gray-600">Loading LukaMath...</p>
+      </div>
     </div>
   );
 }
 
 function Router() {
+  // Track page views when routes change
+  useAnalytics();
+  
   return (
-    <Suspense fallback={<PageLoader />}>
-      <Switch>
-        <Route path="/" component={Home}/>
-        <Route component={NotFound} />
-      </Switch>
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={<PageLoader />}>
+        <Switch>
+          <Route path="/" component={Home}/>
+          <Route path="/blog" component={Blog}/>
+          <Route path="/app-features" component={AppFeatures}/>
+          <Route path="/app" component={StudentApp}/>
+          <Route path="/admin" component={AdminDashboard}/>
+          <Route path="/admin/export" component={AdminExport}/>
+          <Route path="/register" component={Register}/>
+          <Route path="/register-new" component={RegisterNew}/>
+          <Route path="/login" component={LoginNew}/>
+          <Route path="/pwa" component={PWAIndex}/>
+          <Route path="/pwa/auth" component={PWAAuth}/>
+          <Route path="/pwa/dashboard" component={PWADashboard}/>
+          <Route path="/pwa/homework" component={PWAHomework}/>
+          <Route path="/pwa/progress" component={PWAProgress}/>
+          <Route component={NotFound} />
+        </Switch>
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 
 function App() {
-  console.log("App component rendering...");
+  // Initialize Google Analytics and performance optimizations
+  useEffect(() => {
+    // Verify required environment variable is present
+    if (!import.meta.env.VITE_GA_MEASUREMENT_ID) {
+      console.warn('Missing required Google Analytics key: VITE_GA_MEASUREMENT_ID');
+    } else {
+      initGA();
+    }
+
+    // Preload critical resources
+    import('@/lib/preload').then(({ preloadCriticalResources, registerServiceWorker }) => {
+      preloadCriticalResources();
+      registerServiceWorker();
+    });
+  }, []);
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#f0f9ff',
-      padding: '40px',
-      fontFamily: 'Arial, sans-serif'
-    }}>
-      <div style={{
-        maxWidth: '800px',
-        margin: '0 auto',
-        backgroundColor: 'white',
-        padding: '40px',
-        borderRadius: '12px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-      }}>
-        <h1 style={{
-          fontSize: '3rem',
-          fontWeight: 'bold',
-          color: '#1e40af',
-          marginBottom: '1rem',
-          textAlign: 'center'
-        }}>
-          🎉 LukaMath is LIVE! 🎉
-        </h1>
-        <p style={{
-          fontSize: '1.5rem',
-          color: '#374151',
-          marginBottom: '2rem',
-          textAlign: 'center'
-        }}>
-          Professional Online Math Tutoring Platform
-        </p>
-        <div style={{
-          backgroundColor: '#dcfce7',
-          padding: '20px',
-          borderRadius: '8px',
-          border: '2px solid #16a34a',
-          marginBottom: '2rem'
-        }}>
-          <h2 style={{
-            fontSize: '1.5rem',
-            fontWeight: '600',
-            color: '#15803d',
-            marginBottom: '1rem'
-          }}>
-            ✅ Website Successfully Fixed!
-          </h2>
-          <ul style={{ color: '#166534', lineHeight: '1.6' }}>
-            <li>✅ React App Loading</li>
-            <li>✅ Database Connected (Neon)</li>
-            <li>✅ API Endpoints Working</li>
-            <li>✅ Frontend Rendering</li>
-          </ul>
-        </div>
-        <div style={{
-          textAlign: 'center',
-          padding: '20px',
-          backgroundColor: '#fef3c7',
-          borderRadius: '8px',
-          border: '1px solid #f59e0b'
-        }}>
-          <p style={{
-            color: '#92400e',
-            fontSize: '1.1rem',
-            fontWeight: '500'
-          }}>
-            Your LukaMath tutoring platform is now fully operational!
-          </p>
-        </div>
-      </div>
-    </div>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <LanguageProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Router />
+            </TooltipProvider>
+          </LanguageProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
   );
 }
 
