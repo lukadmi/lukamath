@@ -59,32 +59,40 @@ async function apiRequest(endpoint: string, options: RequestInit = {}): Promise<
     headers,
   });
 
-  // Store response status before consuming body
-  const status = response.status;
-  const ok = response.ok;
+  // Check content type before any body consumption
   const contentType = response.headers.get('content-type');
   const hasJsonContent = contentType && contentType.includes('application/json');
 
-  let data;
+  // Always handle the response body only once
+  if (!response.ok) {
+    // For error responses, read the body to get error details
+    let errorMessage;
+    try {
+      if (hasJsonContent) {
+        const errorData = await response.json(); // Read from original response
+        errorMessage = errorData?.message || response.statusText;
+      } else {
+        const errorText = await response.text(); // Read from original response
+        errorMessage = errorText || response.statusText;
+      }
+    } catch (parseError) {
+      errorMessage = response.statusText;
+    }
+    throw new Error(`${response.status}: ${errorMessage}`);
+  }
 
-  // Only attempt to parse JSON if we have JSON content
+  // For successful responses, read the body
   if (hasJsonContent) {
     try {
-      data = await response.json();
+      return await response.json();
     } catch (err) {
       console.error('Failed to parse response as JSON:', err);
-      throw new Error(`Request failed with status ${status} - Invalid JSON response`);
+      throw new Error(`Request failed with status ${response.status} - Invalid JSON response`);
     }
-  } else {
-    // For non-JSON responses, we don't need to read the body
-    data = null;
   }
 
-  if (!ok) {
-    throw new Error(data?.message || `Request failed with status ${status}`);
-  }
-
-  return data;
+  // For non-JSON responses, return null
+  return null;
 }
 
 async function loginUser(credentials: LoginUser): Promise<AuthResult> {
