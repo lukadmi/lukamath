@@ -823,9 +823,37 @@ function AdminDashboard() {
                         )}
                       />
 
+                      {/* Existing Files */}
+                      {existingFiles.length > 0 && (
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-slate-700">Current Attachments</label>
+                          <div className="space-y-1">
+                            {existingFiles.filter(file => !filesToRemove.includes(file.id)).map((file) => (
+                              <div key={file.id} className="flex items-center justify-between text-sm bg-blue-50 p-2 rounded border border-blue-200">
+                                <span className="text-slate-700 truncate">{file.fileName}</span>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => setFilesToRemove(prev => [...prev, file.id])}
+                                  className="text-red-500 hover:text-red-700 h-6 w-6 p-0"
+                                >
+                                  <X className="w-3 h-3" />
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
+                          {filesToRemove.length > 0 && (
+                            <div className="text-sm text-orange-600">
+                              {filesToRemove.length} file(s) will be removed when you update
+                            </div>
+                          )}
+                        </div>
+                      )}
+
                       {/* File Attachments */}
                       <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-700">Attachments (Optional)</label>
+                        <label className="text-sm font-medium text-slate-700">Add New Attachments (Optional)</label>
                         <div className="flex items-center gap-2">
                           <Button
                             type="button"
