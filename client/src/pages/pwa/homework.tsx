@@ -105,8 +105,7 @@ export default function PWAHomework() {
 
   const submitMutation = useMutation({
     mutationFn: async (data: { homeworkId: string; submission: string }) => {
-      const response = await apiRequest('POST', '/api/homework/submit', data);
-      return response.json();
+      return await apiRequest('POST', '/api/homework/submit', data);
     },
     onSuccess: () => {
       toast({
