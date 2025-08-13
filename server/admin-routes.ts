@@ -340,6 +340,27 @@ router.put('/homework/:id', async (req, res) => {
       return res.status(404).json({ error: 'Failed to update homework assignment' });
     }
 
+    // Send email notification
+    try {
+      const student = await db
+        .select()
+        .from(users)
+        .where(eq(users.id, studentId))
+        .limit(1);
+
+      if (student.length > 0) {
+        await EmailNotificationService.notifyHomeworkAssigned({
+          studentEmail: student[0].email,
+          homeworkTitle: title,
+          subject: subject,
+          dueDate: dueDate ? new Date(dueDate) : undefined,
+          isUpdate: true,
+        });
+      }
+    } catch (emailError) {
+      console.error("Failed to send homework update notification:", emailError);
+    }
+
     res.json({
       success: true,
       message: 'Homework assignment updated successfully',
