@@ -407,6 +407,32 @@ function StudentAppContent() {
                     </CardHeader>
                     <CardContent>
                       <p className="text-slate-700 mb-4">{hw.description}</p>
+
+                      {/* Homework File Attachments */}
+                      {(allHomeworkFiles as any)[hw.id] && (allHomeworkFiles as any)[hw.id].length > 0 && (
+                        <div className="mb-4">
+                          <p className="text-sm font-semibold text-slate-900 mb-2">Attachments:</p>
+                          <div className="space-y-1">
+                            {(allHomeworkFiles as any)[hw.id].map((file: HomeworkFile) => (
+                              <div key={file.id} className="flex items-center justify-between bg-slate-50 p-2 rounded border">
+                                <div className="flex items-center">
+                                  <FileText className="w-4 h-4 mr-2 text-slate-500" />
+                                  <span className="text-sm text-slate-700">{file.fileName}</span>
+                                </div>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={() => window.open(file.fileUrl, '_blank')}
+                                  className="text-blue-600 hover:text-blue-700"
+                                >
+                                  <Download className="w-4 h-4" />
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
                       {hw.feedback && (
                         <div className="bg-blue-50 p-3 rounded-lg">
                           <p className="text-sm font-semibold text-blue-900 mb-1">{t('app.feedback')}:</p>
