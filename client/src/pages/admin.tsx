@@ -57,6 +57,7 @@ const availabilitySchema = z.object({
 
 function AdminDashboard() {
   const { isAuthenticated, user, isLoading } = useAuth();
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("overview");
   const [homeworkDialogOpen, setHomeworkDialogOpen] = useState(false);
   const [availabilityDialogOpen, setAvailabilityDialogOpen] = useState(false);
