@@ -496,7 +496,6 @@ export const translations = {
     "app.download": "Preuzmi",
     "app.no_availability": "Nema dostupnih termina",
     "app.book_session": "Rezerviraj sesiju",
-    "app.logout": "Odjava",
 
     // Blog Page
     "blog.page_title": "LukaMath Blog",
