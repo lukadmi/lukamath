@@ -234,6 +234,13 @@ export const translations = {
     "app.unauthorized": "Unauthorized",
     "app.error": "Error",
     "app.submit_error": "Failed to submit question. Please try again.",
+    "app.student_portal": "Student Portal",
+    "app.logout": "Logout",
+    "app.welcome_back": "Welcome back",
+    "app.student": "Student",
+    "app.try_mobile_app": "Try our Mobile App",
+    "app.mobile_experience": "Better mobile experience with offline access",
+    "app.your_homework": "Your Homework",
 
     // Common
     "common.sending": "Sending...",
