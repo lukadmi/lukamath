@@ -272,7 +272,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      const questions = await storage.getQuestionsByStudentId(studentId);
+      const questions = await storage.getQuestionsForStudent(studentId);
       res.json(questions);
     } catch (error) {
       console.error("Error fetching student questions:", error);
