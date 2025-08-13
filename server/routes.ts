@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { setupAuth, isAuthenticated, requireRole } from "./replitAuth";
 import { authenticateToken } from "./auth-middleware";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
+import { EmailNotificationService } from "./email-service.js";
 import { 
   insertContactSchema, 
   insertHomeworkSchema, 
