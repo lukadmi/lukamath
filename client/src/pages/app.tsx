@@ -399,7 +399,7 @@ function StudentAppContent() {
                         name="subject"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Subject</FormLabel>
+                            <FormLabel>{t('app.subject')}</FormLabel>
                             <FormControl>
                               <Input placeholder="e.g., Algebra, Calculus" {...field} />
                             </FormControl>
