@@ -22,6 +22,16 @@ import {
   securityLogger 
 } from "./middleware/security";
 
+// JWT-based role checking middleware
+function requireJWTRole(allowedRoles: string[]) {
+  return (req: any, res: any, next: any) => {
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({ message: "Insufficient permissions" });
+    }
+    next();
+  };
+}
+
 // Utility function to convert data to CSV format
 function convertToCSV(data: any): string {
   if (!Array.isArray(data)) {
