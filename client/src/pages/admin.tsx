@@ -93,7 +93,13 @@ function AdminDashboard() {
   // Fetch homework files for editing
   const { data: homeworkFiles = [] } = useQuery({
     queryKey: ["homework-files", editingHomework?.id],
-    queryFn: () => editingHomework?.id ? apiRequest("GET", `/api/admin/homework/${editingHomework.id}/files`) : Promise.resolve([]),
+    queryFn: async () => {
+      if (!editingHomework?.id) return [];
+      console.log('Fetching files for homework ID:', editingHomework.id);
+      const files = await apiRequest("GET", `/api/admin/homework/${editingHomework.id}/files`);
+      console.log('Homework files received:', files);
+      return files || [];
+    },
     enabled: !!editingHomework?.id,
   }) as { data: any[] };
 
