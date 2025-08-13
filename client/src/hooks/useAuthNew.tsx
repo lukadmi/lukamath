@@ -172,11 +172,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.warn('Logout API call failed:', error);
     } finally {
+      // Clear all authentication state
       removeStoredToken();
+
+      // Clear all React Query cache
       queryClient.clear();
+
+      // Clear any session storage
+      if (typeof window !== 'undefined') {
+        sessionStorage.clear();
+        // Clear any other potential auth-related localStorage items
+        const keysToRemove = Object.keys(localStorage).filter(key =>
+          key.includes('auth') || key.includes('token') || key.includes('user')
+        );
+        keysToRemove.forEach(key => localStorage.removeItem(key));
+      }
+
+      // Reset error state
       setError(null);
-      // Redirect to home page after logout
-      window.location.href = '/';
+
+      // Force a hard redirect to ensure complete state reset
+      if (typeof window !== 'undefined') {
+        window.location.href = '/';
+      }
     }
   };
 
