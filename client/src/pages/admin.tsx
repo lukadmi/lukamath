@@ -835,7 +835,7 @@ function AdminDashboard() {
                             className="text-blue-600 border-blue-200 hover:bg-blue-50"
                           >
                             <Paperclip className="w-4 h-4 mr-2" />
-                            Attach Files
+                            Add New Files
                           </Button>
                           <input
                             id="edit-file-input"
