@@ -575,6 +575,11 @@ export const translations = {
     "app.answered_on_date": "Odgovoreno",
     "app.question_title_label": "Naslov pitanja",
     "app.question_details_label": "Detalji pitanja",
+    "app.submitting": "Šalje se...",
+    "app.unauthorized_logout": "Odjavljen/a ste. Prijavljivanje u tijeku...",
+    "app.unauthorized": "Neovlašteno",
+    "app.error": "Greška",
+    "app.submit_error": "Neuspjeh pri slanju pitanja. Molimo pokušajte ponovno.",
 
     // Common
     "common.sending": "Šalje se...",
