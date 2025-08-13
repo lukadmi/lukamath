@@ -333,7 +333,7 @@ function AdminDashboard() {
                   <p className="text-slate-500">No contact submissions yet.</p>
                 ) : (
                   <div className="space-y-4">
-                    {contacts.slice(0, 5).map((contact: any) => (
+                    {contacts?.slice(0, 5)?.map((contact: any) => (
                       <div key={contact.id} className="flex items-start space-x-4 p-4 bg-slate-50 rounded-lg">
                         <Mail className="w-5 h-5 text-blue-600 mt-0.5" />
                         <div className="flex-1">
