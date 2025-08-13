@@ -4,7 +4,7 @@ import { rateLimit } from 'express-rate-limit';
 // Rate limiting configurations
 export const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 500, // Increased limit for development
+  max: 1000, // Higher limit for development and testing
   message: {
     error: 'Too many requests from this IP, please try again later.',
   },
