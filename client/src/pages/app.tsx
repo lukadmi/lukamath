@@ -234,12 +234,19 @@ function StudentAppContent() {
                     {language === 'en' ? 'Home' : 'Početna'}
                   </Button>
                 </Link>
-                <a href="/api/logout">
-                  <Button variant="ghost" size="sm">
-                    <LogOut className="w-4 h-4 mr-1" />
-                    {language === 'en' ? 'Logout' : t('app.logout')}
-                  </Button>
-                </a>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    // Clear the JWT token from localStorage
+                    localStorage.removeItem('lukamath_auth_token');
+                    // Redirect to home page
+                    window.location.href = '/';
+                  }}
+                >
+                  <LogOut className="w-4 h-4 mr-1" />
+                  {language === 'en' ? 'Logout' : t('app.logout')}
+                </Button>
               </div>
             </div>
           </div>
