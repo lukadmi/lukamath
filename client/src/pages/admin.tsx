@@ -60,6 +60,8 @@ function AdminDashboard() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("overview");
   const [homeworkDialogOpen, setHomeworkDialogOpen] = useState(false);
+  const [editHomeworkDialogOpen, setEditHomeworkDialogOpen] = useState(false);
+  const [editingHomework, setEditingHomework] = useState<any>(null);
   const [availabilityDialogOpen, setAvailabilityDialogOpen] = useState(false);
 
   // Data queries with proper typing and authentication
