@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { useAuth } from "@/hooks/useAuthNew";
-import { LanguageContext, type Language, translations } from "@/hooks/useLanguage";
+import { useLanguage, type Language, translations } from "@/hooks/useLanguage";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
