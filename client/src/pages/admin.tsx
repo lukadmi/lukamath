@@ -146,12 +146,31 @@ function AdminDashboard() {
 
   const createAvailabilityMutation = useMutation({
     mutationFn: async (data: any) => {
-      return await apiRequest("POST", "/api/admin/availability", data);
+      // Add tutor ID to the data
+      const availabilityData = {
+        ...data,
+        tutorId: user?.id,
+        isAvailable: true
+      };
+      return await apiRequest("POST", "/api/admin/availability", availabilityData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-availability"] });
+      queryClient.invalidateQueries({ queryKey: ["availability"] });
       setAvailabilityDialogOpen(false);
       availabilityForm.reset();
+      toast({
+        title: "Success",
+        description: "Availability slot added successfully",
+      });
+    },
+    onError: (error) => {
+      console.error("Availability creation error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add availability slot",
+        variant: "destructive",
+      });
     },
   });
 
