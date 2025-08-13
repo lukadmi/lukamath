@@ -357,10 +357,10 @@ function StudentAppContent() {
                            t('app.pending')}
                         </Badge>
                       </div>
-                      <p className="text-sm text-slate-600">Subject: {hw.subject}</p>
+                      <p className="text-sm text-slate-600">{t('app.subject')}: {hw.subject}</p>
                       {hw.dueDate && (
                         <p className="text-sm text-slate-600">
-                          Due: {new Date(hw.dueDate).toLocaleDateString()}
+                          {t('app.due_date')}: {new Date(hw.dueDate).toLocaleDateString()}
                         </p>
                       )}
                     </CardHeader>
@@ -368,7 +368,7 @@ function StudentAppContent() {
                       <p className="text-slate-700 mb-4">{hw.description}</p>
                       {hw.feedback && (
                         <div className="bg-blue-50 p-3 rounded-lg">
-                          <p className="text-sm font-semibold text-blue-900 mb-1">Feedback:</p>
+                          <p className="text-sm font-semibold text-blue-900 mb-1">{t('app.feedback')}:</p>
                           <p className="text-sm text-blue-800">{hw.feedback}</p>
                         </div>
                       )}
