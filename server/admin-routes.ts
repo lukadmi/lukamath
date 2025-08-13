@@ -275,6 +275,61 @@ router.post('/homework/files', async (req, res) => {
 });
 
 /**
+ * PUT /api/admin/homework/:id
+ * Update homework assignment
+ */
+router.put('/homework/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { studentId, title, subject, description, difficulty, dueDate, attachedFiles } = req.body;
+
+    // Validate required fields
+    if (!studentId || !title || !subject || !description) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Check if homework exists
+    const existingHomework = await db
+      .select()
+      .from(homework)
+      .where(eq(homework.id, id))
+      .limit(1);
+
+    if (existingHomework.length === 0) {
+      return res.status(404).json({ error: 'Homework assignment not found' });
+    }
+
+    // Update the homework assignment
+    const updatedHomework = await db
+      .update(homework)
+      .set({
+        studentId,
+        title,
+        subject,
+        description,
+        difficulty: difficulty || 'medium',
+        dueDate: dueDate ? new Date(dueDate) : null,
+        updatedAt: new Date(),
+      })
+      .where(eq(homework.id, id))
+      .returning();
+
+    if (updatedHomework.length === 0) {
+      return res.status(404).json({ error: 'Failed to update homework assignment' });
+    }
+
+    res.json({
+      success: true,
+      message: 'Homework assignment updated successfully',
+      homework: updatedHomework[0]
+    });
+  } catch (error) {
+    console.error('Update homework error:', error);
+    res.status(500).json({ error: 'Failed to update homework assignment' });
+  }
+});
+
+/**
  * DELETE /api/admin/homework/:id
  * Delete homework assignment
  */
