@@ -27,6 +27,19 @@ app.get('/api/logout', (req, res) => {
   res.redirect('/?logout=true');
 });
 
+// Common auth endpoint mistakes - redirect to correct paths
+app.get('/api/login', (req, res) => {
+  res.redirect('/login');
+});
+
+app.post('/api/login', (req, res) => {
+  res.status(404).json({
+    error: 'Login endpoint moved',
+    message: 'Use /api/auth/login for authentication',
+    redirect: '/api/auth/login'
+  });
+});
+
 // Serve static files from client build
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
