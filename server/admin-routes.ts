@@ -356,7 +356,7 @@ router.get('/homework/:id/files', async (req, res) => {
 router.put('/homework/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { studentId, title, subject, description, difficulty, dueDate, attachedFiles } = req.body;
+    const { studentId, title, subject, description, difficulty, dueDate, attachedFiles, filesToRemove } = req.body;
 
     // Validate required fields
     if (!studentId || !title || !subject || !description) {
