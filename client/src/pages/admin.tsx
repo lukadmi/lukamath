@@ -159,12 +159,12 @@ function AdminDashboard() {
   });
 
   const stats = {
-    totalStudents: students.length,
-    pendingHomework: allHomework.filter((hw: any) => hw.status === "pending").length,
-    unansweredQuestions: allQuestions.filter((q: any) => !q.isAnswered).length,
-    newContacts: contacts.filter((c: any) => 
+    totalStudents: students?.length || 0,
+    pendingHomework: allHomework?.filter((hw: any) => hw.status === "pending")?.length || 0,
+    unansweredQuestions: allQuestions?.filter((q: any) => !q.isAnswered)?.length || 0,
+    newContacts: contacts?.filter((c: any) =>
       new Date(c.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-    ).length,
+    )?.length || 0,
   };
 
   // Check if user is admin - after all hooks are defined
