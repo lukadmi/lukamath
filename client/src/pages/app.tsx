@@ -187,7 +187,7 @@ function StudentAppContent() {
                   LukaMath
                 </div>
               </Link>
-              <span className="ml-4 text-slate-500">{language === 'en' ? 'Student Portal' : 'Studentski portal'}</span>
+              <span className="ml-4 text-slate-500">{t('app.student_portal')}</span>
             </div>
             
             <div className="flex items-center space-x-4">
@@ -231,7 +231,7 @@ function StudentAppContent() {
                   }}
                 >
                   <LogOut className="w-4 h-4 mr-1" />
-                  {language === 'en' ? 'Logout' : t('app.logout')}
+                  {t('app.logout')}
                 </Button>
               </div>
             </div>
@@ -243,7 +243,7 @@ function StudentAppContent() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900 mb-2">
-            {language === 'en' ? `Welcome back, ${(user as any)?.firstName || "Student"}!` : `${t('app.welcome')} ${(user as any)?.firstName || "učenik"}!`}
+            {`${t('app.welcome_back')}, ${(user as any)?.firstName || t('app.student')}!`}
           </h1>
           <p className="text-slate-600 mb-4">
             {t('app.track_manage')}
@@ -258,10 +258,10 @@ function StudentAppContent() {
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-slate-700">
-                    {language === 'en' ? 'Try our Mobile App' : 'Probajte našu mobilnu aplikaciju'}
+                    {t('app.try_mobile_app')}
                   </h3>
                   <p className="text-xs text-slate-500">
-                    {language === 'en' ? 'Better mobile experience with offline access' : 'Bolje mobilno iskustvo s offline pristupom'}
+                    {t('app.mobile_experience')}
                   </p>
                 </div>
               </div>
@@ -297,7 +297,7 @@ function StudentAppContent() {
           {/* Homework Tab */}
           <TabsContent value="homework" className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-slate-900">{language === 'en' ? 'Your Homework' : 'Domaća zadaća'}</h2>
+              <h2 className="text-xl font-semibold text-slate-900">{t('app.your_homework')}</h2>
             </div>
 
             {homeworkLoading ? (
