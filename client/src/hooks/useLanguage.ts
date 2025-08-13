@@ -566,6 +566,7 @@ export const translations = {
     "app.completed_count": "Završeno",
     "app.in_progress": "U tijeku",
     "app.pending_count": "Na čekanju",
+    "app.due_date": "Krajnji rok",
     "app.qa_activity": "Q&A aktivnost",
     "app.total_questions": "Ukupno pitanja",
     "app.answered_count": "Odgovoreno",
