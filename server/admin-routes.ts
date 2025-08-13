@@ -168,6 +168,27 @@ router.post('/homework', async (req, res) => {
       })
       .returning();
 
+    // Send email notification
+    try {
+      const student = await db
+        .select()
+        .from(users)
+        .where(eq(users.id, studentId))
+        .limit(1);
+
+      if (student.length > 0) {
+        await EmailNotificationService.notifyHomeworkAssigned({
+          studentEmail: student[0].email,
+          homeworkTitle: title,
+          subject: subject,
+          dueDate: dueDate ? new Date(dueDate) : undefined,
+          isUpdate: false,
+        });
+      }
+    } catch (emailError) {
+      console.error("Failed to send homework assignment notification:", emailError);
+    }
+
     res.status(201).json(newHomework[0]);
   } catch (error) {
     console.error('Create homework error:', error);
