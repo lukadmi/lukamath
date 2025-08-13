@@ -414,7 +414,7 @@ function StudentAppContent() {
                         name="title"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Question Title</FormLabel>
+                            <FormLabel>{t('app.question_title_label')}</FormLabel>
                             <FormControl>
                               <Input placeholder={t('app.question_placeholder')} {...field} />
                             </FormControl>
@@ -427,7 +427,7 @@ function StudentAppContent() {
                         name="content"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Question Details</FormLabel>
+                            <FormLabel>{t('app.question_details_label')}</FormLabel>
                             <FormControl>
                               <Textarea 
                                 placeholder={t('app.content_placeholder')}
