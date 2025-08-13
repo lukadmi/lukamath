@@ -95,16 +95,27 @@ async function getCurrentUser(): Promise<{ user: User }> {
 async function logoutUser(): Promise<void> {
   // Don't use apiRequest for logout as it sends auth headers
   // Logout should work even with expired/invalid tokens
-  const response = await fetch('/api/auth/logout', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
+  try {
+    const response = await fetch('/api/auth/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
 
-  if (!response.ok) {
-    const data = await response.json();
-    throw new Error(data.message || 'Logout failed');
+    if (!response.ok) {
+      // Try to get error message but don't fail if we can't parse it
+      try {
+        const data = await response.json();
+        throw new Error(data.message || 'Logout failed');
+      } catch (parseError) {
+        throw new Error(`Logout failed with status ${response.status}`);
+      }
+    }
+  } catch (error) {
+    // Log the error but don't prevent logout from completing
+    console.warn('Logout API call failed:', error);
+    throw error;
   }
 }
 
