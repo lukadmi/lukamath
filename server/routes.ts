@@ -281,6 +281,84 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Book availability slot endpoint
+  app.post("/api/availability/book", authenticateToken, async (req, res) => {
+    try {
+      const { slotId, notes } = req.body;
+      const studentId = (req as any).user?.id;
+      const studentEmail = (req as any).user?.email;
+
+      if (!studentId) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+
+      if (!slotId) {
+        return res.status(400).json({
+          success: false,
+          message: "Slot ID is required"
+        });
+      }
+
+      // Get the availability slot details first
+      const slot = await storage.getAvailabilitySlot(slotId);
+      if (!slot) {
+        return res.status(404).json({
+          success: false,
+          message: "Availability slot not found"
+        });
+      }
+
+      if (!slot.isAvailable) {
+        return res.status(400).json({
+          success: false,
+          message: "This slot is no longer available"
+        });
+      }
+
+      // Book the slot (mark as unavailable and add booking info)
+      const booking = await storage.bookAvailabilitySlot(slotId, studentId, notes);
+
+      // Send email notification to admin
+      try {
+        const bookingDetails = {
+          studentEmail: studentEmail,
+          slotDate: new Date(slot.date).toLocaleDateString(),
+          slotTime: `${slot.startTime} - ${slot.endTime}`,
+          notes: notes || 'No additional notes'
+        };
+
+        // Create a contact entry for email notification
+        await storage.createContact({
+          name: `Session Booking from ${studentEmail}`,
+          email: studentEmail,
+          phone: '',
+          subject: 'New Session Booking',
+          message: `New tutoring session booked!\n\nDate: ${bookingDetails.slotDate}\nTime: ${bookingDetails.slotTime}\nStudent: ${studentEmail}\n\nNotes: ${bookingDetails.notes}`
+        });
+
+        console.log(`📧 Session booking notification sent for ${studentEmail} - ${bookingDetails.slotDate} ${bookingDetails.slotTime}`);
+      } catch (emailError) {
+        console.error("Failed to send booking notification:", emailError);
+        // Don't fail the booking if email fails
+      }
+
+      res.status(201).json({
+        success: true,
+        message: "Session booked successfully! You will receive a confirmation email shortly.",
+        booking: { id: booking.id }
+      });
+    } catch (error) {
+      console.error("Booking error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to book session. Please try again."
+      });
+    }
+  });
+
   // Student registration endpoint (public)
   const registerSchema = z.object({
     firstName: z.string().min(1),
