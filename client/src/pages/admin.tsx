@@ -116,6 +116,18 @@ function AdminDashboard() {
     },
   });
 
+  const editHomeworkForm = useForm({
+    resolver: zodResolver(homeworkSchema),
+    defaultValues: {
+      studentId: "",
+      title: "",
+      subject: "",
+      difficulty: "medium",
+      description: "",
+      dueDate: "",
+    },
+  });
+
   // Mutations
   const createHomeworkMutation = useMutation({
     mutationFn: async (data: any) => {
