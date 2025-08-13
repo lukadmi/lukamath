@@ -530,7 +530,7 @@ function StudentAppContent() {
             <div className="grid gap-6 md:grid-cols-2">
               <Card>
                 <CardHeader>
-                  <CardTitle>Homework Statistics</CardTitle>
+                  <CardTitle>{t('app.homework_statistics')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
