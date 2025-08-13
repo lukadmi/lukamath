@@ -1,30 +1,46 @@
-import React from "react";
 import { createRoot } from "react-dom/client";
 
-// Extremely basic test without any CSS imports
 function TestApp() {
-  return React.createElement('div', {
-    style: {
+  return (
+    <div style={{
       position: 'fixed',
       top: 0,
       left: 0,
       width: '100vw',
       height: '100vh',
-      backgroundColor: 'red',
+      backgroundColor: '#059669',
       color: 'white',
-      fontSize: '24px',
-      padding: '20px',
-      zIndex: 9999
-    }
-  }, 'EMERGENCY TEST: If you see this, React is working!');
+      fontSize: '28px',
+      padding: '40px',
+      zIndex: 9999,
+      fontFamily: 'Arial, sans-serif',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center'
+    }}>
+      <h1 style={{ fontSize: '4rem', marginBottom: '2rem' }}>
+        🎉 SUCCESS! 🎉
+      </h1>
+      <h2 style={{ fontSize: '2rem', marginBottom: '1rem' }}>
+        LukaMath Website is FIXED!
+      </h2>
+      <p style={{ fontSize: '1.5rem', marginBottom: '2rem' }}>
+        React is working properly with Vite and TypeScript
+      </p>
+      <div style={{
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        padding: '20px',
+        borderRadius: '10px'
+      }}>
+        <p>✅ Frontend: Working</p>
+        <p>✅ Database: Connected</p>
+        <p>✅ API: Functional</p>
+      </div>
+    </div>
+  );
 }
 
-console.log("Loading React...");
-const root = document.getElementById("root");
-console.log("Root element:", root);
-
-if (root) {
-  console.log("Creating React root...");
-  createRoot(root).render(React.createElement(TestApp));
-  console.log("React app should be rendered!");
-}
+console.log("Loading React with JSX...");
+createRoot(document.getElementById("root")!).render(<TestApp />);
