@@ -33,19 +33,6 @@ function Router() {
       <Suspense fallback={<PageLoader />}>
         <Switch>
           <Route path="/" component={Home}/>
-          <Route path="/blog" component={Blog}/>
-          <Route path="/app-features" component={AppFeatures}/>
-          <Route path="/app" component={StudentApp}/>
-          <Route path="/admin" component={AdminDashboard}/>
-          <Route path="/admin/export" component={AdminExport}/>
-          <Route path="/register" component={Register}/>
-          <Route path="/register-new" component={RegisterNew}/>
-          <Route path="/login" component={LoginNew}/>
-          <Route path="/pwa" component={PWAIndex}/>
-          <Route path="/pwa/auth" component={PWAAuth}/>
-          <Route path="/pwa/dashboard" component={PWADashboard}/>
-          <Route path="/pwa/homework" component={PWAHomework}/>
-          <Route path="/pwa/progress" component={PWAProgress}/>
           <Route component={NotFound} />
         </Switch>
       </Suspense>
