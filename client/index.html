@@ -61,13 +61,39 @@
     <meta name="apple-mobile-web-app-title" content="LukaMath Student" />
   </head>
   <body>
-    <script>
-      console.log("Basic HTML script executing...");
-      document.body.style.backgroundColor = 'green';
-      document.body.innerHTML = '<h1 style="color:white;padding:20px;font-size:3em;">HTML TEST WORKING!</h1>';
-    </script>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      console.log("Testing React mounting...");
+
+      // Test if React can load without modules first
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/react@18/umd/react.development.js';
+      script.onload = () => {
+        console.log("React loaded successfully!");
+
+        const reactDOMScript = document.createElement('script');
+        reactDOMScript.src = 'https://unpkg.com/react-dom@18/umd/react-dom.development.js';
+        reactDOMScript.onload = () => {
+          console.log("ReactDOM loaded successfully!");
+
+          // Test basic React rendering
+          const root = document.getElementById('root');
+          const element = React.createElement('div', {
+            style: {
+              padding: '20px',
+              backgroundColor: '#0066cc',
+              color: 'white',
+              fontSize: '2em',
+              textAlign: 'center'
+            }
+          }, 'REACT IS WORKING! Site Fixed!');
+
+          ReactDOM.render(element, root);
+        };
+        document.head.appendChild(reactDOMScript);
+      };
+      document.head.appendChild(script);
+    </script>
     <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
     <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
   </body>
