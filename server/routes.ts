@@ -87,7 +87,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   console.log("🔐 Setting up authentication system...");
 
   // Import auth routes from auth-routes.ts
-  const authRoutes = await import('./auth-routes.js');
+  const authRoutes = await import('./auth-routes');
   app.use('/api/auth', authRoutes.default);
 
   console.log("✅ Authentication routes setup complete");
