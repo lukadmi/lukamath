@@ -832,7 +832,16 @@ function AdminDashboard() {
                       {/* Existing Files */}
                       <div className="space-y-2">
                         <label className="text-sm font-medium text-slate-700">Current Attachments</label>
-                        <div className="text-xs text-red-500 bg-red-50 p-1 rounded">DEBUG: existingFiles.length = {existingFiles.length}, homeworkFiles.length = {homeworkFiles?.length || 0}</div>
+                        <div className="text-xs text-red-500 bg-red-50 p-1 rounded">
+                          DEBUG: existingFiles.length = {existingFiles.length}, homeworkFiles.length = {homeworkFiles?.length || 0}
+                          <button
+                            type="button"
+                            onClick={() => setExistingFiles([{id: 'test-1', fileName: 'test-file.pdf'}])}
+                            className="ml-2 px-2 py-1 text-xs bg-blue-500 text-white rounded"
+                          >
+                            Test Add File
+                          </button>
+                        </div>
                         {existingFiles.length > 0 ? (
                           <>
                             <div className="space-y-1">
