@@ -659,7 +659,7 @@ function AdminDashboard() {
               </Card>
             ) : (
               <div className="space-y-4">
-                {allQuestions.map((question: any) => (
+                {allQuestions?.map((question: any) => (
                   <Card key={question.id}>
                     <CardHeader>
                       <div className="flex justify-between items-start">
