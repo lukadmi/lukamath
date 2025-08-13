@@ -373,7 +373,7 @@ function StudentAppContent() {
                 <DialogTrigger asChild>
                   <Button className="bg-blue-600 text-white hover:bg-blue-700">
                     <Plus className="w-4 h-4 mr-2" />
-                    Ask Question
+                    <p>Postavi pitanje</p>
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-md">
