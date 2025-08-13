@@ -105,6 +105,8 @@ function AdminDashboard() {
   });
 
   const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
+  const [existingFiles, setExistingFiles] = useState<any[]>([]);
+  const [filesToRemove, setFilesToRemove] = useState<string[]>([]);
 
   const availabilityForm = useForm({
     resolver: zodResolver(availabilitySchema),
