@@ -126,32 +126,56 @@ export class ObjectStorageService {
   // Uploads a file to object storage and returns the public URL
   async uploadFile(fileName: string, buffer: Buffer, mimeType: string): Promise<string> {
     try {
-      const privateObjectDir = this.getPrivateObjectDir();
-      if (!privateObjectDir) {
-        throw new Error(
-          "PRIVATE_OBJECT_DIR not set. Create a bucket in 'Object Storage' " +
-            "tool and set PRIVATE_OBJECT_DIR env var."
-        );
+      // Try Google Cloud Storage first, fallback to local storage if it fails
+      try {
+        const privateObjectDir = this.getPrivateObjectDir();
+        const fullPath = `${privateObjectDir}/${fileName}`;
+        const { bucketName, objectName } = parseObjectPath(fullPath);
+
+        const bucket = objectStorageClient.bucket(bucketName);
+        const file = bucket.file(objectName);
+
+        // Upload the file
+        await file.save(buffer, {
+          metadata: {
+            contentType: mimeType,
+          },
+          resumable: false,
+        });
+
+        // Return the public URL
+        return `https://storage.googleapis.com/${bucketName}/${objectName}`;
+      } catch (gcsError) {
+        console.warn("Google Cloud Storage unavailable, using local storage fallback:", gcsError);
+
+        // Fallback to local file storage
+        const fs = await import('fs');
+        const path = await import('path');
+
+        // Create uploads directory if it doesn't exist
+        const uploadsDir = path.join(process.cwd(), 'uploads');
+        if (!fs.existsSync(uploadsDir)) {
+          fs.mkdirSync(uploadsDir, { recursive: true });
+        }
+
+        // Clean fileName to be filesystem safe
+        const safeName = fileName.replace(/[^a-zA-Z0-9\-_\.\/]/g, '_');
+        const filePath = path.join(uploadsDir, safeName);
+
+        // Create directory structure if needed
+        const fileDir = path.dirname(filePath);
+        if (!fs.existsSync(fileDir)) {
+          fs.mkdirSync(fileDir, { recursive: true });
+        }
+
+        // Write file to local storage
+        fs.writeFileSync(filePath, buffer);
+
+        // Return local URL that can be served by the server
+        return `/api/files/${safeName}`;
       }
-
-      const fullPath = `${privateObjectDir}/${fileName}`;
-      const { bucketName, objectName } = parseObjectPath(fullPath);
-
-      const bucket = objectStorageClient.bucket(bucketName);
-      const file = bucket.file(objectName);
-
-      // Upload the file
-      await file.save(buffer, {
-        metadata: {
-          contentType: mimeType,
-        },
-        resumable: false,
-      });
-
-      // Return the public URL
-      return `https://storage.googleapis.com/${bucketName}/${objectName}`;
     } catch (error) {
-      console.error("Error uploading file to object storage:", error);
+      console.error("Error uploading file:", error);
       throw new Error(`Failed to upload file: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
