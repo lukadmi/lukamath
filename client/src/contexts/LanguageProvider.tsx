@@ -8,8 +8,15 @@ interface LanguageProviderProps {
 export function LanguageProvider({ children }: LanguageProviderProps) {
   const [language, setLanguage] = useState<Language>(() => {
     // Try to get saved language from localStorage
-    const saved = localStorage.getItem('preferred-language');
-    return (saved as Language) || 'en';
+    try {
+      const saved = localStorage.getItem('preferred-language');
+      if (saved && (saved === 'en' || saved === 'hr')) {
+        return saved as Language;
+      }
+    } catch (error) {
+      console.warn('Failed to get language from localStorage:', error);
+    }
+    return 'en';
   });
 
   // Save language preference to localStorage
