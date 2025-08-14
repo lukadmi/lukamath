@@ -700,7 +700,7 @@ function StudentApp() {
                       <FormField
                         control={studentFileForm.control}
                         name="file"
-                        render={({ field: { onChange, ...field } }) => (
+                        render={({ field: { onChange, value, ...field } }) => (
                           <FormItem>
                             <FormLabel>Upload File</FormLabel>
                             <FormControl>
@@ -712,6 +712,7 @@ function StudentApp() {
                                   if (file) onChange(file);
                                 }}
                                 {...field}
+                                value=""
                               />
                             </FormControl>
                             <p className="text-xs text-slate-500">Max file size: 50MB. Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG</p>
