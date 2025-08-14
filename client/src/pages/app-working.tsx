@@ -975,8 +975,9 @@ function StudentApp() {
                             const file = e.target.files?.[0];
                             if (file) onChange(file);
                           }}
-                          {...field}
-                          value=""
+                          ref={field.ref}
+                          name={field.name}
+                          onBlur={field.onBlur}
                         />
                       </FormControl>
                       <p className="text-xs text-slate-500">Max file size: 50MB. Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG</p>
