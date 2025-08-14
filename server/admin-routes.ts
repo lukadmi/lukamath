@@ -350,6 +350,80 @@ router.get('/homework/:id/files', async (req, res) => {
 });
 
 /**
+ * GET /api/admin/homework/:id/submissions
+ * Get all student submissions for a homework assignment
+ */
+router.get('/homework/:id/submissions', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const submissions = await db
+      .select({
+        id: studentSubmissions.id,
+        studentId: studentSubmissions.studentId,
+        fileName: studentSubmissions.fileName,
+        originalName: studentSubmissions.originalName,
+        fileUrl: studentSubmissions.fileUrl,
+        fileSize: studentSubmissions.fileSize,
+        mimeType: studentSubmissions.mimeType,
+        notes: studentSubmissions.notes,
+        createdAt: studentSubmissions.createdAt,
+        // Student info
+        studentFirstName: users.firstName,
+        studentLastName: users.lastName,
+        studentEmail: users.email,
+      })
+      .from(studentSubmissions)
+      .leftJoin(users, eq(studentSubmissions.studentId, users.id))
+      .where(eq(studentSubmissions.homeworkId, id))
+      .orderBy(desc(studentSubmissions.createdAt));
+
+    res.json(submissions);
+  } catch (error) {
+    console.error('Get homework submissions error:', error);
+    res.status(500).json({ error: 'Failed to fetch homework submissions' });
+  }
+});
+
+/**
+ * GET /api/admin/submissions
+ * Get all student submissions across all homework
+ */
+router.get('/submissions', async (req, res) => {
+  try {
+    const submissions = await db
+      .select({
+        id: studentSubmissions.id,
+        homeworkId: studentSubmissions.homeworkId,
+        studentId: studentSubmissions.studentId,
+        fileName: studentSubmissions.fileName,
+        originalName: studentSubmissions.originalName,
+        fileUrl: studentSubmissions.fileUrl,
+        fileSize: studentSubmissions.fileSize,
+        mimeType: studentSubmissions.mimeType,
+        notes: studentSubmissions.notes,
+        createdAt: studentSubmissions.createdAt,
+        // Student info
+        studentFirstName: users.firstName,
+        studentLastName: users.lastName,
+        studentEmail: users.email,
+        // Homework info
+        homeworkTitle: homework.title,
+        homeworkSubject: homework.subject,
+      })
+      .from(studentSubmissions)
+      .leftJoin(users, eq(studentSubmissions.studentId, users.id))
+      .leftJoin(homework, eq(studentSubmissions.homeworkId, homework.id))
+      .orderBy(desc(studentSubmissions.createdAt));
+
+    res.json(submissions);
+  } catch (error) {
+    console.error('Get all submissions error:', error);
+    res.status(500).json({ error: 'Failed to fetch submissions' });
+  }
+});
+
+/**
  * PUT /api/admin/homework/:id
  * Update homework assignment
  */
