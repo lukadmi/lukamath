@@ -6,6 +6,24 @@ function getStoredToken(): string | null {
   return localStorage.getItem('lukamath_auth_token');
 }
 
+// Store reference to native fetch in case FullStory or other scripts override it
+const nativeFetch = typeof window !== 'undefined' && window.fetch ? window.fetch.bind(window) : fetch;
+
+// Helper function to make fetch requests with fallback
+async function safeFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  try {
+    // Try the current fetch first (might be wrapped by FullStory)
+    return await fetch(input, init);
+  } catch (error: any) {
+    if (error.message === 'Failed to fetch' && nativeFetch !== fetch) {
+      console.warn('Fetch failed, trying with native fetch as fallback');
+      // Fallback to native fetch if available
+      return await nativeFetch(input, init);
+    }
+    throw error;
+  }
+}
+
 
 export async function apiRequest(
   method: string,
@@ -19,12 +37,22 @@ export async function apiRequest(
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const res = await fetch(url, {
-    method,
-    headers,
-    body: data ? JSON.stringify(data) : undefined,
-    credentials: "include",
-  });
+  let res: Response;
+  try {
+    res = await safeFetch(url, {
+      method,
+      headers,
+      body: data ? JSON.stringify(data) : undefined,
+      credentials: "include",
+    });
+  } catch (fetchError: any) {
+    // Handle network errors and FullStory interference
+    console.error('Fetch error in apiRequest:', fetchError);
+    if (fetchError.message === 'Failed to fetch' || fetchError.name === 'TypeError') {
+      throw new Error('Network error: Unable to connect to server');
+    }
+    throw fetchError;
+  }
 
   // Check content type before any body consumption
   const contentType = res.headers.get('content-type');
@@ -70,10 +98,20 @@ export const getQueryFn: <T>(options: {
       headers.Authorization = `Bearer ${token}`;
     }
 
-    const res = await fetch(queryKey.join("/") as string, {
-      headers,
-      credentials: "include",
-    });
+    let res: Response;
+    try {
+      res = await safeFetch(queryKey.join("/") as string, {
+        headers,
+        credentials: "include",
+      });
+    } catch (fetchError: any) {
+      // Handle network errors and FullStory interference
+      console.error('Fetch error in getQueryFn:', fetchError);
+      if (fetchError.message === 'Failed to fetch' || fetchError.name === 'TypeError') {
+        throw new Error('Network error: Unable to connect to server');
+      }
+      throw fetchError;
+    }
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {
       return null;
@@ -116,10 +154,24 @@ export const queryClient = new QueryClient({
       refetchInterval: false,
       refetchOnWindowFocus: false,
       staleTime: Infinity,
-      retry: false,
+      retry: (failureCount, error: any) => {
+        // Retry up to 2 times for network errors
+        if (error?.message?.includes('Network error') && failureCount < 2) {
+          return true;
+        }
+        // Don't retry for other errors (like 401, 404, etc.)
+        return false;
+      },
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 3000),
     },
     mutations: {
-      retry: false,
+      retry: (failureCount, error: any) => {
+        // Only retry network errors for mutations, not auth or validation errors
+        if (error?.message?.includes('Network error') && failureCount < 1) {
+          return true;
+        }
+        return false;
+      },
     },
   },
 });

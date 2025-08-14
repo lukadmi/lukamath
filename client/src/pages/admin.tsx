@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuthNew";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Users, 
   BookOpen, 
@@ -56,30 +57,51 @@ const availabilitySchema = z.object({
 
 function AdminDashboard() {
   const { isAuthenticated, user, isLoading } = useAuth();
+  const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("overview");
   const [homeworkDialogOpen, setHomeworkDialogOpen] = useState(false);
+  const [editHomeworkDialogOpen, setEditHomeworkDialogOpen] = useState(false);
+  const [editingHomework, setEditingHomework] = useState<any>(null);
   const [availabilityDialogOpen, setAvailabilityDialogOpen] = useState(false);
 
-  // Data queries with proper typing
+  // Data queries with proper typing and authentication
   const { data: students = [], isLoading: studentsLoading } = useQuery({
-    queryKey: ["/api/admin/students"],
+    queryKey: ["admin-students"],
+    queryFn: () => apiRequest("GET", "/api/admin/students"),
   }) as { data: any[]; isLoading: boolean };
 
   const { data: allHomework = [], isLoading: homeworkLoading } = useQuery({
-    queryKey: ["/api/admin/homework"],
+    queryKey: ["admin-homework"],
+    queryFn: () => apiRequest("GET", "/api/admin/homework"),
   }) as { data: any[]; isLoading: boolean };
 
   const { data: allQuestions = [], isLoading: questionsLoading } = useQuery({
-    queryKey: ["/api/admin/questions"],
+    queryKey: ["admin-questions"],
+    queryFn: () => apiRequest("GET", "/api/admin/questions"),
   }) as { data: any[]; isLoading: boolean };
 
   const { data: contacts = [], isLoading: contactsLoading } = useQuery({
-    queryKey: ["/api/admin/contacts"],
+    queryKey: ["admin-contacts"],
+    queryFn: () => apiRequest("GET", "/api/admin/contacts"),
   }) as { data: any[]; isLoading: boolean };
 
   const { data: availability = [], isLoading: availabilityLoading } = useQuery({
-    queryKey: ["/api/availability"],
+    queryKey: ["admin-availability"],
+    queryFn: () => apiRequest("GET", "/api/availability"),
   }) as { data: any[]; isLoading: boolean };
+
+  // Fetch homework files for editing
+  const { data: homeworkFiles = [] } = useQuery({
+    queryKey: ["homework-files", editingHomework?.id],
+    queryFn: async () => {
+      if (!editingHomework?.id) return [];
+      console.log('Fetching files for homework ID:', editingHomework.id);
+      const files = await apiRequest("GET", `/api/admin/homework/${editingHomework.id}/files`);
+      console.log('Homework files received:', files);
+      return files || [];
+    },
+    enabled: !!editingHomework?.id,
+  }) as { data: any[] };
 
   // Forms
   const homeworkForm = useForm({
@@ -96,6 +118,15 @@ function AdminDashboard() {
   });
 
   const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
+  const [existingFiles, setExistingFiles] = useState<any[]>([]);
+  const [filesToRemove, setFilesToRemove] = useState<string[]>([]);
+
+  // Update existing files when homework files are loaded
+  useEffect(() => {
+    console.log('homeworkFiles changed:', homeworkFiles);
+    setExistingFiles(homeworkFiles || []);
+    setFilesToRemove([]); // Reset files to remove when homework changes
+  }, [homeworkFiles]);
 
   const availabilityForm = useForm({
     resolver: zodResolver(availabilitySchema),
@@ -107,14 +138,26 @@ function AdminDashboard() {
     },
   });
 
+  const editHomeworkForm = useForm({
+    resolver: zodResolver(homeworkSchema),
+    defaultValues: {
+      studentId: "",
+      title: "",
+      subject: "",
+      difficulty: "medium",
+      description: "",
+      dueDate: "",
+    },
+  });
+
   // Mutations
   const createHomeworkMutation = useMutation({
     mutationFn: async (data: any) => {
       // First create the homework
-      const homework = await apiRequest("POST", "/api/homework", data);
+      const homework = await apiRequest("POST", "/api/admin/homework", data);
 
       // Then upload any attached files
-      if (attachedFiles.length > 0) {
+      if (attachedFiles?.length > 0) {
         const formData = new FormData();
         attachedFiles.forEach(file => {
           formData.append('files', file);
@@ -132,7 +175,7 @@ function AdminDashboard() {
       return homework;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/homework"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-homework"] });
       setHomeworkDialogOpen(false);
       homeworkForm.reset();
       setAttachedFiles([]);
@@ -141,12 +184,31 @@ function AdminDashboard() {
 
   const createAvailabilityMutation = useMutation({
     mutationFn: async (data: any) => {
-      return await apiRequest("POST", "/api/availability", data);
+      // Add tutor ID to the data
+      const availabilityData = {
+        ...data,
+        tutorId: user?.id,
+        isAvailable: true
+      };
+      return await apiRequest("POST", "/api/admin/availability", availabilityData);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/availability"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-availability"] });
+      queryClient.invalidateQueries({ queryKey: ["availability"] });
       setAvailabilityDialogOpen(false);
       availabilityForm.reset();
+      toast({
+        title: "Success",
+        description: "Availability slot added successfully",
+      });
+    },
+    onError: (error) => {
+      console.error("Availability creation error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add availability slot",
+        variant: "destructive",
+      });
     },
   });
 
@@ -154,17 +216,89 @@ function AdminDashboard() {
     mutationFn: ({ questionId, answer }: { questionId: string; answer: string }) =>
       apiRequest("PATCH", `/api/questions/${questionId}/answer`, { answer }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/questions"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-questions"] });
+    },
+  });
+
+  // Edit homework mutation
+  const editHomeworkMutation = useMutation({
+    mutationFn: async (data: any) => {
+      const homeworkData = { ...data, attachedFiles, filesToRemove };
+      return await apiRequest("PUT", `/api/admin/homework/${editingHomework.id}`, homeworkData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-homework"] });
+      setEditHomeworkDialogOpen(false);
+      setEditingHomework(null);
+      editHomeworkForm.reset();
+      setAttachedFiles([]);
+      toast({
+        title: "Success",
+        description: "Homework assignment updated successfully",
+      });
+    },
+    onError: (error) => {
+      console.error("Edit homework error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to update homework assignment",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Delete homework mutation
+  const deleteHomeworkMutation = useMutation({
+    mutationFn: async (homeworkId: string) => {
+      return await apiRequest("DELETE", `/api/admin/homework/${homeworkId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-homework"] });
+      toast({
+        title: "Success",
+        description: "Homework assignment deleted successfully",
+      });
+    },
+    onError: (error) => {
+      console.error("Delete homework error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete homework assignment",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Delete availability slot mutation
+  const deleteAvailabilityMutation = useMutation({
+    mutationFn: async (slotId: string) => {
+      return await apiRequest("DELETE", `/api/admin/availability/${slotId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-availability"] });
+      queryClient.invalidateQueries({ queryKey: ["availability"] });
+      toast({
+        title: "Success",
+        description: "Availability slot deleted successfully",
+      });
+    },
+    onError: (error) => {
+      console.error("Delete availability error:", error);
+      toast({
+        title: "Error",
+        description: "Failed to delete availability slot",
+        variant: "destructive",
+      });
     },
   });
 
   const stats = {
-    totalStudents: students.length,
-    pendingHomework: allHomework.filter((hw: any) => hw.status === "pending").length,
-    unansweredQuestions: allQuestions.filter((q: any) => !q.isAnswered).length,
-    newContacts: contacts.filter((c: any) => 
-      new Date(c.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-    ).length,
+    totalStudents: Array.isArray(students) ? students.length : 0,
+    pendingHomework: Array.isArray(allHomework) ? allHomework.filter((hw: any) => hw?.status === "pending").length : 0,
+    unansweredQuestions: Array.isArray(allQuestions) ? allQuestions.filter((q: any) => !q?.isAnswered).length : 0,
+    newContacts: Array.isArray(contacts) ? contacts.filter((c: any) =>
+      c?.createdAt && new Date(c.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+    ).length : 0,
   };
 
   // Check if user is admin - after all hooks are defined
@@ -242,7 +376,7 @@ function AdminDashboard() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-900 mb-2">
-            Admin Dashboard
+            🚨 TEST CHANGE APPLIED 🚨 Admin Dashboard
           </h1>
           <p className="text-slate-600">
             Manage students, assignments, questions, and scheduling.
@@ -329,11 +463,11 @@ function AdminDashboard() {
                       <div key={i} className="h-16 bg-slate-200 animate-pulse rounded"></div>
                     ))}
                   </div>
-                ) : contacts.length === 0 ? (
+                ) : (contacts?.length || 0) === 0 ? (
                   <p className="text-slate-500">No contact submissions yet.</p>
                 ) : (
                   <div className="space-y-4">
-                    {contacts.slice(0, 5).map((contact: any) => (
+                    {contacts?.slice(0, 5)?.map((contact: any) => (
                       <div key={contact.id} className="flex items-start space-x-4 p-4 bg-slate-50 rounded-lg">
                         <Mail className="w-5 h-5 text-blue-600 mt-0.5" />
                         <div className="flex-1">
@@ -367,11 +501,11 @@ function AdminDashboard() {
                       <div key={i} className="h-16 bg-slate-200 animate-pulse rounded"></div>
                     ))}
                   </div>
-                ) : students.length === 0 ? (
+                ) : (students?.length || 0) === 0 ? (
                   <p className="text-slate-500">No students registered yet.</p>
                 ) : (
                   <div className="space-y-4">
-                    {students.map((student: any) => (
+                    {students?.map((student: any) => (
                       <div key={student.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
                         <div className="flex items-center space-x-4">
                           <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
@@ -406,14 +540,14 @@ function AdminDashboard() {
                     Create Assignment
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-md">
+                <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
                   <DialogHeader>
                     <DialogTitle>Create Homework Assignment</DialogTitle>
                   </DialogHeader>
                   <Form {...homeworkForm}>
                     <form
-                      onSubmit={homeworkForm.handleSubmit((data) => 
-                        createHomeworkMutation.mutate(data)
+                      onSubmit={homeworkForm.handleSubmit((data) =>
+                        createHomeworkMutation.mutate({ ...data, attachedFiles })
                       )}
                       className="space-y-4"
                     >
@@ -430,7 +564,7 @@ function AdminDashboard() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                {students.map((student: any) => (
+                                {students?.map((student: any) => (
                                   <SelectItem key={student.id} value={student.id}>
                                     {student.firstName} {student.lastName}
                                   </SelectItem>
@@ -546,16 +680,16 @@ function AdminDashboard() {
                             }}
                           />
                         </div>
-                        {attachedFiles.length > 0 && (
+                        {(attachedFiles?.length || 0) > 0 && (
                           <div className="space-y-1">
-                            {attachedFiles.map((file, index) => (
+                            {attachedFiles?.map((file, index) => (
                               <div key={index} className="flex items-center justify-between text-sm bg-slate-50 p-2 rounded">
                                 <span className="text-slate-700 truncate">{file.name}</span>
                                 <Button
                                   type="button"
                                   variant="ghost"
                                   size="sm"
-                                  onClick={() => setAttachedFiles(prev => prev.filter((_, i) => i !== index))}
+                                  onClick={() => setAttachedFiles(prev => prev?.filter((_, i) => i !== index) || [])}
                                   className="text-red-500 hover:text-red-700 h-6 w-6 p-0"
                                 >
                                   <X className="w-3 h-3" />
@@ -578,6 +712,270 @@ function AdminDashboard() {
                   </Form>
                 </DialogContent>
               </Dialog>
+
+              {/* Edit Homework Dialog */}
+              <Dialog open={editHomeworkDialogOpen} onOpenChange={setEditHomeworkDialogOpen}>
+                <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto" aria-describedby="edit-homework-description">
+                  <DialogHeader>
+                    <DialogTitle>Edit Homework Assignment - TEST CHANGE</DialogTitle>
+                  </DialogHeader>
+                  <Form {...editHomeworkForm}>
+                    <form
+                      onSubmit={editHomeworkForm.handleSubmit((data) =>
+                        editHomeworkMutation.mutate(data)
+                      )}
+                      className="space-y-4"
+                    >
+                      <FormField
+                        control={editHomeworkForm.control}
+                        name="studentId"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Student</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {students?.map((student: any) => (
+                                  <SelectItem key={student.id} value={student.id}>
+                                    {student.firstName} {student.lastName} ({student.email})
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={editHomeworkForm.control}
+                        name="title"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Title</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Assignment title..." {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={editHomeworkForm.control}
+                        name="subject"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Subject</FormLabel>
+                            <FormControl>
+                              <Input placeholder="e.g., Algebra, Geometry..." {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={editHomeworkForm.control}
+                        name="difficulty"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Difficulty</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="easy">Easy</SelectItem>
+                                <SelectItem value="medium">Medium</SelectItem>
+                                <SelectItem value="hard">Hard</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={editHomeworkForm.control}
+                        name="description"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Description</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                placeholder="Assignment description..."
+                                className="min-h-[80px]"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={editHomeworkForm.control}
+                        name="dueDate"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Due Date (Optional)</FormLabel>
+                            <FormControl>
+                              <Input type="datetime-local" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      {/* Existing Files */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Current Attachments</label>
+                        <div className="text-xs text-red-500 bg-red-50 p-1 rounded">
+                          DEBUG: existingFiles.length = {existingFiles.length}, homeworkFiles.length = {homeworkFiles?.length || 0}
+                          <button
+                            type="button"
+                            onClick={() => setExistingFiles([{id: 'test-1', fileName: 'test-file.pdf'}])}
+                            className="ml-2 px-2 py-1 text-xs bg-blue-500 text-white rounded"
+                          >
+                            Test Add File
+                          </button>
+                        </div>
+                        {existingFiles.length > 0 ? (
+                          <>
+                            <div className="space-y-1">
+                              {existingFiles.map((file) => (
+                                <div
+                                  key={file.id}
+                                  className={`flex items-center justify-between text-sm p-2 rounded border ${
+                                    filesToRemove.includes(file.id)
+                                      ? 'bg-red-50 border-red-200 opacity-60'
+                                      : 'bg-blue-50 border-blue-200'
+                                  }`}
+                                >
+                                  <span className={`truncate ${filesToRemove.includes(file.id) ? 'text-red-600 line-through' : 'text-slate-700'}`}>
+                                    {file.fileName}
+                                    {filesToRemove.includes(file.id) && (
+                                      <span className="ml-2 text-xs text-red-500">(marked for deletion)</span>
+                                    )}
+                                  </span>
+                                  <div className="flex items-center space-x-1">
+                                    {filesToRemove.includes(file.id) ? (
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => setFilesToRemove(prev => prev.filter(id => id !== file.id))}
+                                        className="text-blue-500 hover:text-blue-700 h-6 w-6 p-0"
+                                        title="Undo delete"
+                                      >
+                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                                        </svg>
+                                      </Button>
+                                    ) : (
+                                      <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => setFilesToRemove(prev => [...prev, file.id])}
+                                        className="text-red-500 hover:text-red-700 h-6 w-6 p-0"
+                                        title="Delete file"
+                                      >
+                                        <X className="w-3 h-3" />
+                                      </Button>
+                                    )}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                            {filesToRemove.length > 0 && (
+                              <div className="text-sm text-orange-600 bg-orange-50 p-2 rounded border border-orange-200">
+                                ⚠️ {filesToRemove.length} file(s) will be permanently deleted when you update the assignment
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          <div className="text-sm text-slate-500 bg-slate-50 p-3 rounded border border-slate-200">
+                            No files currently attached to this assignment
+                          </div>
+                        )}
+                      </div>
+
+                      {/* File Attachments */}
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Add New Attachments (Optional)</label>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => document.getElementById('edit-file-input')?.click()}
+                            className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                          >
+                            <Paperclip className="w-4 h-4 mr-2" />
+                            Add New Files
+                          </Button>
+                          <input
+                            id="edit-file-input"
+                            type="file"
+                            multiple
+                            accept=".pdf,.doc,.docx,.txt"
+                            className="hidden"
+                            onChange={(e) => {
+                              const files = Array.from(e.target.files || []);
+                              setAttachedFiles(prev => [...prev, ...files]);
+                            }}
+                          />
+                        </div>
+                        {(attachedFiles?.length || 0) > 0 && (
+                          <div className="space-y-1">
+                            {attachedFiles?.map((file, index) => (
+                              <div key={index} className="flex items-center justify-between text-sm bg-slate-50 p-2 rounded">
+                                <span className="text-slate-700 truncate">{file.name}</span>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => setAttachedFiles(prev => prev?.filter((_, i) => i !== index) || [])}
+                                  className="text-red-500 hover:text-red-700 h-6 w-6 p-0"
+                                >
+                                  <X className="w-3 h-3" />
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="flex justify-end space-x-2">
+                        <Button type="button" variant="outline" onClick={() => setEditHomeworkDialogOpen(false)}>
+                          Cancel
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => {
+                            if (confirm("Are you sure you want to delete this homework assignment?")) {
+                              deleteHomeworkMutation.mutate(editingHomework.id);
+                              setEditHomeworkDialogOpen(false);
+                            }
+                          }}
+                          className="text-red-600 border-red-200 hover:bg-red-50"
+                          disabled={deleteHomeworkMutation.isPending}
+                        >
+                          <Trash2 className="w-4 h-4 mr-2" />
+                          Delete
+                        </Button>
+                        <Button type="submit" disabled={editHomeworkMutation.isPending}>
+                          {editHomeworkMutation.isPending ? "Updating..." : "Update Assignment"}
+                        </Button>
+                      </div>
+                    </form>
+                  </Form>
+                </DialogContent>
+              </Dialog>
             </div>
 
             {/* Homework List */}
@@ -589,13 +987,13 @@ function AdminDashboard() {
                       <div key={i} className="h-20 bg-slate-200 animate-pulse rounded"></div>
                     ))}
                   </div>
-                ) : allHomework.length === 0 ? (
+                ) : (!Array.isArray(allHomework) || allHomework.length === 0) ? (
                   <div className="p-6">
                     <p className="text-slate-500">No assignments created yet.</p>
                   </div>
                 ) : (
                   <div className="divide-y">
-                    {allHomework.map((hw: any) => (
+                    {(allHomework || []).map((hw: any) => (
                       <div key={hw.id} className="p-6">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
@@ -624,6 +1022,35 @@ function AdminDashboard() {
                               )}
                             </div>
                           </div>
+                          <div className="flex items-center space-x-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={(e) => {
+                                console.log('CLICK DETECTED!', hw.title);
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setEditHomeworkDialogOpen(true);
+                                console.log('Dialog state set to true');
+                              }}
+                              className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                            >
+                              <Edit className="w-4 h-4" />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                if (confirm("Are you sure you want to delete this homework assignment?")) {
+                                  deleteHomeworkMutation.mutate(hw.id);
+                                }
+                              }}
+                              className="text-red-600 border-red-200 hover:bg-red-50"
+                              disabled={deleteHomeworkMutation.isPending}
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -647,7 +1074,7 @@ function AdminDashboard() {
                   </Card>
                 ))}
               </div>
-            ) : allQuestions.length === 0 ? (
+            ) : (allQuestions?.length || 0) === 0 ? (
               <Card>
                 <CardContent className="flex flex-col items-center justify-center py-12">
                   <MessageSquare className="w-12 h-12 text-slate-400 mb-4" />
@@ -659,7 +1086,7 @@ function AdminDashboard() {
               </Card>
             ) : (
               <div className="space-y-4">
-                {allQuestions.map((question: any) => (
+                {allQuestions?.map((question: any) => (
                   <Card key={question.id}>
                     <CardHeader>
                       <div className="flex justify-between items-start">
@@ -814,11 +1241,11 @@ function AdminDashboard() {
                       <div key={i} className="h-16 bg-slate-200 animate-pulse rounded"></div>
                     ))}
                   </div>
-                ) : availability.length === 0 ? (
+                ) : (availability?.length || 0) === 0 ? (
                   <p className="text-slate-500">No availability slots created yet.</p>
                 ) : (
                   <div className="space-y-4">
-                    {availability.map((slot: any) => (
+                    {availability?.map((slot: any) => (
                       <div key={slot.id} className="flex items-center justify-between p-4 bg-blue-50 rounded-lg border border-blue-200">
                         <div className="flex items-center space-x-3">
                           <Calendar className="w-5 h-5 text-blue-600" />
@@ -837,9 +1264,24 @@ function AdminDashboard() {
                             </p>
                           </div>
                         </div>
-                        <Badge variant={slot.isAvailable ? "default" : "secondary"}>
-                          {slot.isAvailable ? "Available" : "Booked"}
-                        </Badge>
+                        <div className="flex items-center space-x-2">
+                          <Badge variant={slot.isAvailable ? "default" : "secondary"}>
+                            {slot.isAvailable ? "Available" : "Booked"}
+                          </Badge>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              if (confirm("Are you sure you want to delete this time slot?")) {
+                                deleteAvailabilityMutation.mutate(slot.id);
+                              }
+                            }}
+                            className="text-red-600 border-red-200 hover:bg-red-50"
+                            disabled={deleteAvailabilityMutation.isPending}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
                       </div>
                     ))}
                   </div>

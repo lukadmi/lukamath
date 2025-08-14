@@ -1,10 +1,36 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { db } from "./db";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Create missing database tables on startup
+async function ensureDatabaseTables() {
+  try {
+    await db.execute(`
+      CREATE TABLE IF NOT EXISTS "student_submissions" (
+        "id" VARCHAR PRIMARY KEY DEFAULT gen_random_uuid(),
+        "homework_id" VARCHAR NOT NULL REFERENCES "homework"("id"),
+        "student_id" VARCHAR NOT NULL REFERENCES "users"("id"),
+        "file_name" TEXT NOT NULL,
+        "original_name" TEXT NOT NULL,
+        "file_url" TEXT NOT NULL,
+        "file_size" INTEGER NOT NULL,
+        "mime_type" VARCHAR NOT NULL,
+        "notes" TEXT,
+        "created_at" TIMESTAMP DEFAULT NOW() NOT NULL
+      );
+    `);
+    console.log("✅ Database tables verified/created");
+  } catch (error) {
+    console.error("❌ Database table creation error:", error);
+  }
+}
+
+ensureDatabaseTables();
 
 app.use((req, res, next) => {
   const start = Date.now();

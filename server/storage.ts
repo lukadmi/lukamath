@@ -1,10 +1,11 @@
-import { 
+import {
   users,
   contacts,
   homework,
   homeworkFiles,
   questions,
   tutorAvailability,
+  studentSubmissions,
   type User,
   type UpsertUser,
   type Contact,
@@ -16,6 +17,7 @@ import {
   type Question,
   type InsertQuestion,
   type TutorAvailability,
+  type StudentSubmission,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and } from "drizzle-orm";
@@ -25,6 +27,7 @@ export interface IStorage {
   // User operations
   getUser(id: string): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
+  getUserById(id: string): Promise<User | undefined>;
   upsertUser(user: UpsertUser): Promise<User>;
   
   // Contact operations
@@ -59,6 +62,12 @@ export interface IStorage {
   
   // Progress operations
   getStudentProgress(studentId: string): Promise<any[]>;
+
+  // Student submission operations
+  createStudentSubmission(submission: Omit<StudentSubmission, 'id' | 'createdAt'>): Promise<StudentSubmission>;
+  getStudentSubmissions(homeworkId: string, studentId: string): Promise<StudentSubmission[]>;
+  getStudentSubmissionById(submissionId: string): Promise<StudentSubmission | undefined>;
+  deleteStudentSubmission(submissionId: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -70,6 +79,11 @@ export class DatabaseStorage implements IStorage {
 
   async getUserByEmail(email: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.email, email));
+    return user;
+  }
+
+  async getUserById(id: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
     return user;
   }
 
@@ -212,12 +226,20 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(users.createdAt));
   }
 
-  async createQuestion(studentId: string, question: InsertQuestion): Promise<Question> {
+  async createQuestion(questionData: InsertQuestion & { studentId: string }): Promise<Question> {
     const [q] = await db
       .insert(questions)
-      .values({ ...question, studentId })
+      .values(questionData)
       .returning();
     return q;
+  }
+
+  async getQuestionsByStudentId(studentId: string): Promise<Question[]> {
+    return await db
+      .select()
+      .from(questions)
+      .where(eq(questions.studentId, studentId))
+      .orderBy(desc(questions.createdAt));
   }
 
   async answerQuestion(id: string, answer: string, tutorId: string): Promise<Question | undefined> {
@@ -263,6 +285,29 @@ export class DatabaseStorage implements IStorage {
     return slot;
   }
 
+  async getAvailabilitySlot(slotId: string): Promise<TutorAvailability | undefined> {
+    const [slot] = await db
+      .select()
+      .from(tutorAvailability)
+      .where(eq(tutorAvailability.id, slotId))
+      .limit(1);
+    return slot;
+  }
+
+  async bookAvailabilitySlot(slotId: string, studentId: string, notes?: string): Promise<TutorAvailability> {
+    const [bookedSlot] = await db
+      .update(tutorAvailability)
+      .set({
+        isAvailable: false,
+        bookedBy: studentId,
+        bookingNotes: notes || null,
+        updatedAt: new Date(),
+      })
+      .where(eq(tutorAvailability.id, slotId))
+      .returning();
+    return bookedSlot;
+  }
+
   // Progress operations
   async getStudentProgress(studentId: string): Promise<any[]> {
     // Get all completed homework with grades for progress tracking
@@ -285,6 +330,42 @@ export class DatabaseStorage implements IStorage {
       .orderBy(homework.completedAt);
 
     return completedHomework;
+  }
+
+  // Student submission operations
+  async createStudentSubmission(submission: Omit<StudentSubmission, 'id' | 'createdAt'>): Promise<StudentSubmission> {
+    const [newSubmission] = await db
+      .insert(studentSubmissions)
+      .values(submission)
+      .returning();
+    return newSubmission;
+  }
+
+  async getStudentSubmissions(homeworkId: string, studentId: string): Promise<StudentSubmission[]> {
+    return await db
+      .select()
+      .from(studentSubmissions)
+      .where(
+        and(
+          eq(studentSubmissions.homeworkId, homeworkId),
+          eq(studentSubmissions.studentId, studentId)
+        )
+      )
+      .orderBy(desc(studentSubmissions.createdAt));
+  }
+
+  async getStudentSubmissionById(submissionId: string): Promise<StudentSubmission | undefined> {
+    const [submission] = await db
+      .select()
+      .from(studentSubmissions)
+      .where(eq(studentSubmissions.id, submissionId));
+    return submission;
+  }
+
+  async deleteStudentSubmission(submissionId: string): Promise<void> {
+    await db
+      .delete(studentSubmissions)
+      .where(eq(studentSubmissions.id, submissionId));
   }
 }
 

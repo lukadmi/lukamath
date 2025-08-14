@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuthNew";
-import { useLanguage, type Language, translations } from "@/hooks/useLanguage";
+import { useLanguage } from "@/hooks/useLanguage";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,13 +16,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { isUnauthorizedError } from "@/lib/authUtils";
-import { 
-  insertQuestionSchema, 
-  type Question, 
-  type Homework, 
-  type HomeworkFile,
-  type InsertQuestion 
-} from "@shared/schema";
+import { insertQuestionSchema } from "@shared/schema";
+import type { Question, Homework, HomeworkFile, InsertQuestion } from "@shared/schema";
 import { 
   BookOpen, 
   MessageSquare, 
@@ -43,14 +38,10 @@ import {
   BarChart3,
   Smartphone,
   Trash2,
-  Edit,
   Star,
   Award
 } from "lucide-react";
-// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Link } from "wouter";
-
-// Using global LanguageProvider - removed local one that was overriding global language settings
 
 function StudentApp() {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -103,7 +94,7 @@ function StudentApp() {
     retry: false,
   });
 
-  // Homework files query - fetch files for all homework assignments
+  // Homework files query
   const { data: allHomeworkFiles = {} } = useQuery({
     queryKey: ["/api/homework/files", homework],
     queryFn: async () => {
@@ -400,9 +391,7 @@ function StudentApp() {
                   variant="ghost"
                   size="sm"
                   onClick={() => {
-                    // Clear the JWT token from localStorage
                     localStorage.removeItem('lukamath_auth_token');
-                    // Redirect to home page
                     window.location.href = '/';
                   }}
                 >
@@ -424,30 +413,6 @@ function StudentApp() {
           <p className="text-slate-600 mb-4">
             {t('app.track_manage')}
           </p>
-          
-          {/* Mobile App Promotion */}
-          <div className="bg-blue-50 border border-blue-100 rounded-md p-3 mb-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="bg-blue-500 p-1.5 rounded-md mr-2">
-                  <Smartphone className="w-4 h-4 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-medium text-slate-700">
-                    {t('app.try_mobile_app')}
-                  </h3>
-                  <p className="text-xs text-slate-500">
-                    {t('app.mobile_experience')}
-                  </p>
-                </div>
-              </div>
-              <Link href="/pwa">
-                <Button size="sm" variant="outline" className="text-xs border-blue-200 text-blue-600 hover:bg-blue-50">
-                  {t('app.open')}
-                </Button>
-              </Link>
-            </div>
-          </div>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
@@ -503,7 +468,7 @@ function StudentApp() {
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <CardTitle className="text-lg">{hw.title}</CardTitle>
-                        <Badge 
+                        <Badge
                           variant={hw.status === "completed" ? "default" : hw.status === "in_progress" ? "secondary" : "outline"}
                           className={
                             hw.status === "completed" ? "bg-green-100 text-green-800" :
@@ -628,7 +593,7 @@ function StudentApp() {
                 <DialogTrigger asChild>
                   <Button className="bg-blue-600 text-white hover:bg-blue-700">
                     <Plus className="w-4 h-4 mr-2" />
-                    <p>Postavi pitanje</p>
+                    Ask Question
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-md">
@@ -895,7 +860,7 @@ function StudentApp() {
               </Card>
             </div>
 
-            {/* Progress Tracking Graph */}
+            {/* Progress Chart Placeholder */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
@@ -904,25 +869,13 @@ function StudentApp() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {progressLoading ? (
-                  <div className="h-64 bg-slate-200 animate-pulse rounded"></div>
-                ) : ((progress as any[])?.length || 0) === 0 ? (
-                  <div className="h-64 flex items-center justify-center text-slate-500">
-                    <div className="text-center">
-                      <BarChart3 className="w-12 h-12 mx-auto mb-4 text-slate-400" />
-                      <p>{t('app.no_progress_data')}</p>
-                      <p className="text-sm">{t('app.no_progress_data')}</p>
-                    </div>
+                <div className="h-64 flex items-center justify-center bg-slate-50 rounded-lg">
+                  <div className="text-center">
+                    <BarChart3 className="w-12 h-12 mx-auto mb-4 text-slate-400" />
+                    <p className="text-slate-600">Progress Chart</p>
+                    <p className="text-sm text-slate-500">Visual progress tracking</p>
                   </div>
-                ) : (
-                  <div className="h-64 flex items-center justify-center bg-slate-50 rounded-lg">
-                    <div className="text-center">
-                      <BarChart3 className="w-12 h-12 mx-auto mb-4 text-slate-400" />
-                      <p className="text-slate-600">Progress Chart</p>
-                      <p className="text-sm text-slate-500">Visual progress tracking coming soon</p>
-                    </div>
-                  </div>
-                )}
+                </div>
               </CardContent>
             </Card>
 
@@ -1007,7 +960,6 @@ function StudentApp() {
                 </div>
               </CardContent>
             </Card>
-
           </TabsContent>
 
           {/* Scheduling Tab */}

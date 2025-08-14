@@ -6,6 +6,24 @@ function getStoredToken(): string | null {
   return localStorage.getItem('lukamath_auth_token');
 }
 
+// Store reference to native fetch in case FullStory or other scripts override it
+const nativeFetch = typeof window !== 'undefined' && window.fetch ? window.fetch.bind(window) : fetch;
+
+// Helper function to make fetch requests with fallback
+async function safeFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  try {
+    // Try the current fetch first (might be wrapped by FullStory)
+    return await fetch(input, init);
+  } catch (error: any) {
+    if (error.message === 'Failed to fetch' && nativeFetch !== fetch) {
+      console.warn('Fetch failed, trying with native fetch as fallback');
+      // Fallback to native fetch if available
+      return await nativeFetch(input, init);
+    }
+    throw error;
+  }
+}
+
 // API request with JWT token
 async function apiRequestWithAuth(url: string): Promise<any> {
   const token = getStoredToken();
@@ -15,7 +33,17 @@ async function apiRequestWithAuth(url: string): Promise<any> {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const response = await fetch(url, { headers });
+  let response: Response;
+  try {
+    response = await safeFetch(url, { headers, credentials: "include" });
+  } catch (fetchError: any) {
+    // Handle network errors and FullStory interference
+    console.error('Fetch error in apiRequestWithAuth:', fetchError);
+    if (fetchError.message === 'Failed to fetch' || fetchError.name === 'TypeError') {
+      throw new Error('Network error: Unable to connect to server');
+    }
+    throw fetchError;
+  }
 
   // Check content type before any body consumption
   const contentType = response.headers.get('content-type');

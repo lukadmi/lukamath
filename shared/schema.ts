@@ -99,6 +99,20 @@ export const questions = pgTable("questions", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+// Student homework submissions
+export const studentSubmissions = pgTable("student_submissions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  homeworkId: varchar("homework_id").notNull().references(() => homework.id),
+  studentId: varchar("student_id").notNull().references(() => users.id),
+  fileName: text("file_name").notNull(),
+  originalName: text("original_name").notNull(),
+  fileUrl: text("file_url").notNull(),
+  fileSize: integer("file_size").notNull(),
+  mimeType: varchar("mime_type").notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Tutor availability for scheduling
 export const tutorAvailability = pgTable("tutor_availability", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -108,7 +122,10 @@ export const tutorAvailability = pgTable("tutor_availability", {
   endTime: varchar("end_time").notNull(), // '17:00'
   isAvailable: boolean("is_available").notNull().default(true),
   notes: text("notes"),
+  bookedBy: varchar("booked_by").references(() => users.id),
+  bookingNotes: text("booking_notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 // Relations
@@ -161,6 +178,17 @@ export const questionsRelations = relations(questions, ({ one }) => ({
 export const tutorAvailabilityRelations = relations(tutorAvailability, ({ one }) => ({
   tutor: one(users, {
     fields: [tutorAvailability.tutorId],
+    references: [users.id],
+  }),
+}));
+
+export const studentSubmissionsRelations = relations(studentSubmissions, ({ one }) => ({
+  homework: one(homework, {
+    fields: [studentSubmissions.homeworkId],
+    references: [homework.id],
+  }),
+  student: one(users, {
+    fields: [studentSubmissions.studentId],
     references: [users.id],
   }),
 }));
@@ -243,3 +271,4 @@ export type InsertQuestion = z.infer<typeof insertQuestionSchema>;
 export type Question = typeof questions.$inferSelect;
 export type UpdateHomework = z.infer<typeof updateHomeworkSchema>;
 export type TutorAvailability = typeof tutorAvailability.$inferSelect;
+export type StudentSubmission = typeof studentSubmissions.$inferSelect;
