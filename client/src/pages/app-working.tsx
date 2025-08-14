@@ -16,13 +16,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { isUnauthorizedError } from "@/lib/authUtils";
-import { 
-  insertQuestionSchema, 
-  type Question, 
-  type Homework, 
-  type HomeworkFile,
-  type InsertQuestion 
-} from "@shared/schema";
+import { insertQuestionSchema } from "@shared/schema";
+import type { Question, Homework, HomeworkFile, InsertQuestion } from "@shared/schema";
 import { 
   BookOpen, 
   MessageSquare, 
