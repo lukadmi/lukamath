@@ -64,7 +64,7 @@ function Router() {
           <Route path="/app" component={StudentApp}/>
           <Route path="/admin" component={AdminDashboard}/>
           <Route path="/admin/export" component={AdminExport}/>
-          <Route path="/register" component={Register}/>
+          <Route path="/register" component={RegisterNew}/>
           <Route path="/register-new" component={RegisterNew}/>
           <Route path="/login" component={LoginNew}/>
           <Route path="/pwa" component={PWAIndex}/>
