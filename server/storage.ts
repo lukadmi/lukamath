@@ -331,6 +331,42 @@ export class DatabaseStorage implements IStorage {
 
     return completedHomework;
   }
+
+  // Student submission operations
+  async createStudentSubmission(submission: Omit<StudentSubmission, 'id' | 'createdAt'>): Promise<StudentSubmission> {
+    const [newSubmission] = await db
+      .insert(studentSubmissions)
+      .values(submission)
+      .returning();
+    return newSubmission;
+  }
+
+  async getStudentSubmissions(homeworkId: string, studentId: string): Promise<StudentSubmission[]> {
+    return await db
+      .select()
+      .from(studentSubmissions)
+      .where(
+        and(
+          eq(studentSubmissions.homeworkId, homeworkId),
+          eq(studentSubmissions.studentId, studentId)
+        )
+      )
+      .orderBy(desc(studentSubmissions.createdAt));
+  }
+
+  async getStudentSubmissionById(submissionId: string): Promise<StudentSubmission | undefined> {
+    const [submission] = await db
+      .select()
+      .from(studentSubmissions)
+      .where(eq(studentSubmissions.id, submissionId));
+    return submission;
+  }
+
+  async deleteStudentSubmission(submissionId: string): Promise<void> {
+    await db
+      .delete(studentSubmissions)
+      .where(eq(studentSubmissions.id, submissionId));
+  }
 }
 
 export const storage = new DatabaseStorage();
