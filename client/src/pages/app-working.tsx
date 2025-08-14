@@ -555,9 +555,8 @@ function StudentApp() {
                       <div className="mb-4">
                         <Button
                           size="sm"
-                          onClick={(e) => handleUploadClick(e, hw)}
+                          onClick={() => handleUploadClick(hw)}
                           className="bg-blue-600 text-white hover:bg-blue-700"
-                          type="button"
                         >
                           <Upload className="w-4 h-4 mr-2" />
                           Submit Homework
