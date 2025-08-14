@@ -200,9 +200,23 @@ function StudentApp() {
       formData.append('file', file);
       if (notes) formData.append('notes', notes);
       
-      return await apiRequest("POST", `/api/homework/${homeworkId}/student-upload`, formData, {
-        'Content-Type': 'multipart/form-data'
+      const token = localStorage.getItem('lukamath_auth_token');
+      const headers: any = {};
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`/api/homework/${homeworkId}/student-upload`, {
+        method: 'POST',
+        headers,
+        body: formData
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/homework/student-submissions"] });
