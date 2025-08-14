@@ -68,6 +68,39 @@ The student has submitted their homework. Please review and provide feedback in 
   }
 
   /**
+   * Send notification about homework submission
+   */
+  static async notifyHomeworkSubmitted(submissionData: {
+    studentEmail: string;
+    homeworkTitle: string;
+    subject: string;
+    submissionType: 'text' | 'file';
+    submissionContent?: string;
+  }) {
+    try {
+      await storage.createContact({
+        name: `Homework Submission - ${submissionData.studentEmail}`,
+        email: submissionData.studentEmail,
+        phone: '',
+        subject: `Homework Submitted: ${submissionData.homeworkTitle}`,
+        message: `📝 HOMEWORK SUBMITTED
+
+Student: ${submissionData.studentEmail}
+Homework: ${submissionData.homeworkTitle}
+Subject: ${submissionData.subject}
+Submission Type: ${submissionData.submissionType}
+${submissionData.submissionContent ? `Content: ${submissionData.submissionContent}` : ''}
+
+A student has submitted their homework. Please review the submission in your admin dashboard.`
+      });
+
+      console.log(`📧 Homework submission notification sent for ${submissionData.studentEmail} - ${submissionData.homeworkTitle}`);
+    } catch (error) {
+      console.error('Failed to send homework submission notification:', error);
+    }
+  }
+
+  /**
    * Send notification about time slot booking
    */
   static async notifySlotBooked(bookingData: {
