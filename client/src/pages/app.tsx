@@ -900,45 +900,12 @@ function StudentApp() {
                     </div>
                   </div>
                 ) : (
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={(progress as any[])?.map((item: any, index: number) => ({
-                        assignment: index + 1,
-                        grade: item.grade || 0,
-                        subject: item.subject,
-                        title: item.title
-                      }))}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis 
-                          dataKey="assignment" 
-                          label={{ value: t('app.assignment_number'), position: 'insideBottom', offset: -10 }}
-                        />
-                        <YAxis 
-                          domain={[0, 100]}
-                          label={{ value: t('app.grade_label'), angle: -90, position: 'insideLeft' }}
-                        />
-                        <Tooltip 
-                          formatter={(value: any, name: any, props: any) => [
-                            `${value}%`, 
-                            t('app.grade_label')
-                          ]}
-                          labelFormatter={(label: any, payload: any) => {
-                            if (payload && payload[0]) {
-                              return `${payload[0].payload.title} (${payload[0].payload.subject})`;
-                            }
-                            return `Assignment ${label}`;
-                          }}
-                        />
-                        <Line 
-                          type="monotone" 
-                          dataKey="grade" 
-                          stroke="#2563eb" 
-                          strokeWidth={3}
-                          dot={{ fill: '#2563eb', strokeWidth: 2, r: 6 }}
-                          activeDot={{ r: 8, stroke: '#2563eb', strokeWidth: 2 }}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
+                  <div className="h-64 flex items-center justify-center bg-slate-50 rounded-lg">
+                    <div className="text-center">
+                      <BarChart3 className="w-12 h-12 mx-auto mb-4 text-slate-400" />
+                      <p className="text-slate-600">Progress Chart</p>
+                      <p className="text-sm text-slate-500">Visual progress tracking coming soon</p>
+                    </div>
                   </div>
                 )}
               </CardContent>
