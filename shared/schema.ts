@@ -182,6 +182,17 @@ export const tutorAvailabilityRelations = relations(tutorAvailability, ({ one })
   }),
 }));
 
+export const studentSubmissionsRelations = relations(studentSubmissions, ({ one }) => ({
+  homework: one(homework, {
+    fields: [studentSubmissions.homeworkId],
+    references: [homework.id],
+  }),
+  student: one(users, {
+    fields: [studentSubmissions.studentId],
+    references: [users.id],
+  }),
+}));
+
 // Schemas for validation
 export const insertContactSchema = createInsertSchema(contacts).pick({
   name: true,
