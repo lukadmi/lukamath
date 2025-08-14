@@ -490,6 +490,163 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Student homework file upload endpoint
+  app.post("/api/homework/:homeworkId/student-upload", authenticateToken, uploadLimiter, async (req, res) => {
+    try {
+      const homeworkId = req.params.homeworkId;
+      const studentId = (req as any).user?.userId;
+      const notes = req.body.notes || '';
+
+      if (!studentId) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+
+      // Verify the homework exists and the student is authorized
+      const homework = await storage.getHomeworkById(homeworkId);
+      if (!homework) {
+        return res.status(404).json({
+          success: false,
+          message: "Homework not found"
+        });
+      }
+
+      // Check if this homework is assigned to the student
+      const studentHomework = await storage.getHomeworkForStudent(studentId);
+      const isAssigned = studentHomework.some(hw => hw.id === homeworkId);
+
+      if (!isAssigned) {
+        return res.status(403).json({
+          success: false,
+          message: "You are not authorized to submit for this homework"
+        });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({
+          success: false,
+          message: "No file uploaded"
+        });
+      }
+
+      // Upload file to object storage
+      const objectStorage = new ObjectStorageService();
+      const fileName = `homework-submissions/${homeworkId}/${studentId}/${Date.now()}-${req.file.originalname}`;
+      const fileUrl = await objectStorage.uploadFile(fileName, req.file.buffer, req.file.mimetype);
+
+      // Save submission record to database
+      const submission = await storage.createStudentSubmission({
+        homeworkId,
+        studentId,
+        fileName,
+        originalName: req.file.originalname,
+        fileUrl,
+        fileSize: req.file.size,
+        mimeType: req.file.mimetype,
+        notes: notes || null
+      });
+
+      res.status(201).json({
+        success: true,
+        message: "File uploaded successfully",
+        submission: {
+          id: submission.id,
+          originalName: req.file.originalname,
+          fileUrl,
+          notes
+        }
+      });
+    } catch (error) {
+      console.error("Student file upload error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to upload file"
+      });
+    }
+  });
+
+  // Get student submissions for a homework assignment
+  app.get("/api/homework/:homeworkId/student-submissions/:studentId", authenticateToken, async (req, res) => {
+    try {
+      const { homeworkId, studentId } = req.params;
+      const requestingUserId = (req as any).user?.userId;
+
+      // Students can only see their own submissions, admins can see any
+      if (requestingUserId !== studentId && (req as any).user?.role !== 'admin') {
+        return res.status(403).json({
+          success: false,
+          message: "Access denied"
+        });
+      }
+
+      const submissions = await storage.getStudentSubmissions(homeworkId, studentId);
+      res.json(submissions);
+    } catch (error) {
+      console.error("Error fetching student submissions:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error"
+      });
+    }
+  });
+
+  // Delete student submission
+  app.delete("/api/homework/student-submission/:submissionId", authenticateToken, async (req, res) => {
+    try {
+      const submissionId = req.params.submissionId;
+      const studentId = (req as any).user?.userId;
+
+      if (!studentId) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+
+      // Get submission to verify ownership
+      const submission = await storage.getStudentSubmissionById(submissionId);
+      if (!submission) {
+        return res.status(404).json({
+          success: false,
+          message: "Submission not found"
+        });
+      }
+
+      // Verify the student owns this submission
+      if (submission.studentId !== studentId) {
+        return res.status(403).json({
+          success: false,
+          message: "You can only delete your own submissions"
+        });
+      }
+
+      // Delete file from object storage
+      try {
+        const objectStorage = new ObjectStorageService();
+        await objectStorage.deleteFile(submission.fileName);
+      } catch (error) {
+        console.warn("Failed to delete file from object storage:", error);
+        // Continue with database deletion even if file deletion fails
+      }
+
+      // Delete submission record from database
+      await storage.deleteStudentSubmission(submissionId);
+
+      res.json({
+        success: true,
+        message: "Submission deleted successfully"
+      });
+    } catch (error) {
+      console.error("Delete submission error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to delete submission"
+      });
+    }
+  });
+
   // Admin routes are now handled by admin-routes.ts
 
   console.log("🌐 Creating HTTP server...");
