@@ -585,6 +585,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Serve uploaded files from local storage
+  app.get("/api/files/*", authenticateToken, async (req, res) => {
+    try {
+      const fs = await import('fs');
+      const path = await import('path');
+
+      const filePath = req.params[0]; // Everything after /api/files/
+      const fullPath = path.join(process.cwd(), 'uploads', filePath);
+
+      // Security check - ensure the file is within uploads directory
+      const uploadsDir = path.resolve(process.cwd(), 'uploads');
+      const resolvedPath = path.resolve(fullPath);
+
+      if (!resolvedPath.startsWith(uploadsDir)) {
+        return res.status(403).json({ error: "Access denied" });
+      }
+
+      if (!fs.existsSync(resolvedPath)) {
+        return res.status(404).json({ error: "File not found" });
+      }
+
+      // Get file stats for content type and size
+      const stats = fs.statSync(resolvedPath);
+      const ext = path.extname(resolvedPath).toLowerCase();
+
+      // Set content type based on extension
+      let contentType = 'application/octet-stream';
+      if (ext === '.pdf') contentType = 'application/pdf';
+      else if (ext === '.jpg' || ext === '.jpeg') contentType = 'image/jpeg';
+      else if (ext === '.png') contentType = 'image/png';
+      else if (ext === '.txt') contentType = 'text/plain';
+      else if (ext === '.doc') contentType = 'application/msword';
+      else if (ext === '.docx') contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+
+      res.set({
+        'Content-Type': contentType,
+        'Content-Length': stats.size.toString(),
+        'Cache-Control': 'private, max-age=3600'
+      });
+
+      // Stream the file
+      const stream = fs.createReadStream(resolvedPath);
+      stream.pipe(res);
+
+    } catch (error) {
+      console.error("Error serving file:", error);
+      res.status(500).json({ error: "Error serving file" });
+    }
+  });
+
   // Get student submissions for a homework assignment
   app.get("/api/homework/:homeworkId/student-submissions/:studentId", authenticateToken, async (req, res) => {
     try {

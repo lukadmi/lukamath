@@ -121,6 +121,19 @@ function AdminDashboard() {
   const [existingFiles, setExistingFiles] = useState<any[]>([]);
   const [filesToRemove, setFilesToRemove] = useState<string[]>([]);
 
+  // Populate edit form when editingHomework changes
+  useEffect(() => {
+    if (editingHomework) {
+      console.log('Populating form with editing homework:', editingHomework);
+      editHomeworkForm.setValue('studentId', editingHomework.studentId || '');
+      editHomeworkForm.setValue('title', editingHomework.title || '');
+      editHomeworkForm.setValue('subject', editingHomework.subject || '');
+      editHomeworkForm.setValue('difficulty', editingHomework.difficulty || 'medium');
+      editHomeworkForm.setValue('description', editingHomework.description || '');
+      editHomeworkForm.setValue('dueDate', editingHomework.dueDate ? new Date(editingHomework.dueDate).toISOString().split('T')[0] : '');
+    }
+  }, [editingHomework]);
+
   // Update existing files when homework files are loaded
   useEffect(() => {
     console.log('homeworkFiles changed:', homeworkFiles);
@@ -714,7 +727,13 @@ function AdminDashboard() {
               </Dialog>
 
               {/* Edit Homework Dialog */}
-              <Dialog open={editHomeworkDialogOpen} onOpenChange={setEditHomeworkDialogOpen}>
+              <Dialog open={editHomeworkDialogOpen} onOpenChange={(open) => {
+                setEditHomeworkDialogOpen(open);
+                if (!open) {
+                  setEditingHomework(null);
+                  editHomeworkForm.reset();
+                }
+              }}>
                 <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto" aria-describedby="edit-homework-description">
                   <DialogHeader>
                     <DialogTitle>Edit Homework Assignment - TEST CHANGE</DialogTitle>
@@ -950,7 +969,11 @@ function AdminDashboard() {
                       </div>
 
                       <div className="flex justify-end space-x-2">
-                        <Button type="button" variant="outline" onClick={() => setEditHomeworkDialogOpen(false)}>
+                        <Button type="button" variant="outline" onClick={() => {
+                          setEditHomeworkDialogOpen(false);
+                          setEditingHomework(null);
+                          editHomeworkForm.reset();
+                        }}>
                           Cancel
                         </Button>
                         <Button
@@ -1030,6 +1053,7 @@ function AdminDashboard() {
                                 console.log('CLICK DETECTED!', hw.title);
                                 e.preventDefault();
                                 e.stopPropagation();
+                                setEditingHomework(hw);
                                 setEditHomeworkDialogOpen(true);
                                 console.log('Dialog state set to true');
                               }}

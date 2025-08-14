@@ -123,6 +123,80 @@ export class ObjectStorageService {
     });
   }
 
+  // Uploads a file to object storage and returns the public URL
+  async uploadFile(fileName: string, buffer: Buffer, mimeType: string): Promise<string> {
+    try {
+      // Try Google Cloud Storage first, fallback to local storage if it fails
+      try {
+        const privateObjectDir = this.getPrivateObjectDir();
+        const fullPath = `${privateObjectDir}/${fileName}`;
+        const { bucketName, objectName } = parseObjectPath(fullPath);
+
+        const bucket = objectStorageClient.bucket(bucketName);
+        const file = bucket.file(objectName);
+
+        // Upload the file
+        await file.save(buffer, {
+          metadata: {
+            contentType: mimeType,
+          },
+          resumable: false,
+        });
+
+        // Return the public URL
+        return `https://storage.googleapis.com/${bucketName}/${objectName}`;
+      } catch (gcsError) {
+        console.warn("Google Cloud Storage unavailable, using local storage fallback:", gcsError);
+
+        // Fallback to local file storage
+        const fs = await import('fs');
+        const path = await import('path');
+
+        // Create uploads directory if it doesn't exist
+        const uploadsDir = path.join(process.cwd(), 'uploads');
+        if (!fs.existsSync(uploadsDir)) {
+          fs.mkdirSync(uploadsDir, { recursive: true });
+        }
+
+        // Clean fileName to be filesystem safe
+        const safeName = fileName.replace(/[^a-zA-Z0-9\-_\.\/]/g, '_');
+        const filePath = path.join(uploadsDir, safeName);
+
+        // Create directory structure if needed
+        const fileDir = path.dirname(filePath);
+        if (!fs.existsSync(fileDir)) {
+          fs.mkdirSync(fileDir, { recursive: true });
+        }
+
+        // Write file to local storage
+        fs.writeFileSync(filePath, buffer);
+
+        // Return local URL that can be served by the server
+        return `/api/files/${safeName}`;
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw new Error(`Failed to upload file: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  // Deletes a file from object storage
+  async deleteFile(fileName: string): Promise<void> {
+    try {
+      const privateObjectDir = this.getPrivateObjectDir();
+      const fullPath = `${privateObjectDir}/${fileName}`;
+      const { bucketName, objectName } = parseObjectPath(fullPath);
+
+      const bucket = objectStorageClient.bucket(bucketName);
+      const file = bucket.file(objectName);
+
+      await file.delete();
+    } catch (error) {
+      console.error("Error deleting file from object storage:", error);
+      throw new Error(`Failed to delete file: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
   // Gets the object entity file from the object path.
   async getObjectEntityFile(objectPath: string): Promise<File> {
     if (!objectPath.startsWith("/objects/")) {
