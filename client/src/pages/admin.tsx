@@ -121,6 +121,19 @@ function AdminDashboard() {
   const [existingFiles, setExistingFiles] = useState<any[]>([]);
   const [filesToRemove, setFilesToRemove] = useState<string[]>([]);
 
+  // Populate edit form when editingHomework changes
+  useEffect(() => {
+    if (editingHomework) {
+      console.log('Populating form with editing homework:', editingHomework);
+      editHomeworkForm.setValue('studentId', editingHomework.studentId || '');
+      editHomeworkForm.setValue('title', editingHomework.title || '');
+      editHomeworkForm.setValue('subject', editingHomework.subject || '');
+      editHomeworkForm.setValue('difficulty', editingHomework.difficulty || 'medium');
+      editHomeworkForm.setValue('description', editingHomework.description || '');
+      editHomeworkForm.setValue('dueDate', editingHomework.dueDate ? new Date(editingHomework.dueDate).toISOString().split('T')[0] : '');
+    }
+  }, [editingHomework, editHomeworkForm]);
+
   // Update existing files when homework files are loaded
   useEffect(() => {
     console.log('homeworkFiles changed:', homeworkFiles);
