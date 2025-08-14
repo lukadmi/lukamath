@@ -271,3 +271,4 @@ export type InsertQuestion = z.infer<typeof insertQuestionSchema>;
 export type Question = typeof questions.$inferSelect;
 export type UpdateHomework = z.infer<typeof updateHomeworkSchema>;
 export type TutorAvailability = typeof tutorAvailability.$inferSelect;
+export type StudentSubmission = typeof studentSubmissions.$inferSelect;
