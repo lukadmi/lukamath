@@ -213,6 +213,7 @@ export const translations = {
     "app.completed_count": "Completed",
     "app.in_progress": "In Progress",
     "app.pending_count": "Pending",
+    "app.pending": "Pending",
     "app.due_date": "Due Date",
     "app.qa_activity": "Q&A Activity",
     "app.total_questions": "Total Questions",
@@ -298,7 +299,7 @@ export const translations = {
     
     // Certificates
     "certificates.title": "Uvjerenja i certifikati",
-    "certificates.subtitle": "Kontinuirano učenje za pružanje najbolje matematičke edukacije",
+    "certificates.subtitle": "Kontinuirano učenje za pru��anje najbolje matematičke edukacije",
     
     // About Section
     "about.title": "Upoznajte svog mentora za matematiku",
@@ -565,6 +566,7 @@ export const translations = {
     "app.completed_count": "Završeno",
     "app.in_progress": "U tijeku",
     "app.pending_count": "Na čekanju",
+    "app.pending": "Na čekanju",
     "app.due_date": "Krajnji rok",
     "app.qa_activity": "Q&A aktivnost",
     "app.total_questions": "Ukupno pitanja",
