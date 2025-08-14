@@ -647,6 +647,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get homework files for students
+  app.get("/api/homework/:homeworkId/files", authenticateToken, async (req, res) => {
+    try {
+      const homeworkId = req.params.homeworkId;
+      const studentId = (req as any).user?.userId;
+
+      if (!studentId) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+
+      // Verify the homework belongs to this student
+      const homework = await storage.getHomeworkById(homeworkId);
+      if (!homework) {
+        return res.status(404).json({
+          success: false,
+          message: "Homework not found"
+        });
+      }
+
+      // Check if this homework is assigned to the student
+      const studentHomework = await storage.getHomeworkForStudent(studentId);
+      const isAssigned = studentHomework.some(hw => hw.id === homeworkId);
+
+      if (!isAssigned && (req as any).user?.role !== 'admin') {
+        return res.status(403).json({
+          success: false,
+          message: "Access denied"
+        });
+      }
+
+      const files = await storage.getHomeworkFiles(homeworkId);
+      res.json(files);
+    } catch (error) {
+      console.error("Error fetching homework files:", error);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error"
+      });
+    }
+  });
+
   // Admin routes are now handled by admin-routes.ts
 
   console.log("🌐 Creating HTTP server...");
