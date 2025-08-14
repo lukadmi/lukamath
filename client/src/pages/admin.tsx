@@ -1030,6 +1030,7 @@ function AdminDashboard() {
                                 console.log('CLICK DETECTED!', hw.title);
                                 e.preventDefault();
                                 e.stopPropagation();
+                                setEditingHomework(hw);
                                 setEditHomeworkDialogOpen(true);
                                 console.log('Dialog state set to true');
                               }}
