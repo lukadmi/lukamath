@@ -288,6 +288,7 @@ function StudentApp() {
   };
 
   const handleUploadClick = (homework: Homework) => {
+    console.log("Submit Homework button clicked!", homework);
     setSelectedHomework(homework);
     setUploadDialogOpen(true);
   };
