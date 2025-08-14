@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuthNew";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -16,12 +16,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { isUnauthorizedError } from "@/lib/authUtils";
-import { insertQuestionSchema } from "@shared/schema";
-import type { 
-  Question, 
-  Homework, 
-  HomeworkFile,
-  InsertQuestion 
+import { 
+  insertQuestionSchema, 
+  type Question, 
+  type Homework, 
+  type HomeworkFile,
+  type InsertQuestion 
 } from "@shared/schema";
 import { 
   BookOpen, 
@@ -286,10 +286,24 @@ function StudentApp() {
   };
 
   const handleUploadClick = (homework: Homework) => {
-    console.log("Submit Homework button clicked!", homework);
     setSelectedHomework(homework);
     setUploadDialogOpen(true);
   };
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      toast({
+        title: t('app.unauthorized'),
+        description: t('app.unauthorized_logout'),
+        variant: "destructive",
+      });
+      setTimeout(() => {
+        window.location.href = "/api/login";
+      }, 500);
+      return;
+    }
+  }, [isAuthenticated, isLoading, toast]);
 
   if (isLoading) {
     return (
@@ -302,22 +316,21 @@ function StudentApp() {
     );
   }
 
-  // Temporarily bypass auth since we know user is authenticated from API logs
-  // if (!isAuthenticated) {
-  //   return (
-  //     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
-  //       <div className="text-center">
-  //         <h2 className="text-2xl font-bold text-slate-800 mb-4">Authentication Required</h2>
-  //         <p className="text-slate-600 mb-6">Please log in to access the student portal.</p>
-  //         <a href="/api/login">
-  //           <Button className="bg-blue-600 text-white hover:bg-blue-700">
-  //             Login
-  //           </Button>
-  //         </a>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">Authentication Required</h2>
+          <p className="text-slate-600 mb-6">Please log in to access the student portal.</p>
+          <a href="/api/login">
+            <Button className="bg-blue-600 text-white hover:bg-blue-700">
+              Login
+            </Button>
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -538,7 +551,7 @@ function StudentApp() {
                         </div>
                       )}
 
-                      {/* Submit Homework Button - FIXED */}
+                      {/* Upload Button */}
                       <div className="mb-4">
                         <Button
                           size="sm"
@@ -637,6 +650,76 @@ function StudentApp() {
                             <>
                               <Send className="w-4 h-4 mr-2" />
                               {t('app.submit_question_btn')}
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </Form>
+                </DialogContent>
+              </Dialog>
+
+              {/* File Upload Dialog */}
+              <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
+                <DialogContent className="max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Submit Homework File</DialogTitle>
+                  </DialogHeader>
+                  <Form {...studentFileForm}>
+                    <form onSubmit={studentFileForm.handleSubmit(onFileUpload)} className="space-y-4">
+                      <FormField
+                        control={studentFileForm.control}
+                        name="file"
+                        render={({ field: { onChange, ...field } }) => (
+                          <FormItem>
+                            <FormLabel>Upload File</FormLabel>
+                            <FormControl>
+                              <Input
+                                type="file"
+                                accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) onChange(file);
+                                }}
+                                {...field}
+                              />
+                            </FormControl>
+                            <p className="text-xs text-slate-500">Max file size: 50MB. Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG</p>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={studentFileForm.control}
+                        name="notes"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Notes (Optional)</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                placeholder="Add any notes about your submission..."
+                                className="min-h-[80px]"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <div className="flex justify-end space-x-2">
+                        <Button type="button" variant="outline" onClick={() => setUploadDialogOpen(false)}>
+                          Cancel
+                        </Button>
+                        <Button type="submit" disabled={uploadFileMutation.isPending}>
+                          {uploadFileMutation.isPending ? (
+                            <>
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                              Uploading...
+                            </>
+                          ) : (
+                            <>
+                              <Upload className="w-4 h-4 mr-2" />
+                              Upload File
                             </>
                           )}
                         </Button>
@@ -931,76 +1014,6 @@ function StudentApp() {
           </TabsContent>
         </Tabs>
       </main>
-
-      {/* File Upload Dialog */}
-      <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Submit Homework File</DialogTitle>
-          </DialogHeader>
-          <Form {...studentFileForm}>
-            <form onSubmit={studentFileForm.handleSubmit(onFileUpload)} className="space-y-4">
-              <FormField
-                control={studentFileForm.control}
-                name="file"
-                render={({ field: { onChange, ...field } }) => (
-                  <FormItem>
-                    <FormLabel>Upload File</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="file"
-                        accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) onChange(file);
-                        }}
-                        {...field}
-                      />
-                    </FormControl>
-                    <p className="text-xs text-slate-500">Max file size: 50MB. Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG</p>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={studentFileForm.control}
-                name="notes"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Notes (Optional)</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Add any notes about your submission..."
-                        className="min-h-[80px]"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className="flex justify-end space-x-2">
-                <Button type="button" variant="outline" onClick={() => setUploadDialogOpen(false)}>
-                  Cancel
-                </Button>
-                <Button type="submit" disabled={uploadFileMutation.isPending}>
-                  {uploadFileMutation.isPending ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      Uploading...
-                    </>
-                  ) : (
-                    <>
-                      <Upload className="w-4 h-4 mr-2" />
-                      Upload File
-                    </>
-                  )}
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
