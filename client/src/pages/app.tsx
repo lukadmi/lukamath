@@ -4,6 +4,7 @@ import { useLanguage, type Language, translations } from "@/hooks/useLanguage";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,7 +41,11 @@ import {
   Send,
   TrendingUp,
   BarChart3,
-  Smartphone
+  Smartphone,
+  Trash2,
+  Edit,
+  Star,
+  Award
 } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Link } from "wouter";
@@ -53,7 +58,22 @@ function StudentApp() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("homework");
   const [questionDialogOpen, setQuestionDialogOpen] = useState(false);
+  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
+  const [selectedHomework, setSelectedHomework] = useState<Homework | null>(null);
   const queryClient = useQueryClient();
+
+  // Student homework file upload form schema
+  const studentFileSchema = z.object({
+    file: z.instanceof(File).refine(file => file.size <= 50 * 1024 * 1024, "File must be less than 50MB"),
+    notes: z.string().optional()
+  });
+
+  const studentFileForm = useForm<{ file: File; notes?: string }>({
+    resolver: zodResolver(studentFileSchema),
+    defaultValues: {
+      notes: ""
+    }
+  });
 
   // Homework queries
   const { data: homework = [], isLoading: homeworkLoading } = useQuery<Homework[]>({
@@ -106,6 +126,28 @@ function StudentApp() {
     retry: false,
   });
 
+  // Student homework submissions query
+  const { data: studentSubmissions = {} } = useQuery({
+    queryKey: ["/api/homework/student-submissions", (user as any)?.id],
+    queryFn: async () => {
+      if (!homework || homework.length === 0) return {};
+      
+      const submissionsPromises = homework.map(async (hw: Homework) => {
+        try {
+          const submissions = await apiRequest("GET", `/api/homework/${hw.id}/student-submissions/${(user as any)?.id}`);
+          return { [hw.id]: submissions || [] };
+        } catch (error) {
+          return { [hw.id]: [] };
+        }
+      });
+      
+      const results = await Promise.all(submissionsPromises);
+      return results.reduce((acc, subMap) => ({ ...acc, ...subMap }), {});
+    },
+    enabled: !!homework && homework.length > 0 && !!(user as any)?.id,
+    retry: false,
+  });
+
   // Question form
   const questionForm = useForm<InsertQuestion>({
     resolver: zodResolver(insertQuestionSchema),
@@ -151,6 +193,57 @@ function StudentApp() {
     },
   });
 
+  // Student file upload mutation
+  const uploadFileMutation = useMutation({
+    mutationFn: async ({ homeworkId, file, notes }: { homeworkId: string; file: File; notes?: string }) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      if (notes) formData.append('notes', notes);
+      
+      return await apiRequest("POST", `/api/homework/${homeworkId}/student-upload`, formData, {
+        'Content-Type': 'multipart/form-data'
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/homework/student-submissions"] });
+      setUploadDialogOpen(false);
+      setSelectedHomework(null);
+      studentFileForm.reset();
+      toast({
+        title: "File uploaded successfully!",
+        description: "Your homework submission has been uploaded.",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Upload failed",
+        description: error?.response?.data?.message || "Failed to upload file. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Delete student submission mutation
+  const deleteSubmissionMutation = useMutation({
+    mutationFn: async (submissionId: string) => {
+      return await apiRequest("DELETE", `/api/homework/student-submission/${submissionId}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/homework/student-submissions"] });
+      toast({
+        title: "Submission deleted",
+        description: "Your homework submission has been deleted.",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Delete failed",
+        description: error?.response?.data?.message || "Failed to delete submission.",
+        variant: "destructive",
+      });
+    },
+  });
+
   // Booking mutation
   const bookSlotMutation = useMutation({
     mutationFn: async ({ slotId, notes }: { slotId: string; notes?: string }) => {
@@ -185,6 +278,20 @@ function StudentApp() {
 
   const onQuestionSubmit = (data: InsertQuestion) => {
     questionMutation.mutate(data);
+  };
+
+  const onFileUpload = (data: { file: File; notes?: string }) => {
+    if (!selectedHomework) return;
+    uploadFileMutation.mutate({
+      homeworkId: selectedHomework.id,
+      file: data.file,
+      notes: data.notes
+    });
+  };
+
+  const handleUploadClick = (homework: Homework) => {
+    setSelectedHomework(homework);
+    setUploadDialogOpen(true);
   };
 
   // Redirect to login if not authenticated
@@ -433,6 +540,59 @@ function StudentApp() {
                         </div>
                       )}
 
+                      {/* Student Submissions */}
+                      {(studentSubmissions as any)[hw.id] && (studentSubmissions as any)[hw.id].length > 0 && (
+                        <div className="mb-4">
+                          <p className="text-sm font-semibold text-slate-900 mb-2">Your Submissions:</p>
+                          <div className="space-y-1">
+                            {(studentSubmissions as any)[hw.id].map((submission: any) => (
+                              <div key={submission.id} className="flex items-center justify-between bg-green-50 p-2 rounded border border-green-200">
+                                <div className="flex items-center">
+                                  <FileText className="w-4 h-4 mr-2 text-green-600" />
+                                  <div>
+                                    <span className="text-sm text-slate-700">{submission.originalName}</span>
+                                    {submission.notes && (
+                                      <p className="text-xs text-slate-500 mt-1">{submission.notes}</p>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="flex items-center space-x-1">
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => window.open(submission.fileUrl, '_blank')}
+                                    className="text-blue-600 hover:text-blue-700"
+                                  >
+                                    <Download className="w-4 h-4" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => deleteSubmissionMutation.mutate(submission.id)}
+                                    className="text-red-600 hover:text-red-700"
+                                    disabled={deleteSubmissionMutation.isPending}
+                                  >
+                                    <Trash2 className="w-4 h-4" />
+                                  </Button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Upload Button */}
+                      <div className="mb-4">
+                        <Button
+                          size="sm"
+                          onClick={() => handleUploadClick(hw)}
+                          className="bg-blue-600 text-white hover:bg-blue-700"
+                        >
+                          <Upload className="w-4 h-4 mr-2" />
+                          Submit Homework
+                        </Button>
+                      </div>
+
                       {hw.feedback && (
                         <div className="bg-blue-50 p-3 rounded-lg">
                           <p className="text-sm font-semibold text-blue-900 mb-1">{t('app.feedback')}:</p>
@@ -528,6 +688,76 @@ function StudentApp() {
                   </Form>
                 </DialogContent>
               </Dialog>
+
+              {/* File Upload Dialog */}
+              <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
+                <DialogContent className="max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Submit Homework File</DialogTitle>
+                  </DialogHeader>
+                  <Form {...studentFileForm}>
+                    <form onSubmit={studentFileForm.handleSubmit(onFileUpload)} className="space-y-4">
+                      <FormField
+                        control={studentFileForm.control}
+                        name="file"
+                        render={({ field: { onChange, ...field } }) => (
+                          <FormItem>
+                            <FormLabel>Upload File</FormLabel>
+                            <FormControl>
+                              <Input
+                                type="file"
+                                accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) onChange(file);
+                                }}
+                                {...field}
+                              />
+                            </FormControl>
+                            <p className="text-xs text-slate-500">Max file size: 50MB. Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG</p>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={studentFileForm.control}
+                        name="notes"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Notes (Optional)</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                placeholder="Add any notes about your submission..."
+                                className="min-h-[80px]"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <div className="flex justify-end space-x-2">
+                        <Button type="button" variant="outline" onClick={() => setUploadDialogOpen(false)}>
+                          Cancel
+                        </Button>
+                        <Button type="submit" disabled={uploadFileMutation.isPending}>
+                          {uploadFileMutation.isPending ? (
+                            <>
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                              Uploading...
+                            </>
+                          ) : (
+                            <>
+                              <Upload className="w-4 h-4 mr-2" />
+                              Upload File
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </Form>
+                </DialogContent>
+              </Dialog>
             </div>
 
             {questionsLoading ? (
@@ -611,12 +841,6 @@ function StudentApp() {
                       <span className="text-slate-600">{t('app.completed_count')}:</span>
                       <span className="font-semibold text-green-600">
                         {homework?.filter((hw: Homework) => hw.status === "completed")?.length || 0}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-600">{t('app.in_progress')}:</span>
-                      <span className="font-semibold text-yellow-600">
-                        {homework?.filter((hw: Homework) => hw.status === "in_progress")?.length || 0}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
@@ -720,6 +944,87 @@ function StudentApp() {
               </CardContent>
             </Card>
 
+            {/* Grading Rubric */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Award className="w-5 h-5" />
+                  <span>Grading Rubric</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="space-y-3">
+                      <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                        <div className="flex items-center space-x-1">
+                          <Star className="w-4 h-4 text-green-600 fill-current" />
+                          <Star className="w-4 h-4 text-green-600 fill-current" />
+                          <Star className="w-4 h-4 text-green-600 fill-current" />
+                          <Star className="w-4 h-4 text-green-600 fill-current" />
+                          <Star className="w-4 h-4 text-green-600 fill-current" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-green-800">Excellent (90-100%)</h4>
+                          <p className="text-sm text-green-700">Complete understanding, clear explanations, all work shown</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                        <div className="flex items-center space-x-1">
+                          <Star className="w-4 h-4 text-blue-600 fill-current" />
+                          <Star className="w-4 h-4 text-blue-600 fill-current" />
+                          <Star className="w-4 h-4 text-blue-600 fill-current" />
+                          <Star className="w-4 h-4 text-blue-600 fill-current" />
+                          <Star className="w-4 h-4 text-blue-200" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-blue-800">Good (80-89%)</h4>
+                          <p className="text-sm text-blue-700">Good understanding, minor errors, mostly complete work</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                        <div className="flex items-center space-x-1">
+                          <Star className="w-4 h-4 text-yellow-600 fill-current" />
+                          <Star className="w-4 h-4 text-yellow-600 fill-current" />
+                          <Star className="w-4 h-4 text-yellow-600 fill-current" />
+                          <Star className="w-4 h-4 text-yellow-200" />
+                          <Star className="w-4 h-4 text-yellow-200" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-yellow-800">Satisfactory (70-79%)</h4>
+                          <p className="text-sm text-yellow-700">Basic understanding, some errors, incomplete work</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-3 p-3 bg-red-50 rounded-lg border border-red-200">
+                        <div className="flex items-center space-x-1">
+                          <Star className="w-4 h-4 text-red-600 fill-current" />
+                          <Star className="w-4 h-4 text-red-600 fill-current" />
+                          <Star className="w-4 h-4 text-red-200" />
+                          <Star className="w-4 h-4 text-red-200" />
+                          <Star className="w-4 h-4 text-red-200" />
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-red-800">Needs Improvement (Below 70%)</h4>
+                          <p className="text-sm text-red-700">Limited understanding, major errors, significant gaps</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-6 p-4 bg-slate-50 rounded-lg">
+                    <h4 className="font-semibold text-slate-800 mb-2">Assessment Criteria:</h4>
+                    <ul className="space-y-1 text-sm text-slate-700">
+                      <li>• <strong>Mathematical Accuracy:</strong> Correct calculations and final answers</li>
+                      <li>• <strong>Problem-Solving Process:</strong> Clear steps and logical reasoning</li>
+                      <li>• <strong>Work Shown:</strong> All calculations and work displayed clearly</li>
+                      <li>• <strong>Understanding:</strong> Evidence of conceptual comprehension</li>
+                      <li>• <strong>Presentation:</strong> Neat, organized, and easy to follow</li>
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
           </TabsContent>
 
