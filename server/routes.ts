@@ -5,13 +5,14 @@ import { setupAuth, isAuthenticated, requireRole } from "./replitAuth";
 import { authenticateToken } from "./auth-middleware";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 import { EmailNotificationService } from "./email-service.js";
-import { 
-  insertContactSchema, 
-  insertHomeworkSchema, 
+import {
+  insertContactSchema,
+  insertHomeworkSchema,
   updateHomeworkSchema,
-  insertQuestionSchema 
+  insertQuestionSchema
 } from "@shared/schema";
 import { z } from "zod";
+import multer from "multer";
 import { 
   generalLimiter, 
   authLimiter, 
@@ -22,6 +23,23 @@ import {
   validateFileUpload,
   securityLogger 
 } from "./middleware/security";
+
+// Configure multer for file uploads (store in memory)
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 50 * 1024 * 1024, // 50MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ['.pdf', '.doc', '.docx', '.txt', '.jpg', '.jpeg', '.png'];
+    const fileExt = file.originalname.toLowerCase().substring(file.originalname.lastIndexOf('.'));
+    if (allowedTypes.includes(fileExt)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type'));
+    }
+  }
+});
 
 // JWT-based role checking middleware
 function requireJWTRole(allowedRoles: string[]) {
@@ -491,7 +509,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Student homework file upload endpoint
-  app.post("/api/homework/:homeworkId/student-upload", authenticateToken, uploadLimiter, async (req, res) => {
+  app.post("/api/homework/:homeworkId/student-upload", authenticateToken, uploadLimiter, upload.single('file'), async (req, res) => {
     try {
       const homeworkId = req.params.homeworkId;
       const studentId = (req as any).user?.userId;
