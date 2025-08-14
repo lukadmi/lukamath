@@ -727,7 +727,13 @@ function AdminDashboard() {
               </Dialog>
 
               {/* Edit Homework Dialog */}
-              <Dialog open={editHomeworkDialogOpen} onOpenChange={setEditHomeworkDialogOpen}>
+              <Dialog open={editHomeworkDialogOpen} onOpenChange={(open) => {
+                setEditHomeworkDialogOpen(open);
+                if (!open) {
+                  setEditingHomework(null);
+                  editHomeworkForm.reset();
+                }
+              }}>
                 <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto" aria-describedby="edit-homework-description">
                   <DialogHeader>
                     <DialogTitle>Edit Homework Assignment - TEST CHANGE</DialogTitle>
