@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { authenticateToken, requireRole } from './auth-middleware.js';
 import { db } from './db.js';
-import { users, homework, questions, contacts, tutorAvailability, homeworkFiles } from '@shared/schema';
+import { users, homework, questions, contacts, tutorAvailability, homeworkFiles, studentSubmissions } from '@shared/schema';
 import { eq, desc, and } from 'drizzle-orm';
 import { EmailNotificationService } from './email-service.js';
 
