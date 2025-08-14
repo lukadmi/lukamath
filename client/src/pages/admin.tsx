@@ -132,7 +132,7 @@ function AdminDashboard() {
       editHomeworkForm.setValue('description', editingHomework.description || '');
       editHomeworkForm.setValue('dueDate', editingHomework.dueDate ? new Date(editingHomework.dueDate).toISOString().split('T')[0] : '');
     }
-  }, [editingHomework, editHomeworkForm]);
+  }, [editingHomework]);
 
   // Update existing files when homework files are loaded
   useEffect(() => {
