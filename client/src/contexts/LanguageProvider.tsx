@@ -25,8 +25,30 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
   }, [language]);
 
   const t = (key: string): string => {
-    const langTranslations = translations[language] as Record<string, string>;
-    return langTranslations[key] || key;
+    try {
+      const langTranslations = translations[language] as Record<string, string>;
+      const translation = langTranslations[key];
+
+      if (translation) {
+        return translation;
+      }
+
+      // Fallback to English if current language doesn't have the key
+      const enTranslations = translations['en'] as Record<string, string>;
+      const enTranslation = enTranslations[key];
+
+      if (enTranslation) {
+        console.warn(`Translation missing for key "${key}" in language "${language}", using English fallback`);
+        return enTranslation;
+      }
+
+      // Last resort: return a more user-friendly version of the key
+      console.warn(`Translation missing for key "${key}" in both languages`);
+      return key.replace('app.', '').replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    } catch (error) {
+      console.error('Translation error:', error);
+      return key;
+    }
   };
 
   return (
