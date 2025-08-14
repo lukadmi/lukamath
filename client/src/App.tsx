@@ -51,14 +51,23 @@ function Router() {
         <Switch>
           {/* Your original LukaMath routes */}
           <Route path="/" component={Home}/>
+
+          {/* Navigation pages that are actually sections on home page */}
+          <Route path="/services" component={Home}/>
+          <Route path="/about" component={Home}/>
+          <Route path="/pricing" component={Home}/>
+          <Route path="/resources" component={Home}/>
+
+          {/* Existing routes */}
           <Route path="/blog" component={Blog}/>
           <Route path="/app-features" component={AppFeatures}/>
           <Route path="/app" component={StudentApp}/>
           <Route path="/admin" component={AdminDashboard}/>
           <Route path="/admin/export" component={AdminExport}/>
-          <Route path="/register" component={Register}/>
+          <Route path="/register" component={RegisterNew}/>
           <Route path="/register-new" component={RegisterNew}/>
           <Route path="/login" component={LoginNew}/>
+          <Route path="/login-new" component={LoginNew}/>
           <Route path="/pwa" component={PWAIndex}/>
           <Route path="/pwa/auth" component={PWAAuth}/>
           <Route path="/pwa/dashboard" component={PWADashboard}/>
