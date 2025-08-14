@@ -46,14 +46,6 @@ import { Link } from "wouter";
 function StudentApp() {
   const { user, isAuthenticated, isLoading } = useAuth();
   const { t, language, setLanguage } = useLanguage();
-
-  // Debug translation
-  console.log('Translation test:', {
-    language,
-    dueDateTranslation: t('app.due_date'),
-    pendingTranslation: t('app.pending'),
-    completedTranslation: t('app.completed')
-  });
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("homework");
   const [questionDialogOpen, setQuestionDialogOpen] = useState(false);
