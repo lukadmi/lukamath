@@ -5,13 +5,14 @@ import { setupAuth, isAuthenticated, requireRole } from "./replitAuth";
 import { authenticateToken } from "./auth-middleware";
 import { ObjectStorageService, ObjectNotFoundError } from "./objectStorage";
 import { EmailNotificationService } from "./email-service.js";
-import { 
-  insertContactSchema, 
-  insertHomeworkSchema, 
+import {
+  insertContactSchema,
+  insertHomeworkSchema,
   updateHomeworkSchema,
-  insertQuestionSchema 
+  insertQuestionSchema
 } from "@shared/schema";
 import { z } from "zod";
+import multer from "multer";
 import { 
   generalLimiter, 
   authLimiter, 
