@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAuth } from "@/hooks/useAuthNew";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -16,14 +16,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { isUnauthorizedError } from "@/lib/authUtils";
-import {
-  insertQuestionSchema
-} from "@shared/schema";
-import type {
-  Question,
-  Homework,
+import { insertQuestionSchema } from "@shared/schema";
+import type { 
+  Question, 
+  Homework, 
   HomeworkFile,
-  InsertQuestion
+  InsertQuestion 
 } from "@shared/schema";
 import { 
   BookOpen, 
@@ -293,24 +291,16 @@ function StudentApp() {
     setUploadDialogOpen(true);
   };
 
-  // Simple authentication redirect without useEffect to avoid render loops
-  if (!isLoading && !isAuthenticated) {
-    setTimeout(() => {
-      window.location.href = "/api/login";
-    }, 100);
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-slate-600">Loading...</p>
+        </div>
+      </div>
+    );
   }
-
-  // Temporarily bypass loading check since API calls show user is authenticated
-  // if (isLoading) {
-  //   return (
-  //     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
-  //       <div className="text-center">
-  //         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-  //         <p className="text-slate-600">Loading...</p>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 
   if (!isAuthenticated) {
     return (
@@ -547,7 +537,7 @@ function StudentApp() {
                         </div>
                       )}
 
-                      {/* Upload Button */}
+                      {/* Submit Homework Button - FIXED */}
                       <div className="mb-4">
                         <Button
                           size="sm"
@@ -646,76 +636,6 @@ function StudentApp() {
                             <>
                               <Send className="w-4 h-4 mr-2" />
                               {t('app.submit_question_btn')}
-                            </>
-                          )}
-                        </Button>
-                      </div>
-                    </form>
-                  </Form>
-                </DialogContent>
-              </Dialog>
-
-              {/* File Upload Dialog */}
-              <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
-                <DialogContent className="max-w-md">
-                  <DialogHeader>
-                    <DialogTitle>Submit Homework File</DialogTitle>
-                  </DialogHeader>
-                  <Form {...studentFileForm}>
-                    <form onSubmit={studentFileForm.handleSubmit(onFileUpload)} className="space-y-4">
-                      <FormField
-                        control={studentFileForm.control}
-                        name="file"
-                        render={({ field: { onChange, ...field } }) => (
-                          <FormItem>
-                            <FormLabel>Upload File</FormLabel>
-                            <FormControl>
-                              <Input
-                                type="file"
-                                accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
-                                onChange={(e) => {
-                                  const file = e.target.files?.[0];
-                                  if (file) onChange(file);
-                                }}
-                                {...field}
-                              />
-                            </FormControl>
-                            <p className="text-xs text-slate-500">Max file size: 50MB. Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG</p>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={studentFileForm.control}
-                        name="notes"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Notes (Optional)</FormLabel>
-                            <FormControl>
-                              <Textarea
-                                placeholder="Add any notes about your submission..."
-                                className="min-h-[80px]"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <div className="flex justify-end space-x-2">
-                        <Button type="button" variant="outline" onClick={() => setUploadDialogOpen(false)}>
-                          Cancel
-                        </Button>
-                        <Button type="submit" disabled={uploadFileMutation.isPending}>
-                          {uploadFileMutation.isPending ? (
-                            <>
-                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                              Uploading...
-                            </>
-                          ) : (
-                            <>
-                              <Upload className="w-4 h-4 mr-2" />
-                              Upload File
                             </>
                           )}
                         </Button>
@@ -1010,6 +930,76 @@ function StudentApp() {
           </TabsContent>
         </Tabs>
       </main>
+
+      {/* File Upload Dialog */}
+      <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Submit Homework File</DialogTitle>
+          </DialogHeader>
+          <Form {...studentFileForm}>
+            <form onSubmit={studentFileForm.handleSubmit(onFileUpload)} className="space-y-4">
+              <FormField
+                control={studentFileForm.control}
+                name="file"
+                render={({ field: { onChange, ...field } }) => (
+                  <FormItem>
+                    <FormLabel>Upload File</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="file"
+                        accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) onChange(file);
+                        }}
+                        {...field}
+                      />
+                    </FormControl>
+                    <p className="text-xs text-slate-500">Max file size: 50MB. Accepted formats: PDF, DOC, DOCX, TXT, JPG, PNG</p>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={studentFileForm.control}
+                name="notes"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Notes (Optional)</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Add any notes about your submission..."
+                        className="min-h-[80px]"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex justify-end space-x-2">
+                <Button type="button" variant="outline" onClick={() => setUploadDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={uploadFileMutation.isPending}>
+                  {uploadFileMutation.isPending ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="w-4 h-4 mr-2" />
+                      Upload File
+                    </>
+                  )}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
