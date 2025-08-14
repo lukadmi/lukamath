@@ -709,6 +709,93 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Homework text submission endpoint (for text answers, not file uploads)
+  app.post("/api/homework/submit", authenticateToken, apiLimiter, async (req, res) => {
+    try {
+      const { homeworkId, submission } = req.body;
+      const studentId = (req as any).user?.userId;
+
+      if (!studentId) {
+        return res.status(401).json({
+          success: false,
+          message: "Authentication required"
+        });
+      }
+
+      if (!homeworkId || !submission) {
+        return res.status(400).json({
+          success: false,
+          message: "Homework ID and submission text are required"
+        });
+      }
+
+      // Verify the homework exists and the student is authorized
+      const homework = await storage.getHomeworkById(homeworkId);
+      if (!homework) {
+        return res.status(404).json({
+          success: false,
+          message: "Homework not found"
+        });
+      }
+
+      // Check if this homework is assigned to the student
+      const studentHomework = await storage.getHomeworkForStudent(studentId);
+      const isAssigned = studentHomework.some(hw => hw.id === homeworkId);
+
+      if (!isAssigned) {
+        return res.status(403).json({
+          success: false,
+          message: "You are not authorized to submit for this homework"
+        });
+      }
+
+      // Save submission as text-based submission
+      const textSubmission = await storage.createStudentSubmission({
+        homeworkId,
+        studentId,
+        fileName: `text-submission-${Date.now()}.txt`,
+        originalName: 'Text Submission',
+        fileUrl: '', // No file URL for text submissions
+        fileSize: Buffer.byteLength(submission, 'utf8'),
+        mimeType: 'text/plain',
+        notes: submission // Store the text content in notes field
+      });
+
+      // Send email notification to admin
+      try {
+        const student = await storage.getUserById(studentId);
+        if (student) {
+          await EmailNotificationService.notifyHomeworkSubmitted({
+            studentEmail: student.email,
+            homeworkTitle: homework.title,
+            subject: homework.subject,
+            submissionType: 'text',
+            submissionContent: submission
+          });
+        }
+      } catch (emailError) {
+        console.error("Failed to send submission notification:", emailError);
+      }
+
+      res.status(201).json({
+        success: true,
+        message: "Homework submitted successfully",
+        submission: {
+          id: textSubmission.id,
+          type: 'text',
+          content: submission,
+          submittedAt: textSubmission.createdAt
+        }
+      });
+    } catch (error) {
+      console.error("Homework text submission error:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to submit homework"
+      });
+    }
+  });
+
   // Admin routes are now handled by admin-routes.ts
 
   console.log("🌐 Creating HTTP server...");
