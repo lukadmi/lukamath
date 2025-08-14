@@ -515,9 +515,6 @@ function StudentApp() {
                     <CardContent>
                       <p className="text-slate-700 mb-4">{hw.description}</p>
 
-                      {/* DEBUG: Log homework data */}
-                      <script>{console.log('Homework data:', hw, 'Files:', (allHomeworkFiles as any)[hw.id], 'Submissions:', (studentSubmissions as any)[hw.id])}</script>
-
                       {/* Homework File Attachments */}
                       {(allHomeworkFiles as any)[hw.id] && (allHomeworkFiles as any)[hw.id].length > 0 && (
                         <div className="mb-4">
