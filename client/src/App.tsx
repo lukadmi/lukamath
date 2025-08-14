@@ -15,7 +15,7 @@ import { HelmetProvider } from 'react-helmet-async';
 const Home = lazy(() => import("@/pages/home"));
 const Blog = lazy(() => import("@/pages/blog"));
 const AppFeatures = lazy(() => import("@/pages/app-features"));
-import StudentApp from "@/pages/app-test";
+import StudentApp from "@/pages/app-simple-fixed";
 const AdminDashboard = lazy(() => import("@/pages/admin"));
 const AdminExport = lazy(() => import("@/pages/admin-export"));
 const Register = lazy(() => import("@/pages/register"));
