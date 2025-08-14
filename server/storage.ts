@@ -62,6 +62,12 @@ export interface IStorage {
   
   // Progress operations
   getStudentProgress(studentId: string): Promise<any[]>;
+
+  // Student submission operations
+  createStudentSubmission(submission: Omit<StudentSubmission, 'id' | 'createdAt'>): Promise<StudentSubmission>;
+  getStudentSubmissions(homeworkId: string, studentId: string): Promise<StudentSubmission[]>;
+  getStudentSubmissionById(submissionId: string): Promise<StudentSubmission | undefined>;
+  deleteStudentSubmission(submissionId: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
