@@ -53,7 +53,9 @@ function Router() {
           <Route path="/" component={Home}/>
           <Route path="/blog" component={Blog}/>
           <Route path="/app-features" component={AppFeatures}/>
-          <Route path="/app" component={StudentApp}/>
+          <Route path="/app">
+            <StudentApp />
+          </Route>
           <Route path="/admin" component={AdminDashboard}/>
           <Route path="/admin/export" component={AdminExport}/>
           <Route path="/register" component={Register}/>
