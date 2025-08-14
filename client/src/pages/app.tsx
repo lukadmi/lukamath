@@ -47,7 +47,7 @@ import {
   Star,
   Award
 } from "lucide-react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Link } from "wouter";
 
 // Using global LanguageProvider - removed local one that was overriding global language settings
