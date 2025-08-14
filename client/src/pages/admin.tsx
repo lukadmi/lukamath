@@ -963,7 +963,11 @@ function AdminDashboard() {
                       </div>
 
                       <div className="flex justify-end space-x-2">
-                        <Button type="button" variant="outline" onClick={() => setEditHomeworkDialogOpen(false)}>
+                        <Button type="button" variant="outline" onClick={() => {
+                          setEditHomeworkDialogOpen(false);
+                          setEditingHomework(null);
+                          editHomeworkForm.reset();
+                        }}>
                           Cancel
                         </Button>
                         <Button
