@@ -123,6 +123,56 @@ export class ObjectStorageService {
     });
   }
 
+  // Uploads a file to object storage and returns the public URL
+  async uploadFile(fileName: string, buffer: Buffer, mimeType: string): Promise<string> {
+    try {
+      const privateObjectDir = this.getPrivateObjectDir();
+      if (!privateObjectDir) {
+        throw new Error(
+          "PRIVATE_OBJECT_DIR not set. Create a bucket in 'Object Storage' " +
+            "tool and set PRIVATE_OBJECT_DIR env var."
+        );
+      }
+
+      const fullPath = `${privateObjectDir}/${fileName}`;
+      const { bucketName, objectName } = parseObjectPath(fullPath);
+
+      const bucket = objectStorageClient.bucket(bucketName);
+      const file = bucket.file(objectName);
+
+      // Upload the file
+      await file.save(buffer, {
+        metadata: {
+          contentType: mimeType,
+        },
+        resumable: false,
+      });
+
+      // Return the public URL
+      return `https://storage.googleapis.com/${bucketName}/${objectName}`;
+    } catch (error) {
+      console.error("Error uploading file to object storage:", error);
+      throw new Error(`Failed to upload file: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  // Deletes a file from object storage
+  async deleteFile(fileName: string): Promise<void> {
+    try {
+      const privateObjectDir = this.getPrivateObjectDir();
+      const fullPath = `${privateObjectDir}/${fileName}`;
+      const { bucketName, objectName } = parseObjectPath(fullPath);
+
+      const bucket = objectStorageClient.bucket(bucketName);
+      const file = bucket.file(objectName);
+
+      await file.delete();
+    } catch (error) {
+      console.error("Error deleting file from object storage:", error);
+      throw new Error(`Failed to delete file: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
   // Gets the object entity file from the object path.
   async getObjectEntityFile(objectPath: string): Promise<File> {
     if (!objectPath.startsWith("/objects/")) {
