@@ -789,4 +789,4 @@ function StudentApp() {
   );
 }
 
-export default StudentAppContent;
+export default StudentApp;
