@@ -47,7 +47,7 @@ import { Link } from "wouter";
 
 // Using global LanguageProvider - removed local one that was overriding global language settings
 
-function StudentAppContent() {
+function StudentApp() {
   const { user, isAuthenticated, isLoading } = useAuth();
   const { t, language, setLanguage } = useLanguage();
   const { toast } = useToast();
