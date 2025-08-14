@@ -454,7 +454,7 @@ function StudentApp() {
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <CardTitle className="text-lg">{hw.title}</CardTitle>
-                        <Badge 
+                        <Badge
                           variant={hw.status === "completed" ? "default" : hw.status === "in_progress" ? "secondary" : "outline"}
                           className={
                             hw.status === "completed" ? "bg-green-100 text-green-800" :
@@ -467,7 +467,7 @@ function StudentApp() {
                           {hw.status === "pending" && <AlertCircle className="w-3 h-3 mr-1" />}
                           {hw.status === "completed" ? t('app.completed') :
                            hw.status === "in_progress" ? t('app.in_progress_status') :
-                           t('app.pending')}
+                           t('app.pending_count')}
                         </Badge>
                       </div>
                       <p className="text-sm text-slate-600">{t('app.subject')}: {hw.subject}</p>
