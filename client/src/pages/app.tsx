@@ -111,7 +111,7 @@ function StudentApp() {
 
       const filesPromises = homework.map(async (hw: Homework) => {
         try {
-          const files = await apiRequest("GET", `/api/admin/homework/${hw.id}/files`);
+          const files = await apiRequest("GET", `/api/homework/${hw.id}/files`);
           return { [hw.id]: files || [] };
         } catch (error) {
           console.warn(`Failed to fetch files for homework ${hw.id}:`, error);
