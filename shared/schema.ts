@@ -99,6 +99,20 @@ export const questions = pgTable("questions", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+// Student homework submissions
+export const studentSubmissions = pgTable("student_submissions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  homeworkId: varchar("homework_id").notNull().references(() => homework.id),
+  studentId: varchar("student_id").notNull().references(() => users.id),
+  fileName: text("file_name").notNull(),
+  originalName: text("original_name").notNull(),
+  fileUrl: text("file_url").notNull(),
+  fileSize: integer("file_size").notNull(),
+  mimeType: varchar("mime_type").notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Tutor availability for scheduling
 export const tutorAvailability = pgTable("tutor_availability", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
