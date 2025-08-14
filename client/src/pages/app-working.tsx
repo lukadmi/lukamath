@@ -467,7 +467,7 @@ function StudentApp() {
                           {hw.status === "pending" && <AlertCircle className="w-3 h-3 mr-1" />}
                           {hw.status === "completed" ? t('app.completed') :
                            hw.status === "in_progress" ? t('app.in_progress_status') :
-                           t('app.pending_count')}
+                           t('app.pending')}
                         </Badge>
                       </div>
                       <p className="text-sm text-slate-600">{t('app.subject')}: {hw.subject}</p>
