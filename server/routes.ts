@@ -509,7 +509,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Student homework file upload endpoint
-  app.post("/api/homework/:homeworkId/student-upload", authenticateToken, uploadLimiter, async (req, res) => {
+  app.post("/api/homework/:homeworkId/student-upload", authenticateToken, uploadLimiter, upload.single('file'), async (req, res) => {
     try {
       const homeworkId = req.params.homeworkId;
       const studentId = (req as any).user?.userId;
