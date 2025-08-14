@@ -1094,5 +1094,4 @@ function StudentApp() {
   );
 }
 
-const StudentAppComponent = StudentApp;
-export default StudentAppComponent;
+export default StudentApp;
