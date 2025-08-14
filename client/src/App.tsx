@@ -67,6 +67,7 @@ function Router() {
           <Route path="/register" component={RegisterNew}/>
           <Route path="/register-new" component={RegisterNew}/>
           <Route path="/login" component={LoginNew}/>
+          <Route path="/login-new" component={LoginNew}/>
           <Route path="/pwa" component={PWAIndex}/>
           <Route path="/pwa/auth" component={PWAAuth}/>
           <Route path="/pwa/dashboard" component={PWADashboard}/>
