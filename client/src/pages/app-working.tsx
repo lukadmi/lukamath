@@ -285,9 +285,7 @@ function StudentApp() {
     });
   };
 
-  const handleUploadClick = (e: React.MouseEvent, homework: Homework) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleUploadClick = (homework: Homework) => {
     setSelectedHomework(homework);
     setUploadDialogOpen(true);
   };
