@@ -51,6 +51,14 @@ function Router() {
         <Switch>
           {/* Your original LukaMath routes */}
           <Route path="/" component={Home}/>
+
+          {/* Navigation pages that are actually sections on home page */}
+          <Route path="/services" component={Home}/>
+          <Route path="/about" component={Home}/>
+          <Route path="/pricing" component={Home}/>
+          <Route path="/resources" component={Home}/>
+
+          {/* Existing routes */}
           <Route path="/blog" component={Blog}/>
           <Route path="/app-features" component={AppFeatures}/>
           <Route path="/app" component={StudentApp}/>
