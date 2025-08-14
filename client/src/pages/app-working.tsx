@@ -292,20 +292,12 @@ function StudentApp() {
     setUploadDialogOpen(true);
   };
 
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      toast({
-        title: t('app.unauthorized'),
-        description: t('app.unauthorized_logout'),
-        variant: "destructive",
-      });
-      setTimeout(() => {
-        window.location.href = "/api/login";
-      }, 500);
-      return;
-    }
-  }, [isAuthenticated, isLoading, toast]);
+  // Simple authentication redirect without useEffect to avoid render loops
+  if (!isLoading && !isAuthenticated) {
+    setTimeout(() => {
+      window.location.href = "/api/login";
+    }, 100);
+  }
 
   if (isLoading) {
     return (
